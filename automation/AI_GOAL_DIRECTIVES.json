@@ -1,0 +1,28 @@
+{
+  "project": "Rikkei Portal Autonomous Learning System",
+  "goal": "Hoan thanh 100% tat ca cac bai hoc tu Session 17 den het khoa hoc [Tsubasa] Lap trinh front-end co ban",
+  "startSession": 17,
+  "zeroGiveUpPolicy": {
+    "enabled": true,
+    "maxRetriesPerLesson": 3,
+    "autoScrollCurriculum": true,
+    "autoExpandAccordions": true,
+    "continueUntilAllSessionsCompleted": true
+  },
+  "domSelectors": {
+    "courseUrl": "https://portal.rikkei.edu.vn/learn/32",
+    "sessionAccordion": ".learn__content--left__item, .learn__sidebar--item, div[class*='session'], div[class*='chapter'], div[class*='accordion']",
+    "pendingLessonBadge": ".lesson-status-badge.pending, [class*='pending'], div:has-text('Chua hoan thanh'), div:has-text('Chưa hoàn thành')",
+    "completedLessonBadge": ".lesson-status-badge.completed, [class*='completed'], div:has-text('Da hoan thanh'), div:has-text('Đã hoàn thành')",
+    "lessonItemBlock": ".learn__content--right__item--block__content, .learn__content--right__item, a[href*='/lessons/'], a[href*='/document/'], a[href*='/quiz/']",
+    "videoElement": "video, iframe[src*='youtube']",
+    "readingContainer": ".premium-reading-container, .lesson-content",
+    "quizStartButton": ".cquiz-landing__btn, button:has-text('Bat dau lam bai'), button:has-text('Bắt đầu làm bài')",
+    "quizAnswerOption": ".cquiz__answer",
+    "quizNextButton": ".cquiz__nav-btn--next, button:has-text('Cau tiep'), button:has-text('Câu tiếp')",
+    "quizSubmitButton": ".cquiz__nav-btn--submit, button:has-text('Nop bai'), button:has-text('Nộp bài')",
+    "quizConfirmSubmit": ".cquiz-confirm__ok, button:has-text('Nop bai'), button:has-text('Nộp bài')",
+    "quizViewWrongButton": ".view-wrong-btn, button:has-text('Xem cac cau minh sai'), button:has-text('Xem các câu mình sai')",
+    "quizRetakeButton": "button:has-text('Lam lai'), button:has-text('Làm lại')"
+  }
+}

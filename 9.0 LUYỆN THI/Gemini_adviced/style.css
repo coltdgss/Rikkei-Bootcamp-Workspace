@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.container {
+    display: flex; /* Dùng Flexbox để chia 2 cột */
+    gap: 20px;
+    padding: 20px;
+}
+.form-section, .list-section {
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+.form-section {
+    width: 35%; /* Cột trái chiếm 35% */
+}
+.list-section {
+    width: 65%; /* Cột phải chiếm 65% */
+}
+.input-group {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+.input-group label {
+    width: 100px; /* Cố định độ rộng label để các ô input thẳng hàng */
+}
+.input-group input[type="text"] {
+    flex: 1; /* Input giãn hết phần không gian còn lại */
+    padding: 5px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+table, th, td {
+    border: 1px solid #aaa;
+}
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+.action-bar {
+    margin-bottom: 10px;
+}

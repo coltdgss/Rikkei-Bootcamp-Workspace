@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  gap: 0px;
+  padding: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.grid-item {
+  background-color: #051431;
+  color: #ffffff;
+  padding: 30px 20px;
+  font-family: sans-serif;
+  font-weight: 500;
+  border-radius: 0px;
+}

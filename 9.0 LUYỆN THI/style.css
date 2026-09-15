@@ -1,0 +1,430 @@
+/* ================================================================
+   style.css  –  Giao diện Quản Lý Học Viên
+   Cấu trúc file:
+     1. Reset & Base       – Xóa style mặc định trình duyệt
+     2. CSS Variables      – Bảng màu & giá trị dùng chung
+     3. Header             – Thanh tiêu đề trên cùng
+     4. Main Layout        – Bố cục 2 cột (form | bảng)
+     5. Card               – Khung trắng bo góc
+     6. Form               – Ô nhập liệu, label, radio, lỗi
+     7. Buttons            – Các loại nút bấm
+     8. Table Toolbar      – Ô tìm kiếm + nút sắp xếp
+     9. Table              – Bảng danh sách học viên
+    10. Responsive         – Tương thích màn hình nhỏ
+================================================================ */
+
+
+/* ================================================================
+   1. RESET & BASE  –  Xóa style mặc định của trình duyệt
+================================================================ */
+
+/*
+  *           → Áp dụng cho TẤT CẢ phần tử
+  *::before   → Áp dụng cho pseudo-element ::before (nội dung ảo trước)
+  *::after    → Áp dụng cho pseudo-element ::after  (nội dung ảo sau)
+*/
+*, *::before, *::after {
+  /*
+    box-sizing: border-box
+    → Khi đặt width: 300px, thì padding và border đều NẰM TRONG 300px đó
+    → Mặc định (content-box): padding cộng thêm vào ngoài width → dễ bị tràn layout
+    → border-box: dễ tính toán kích thước hơn nhiều
+  */
+  box-sizing: border-box;
+
+  /* Xóa margin/padding mặc định của trình duyệt (vd: <p>, <h1> có margin sẵn) */
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ================================================================
+   2. CSS VARIABLES (Custom Properties)  –  Khai báo biến màu sắc
+   Dùng chung toàn trang, chỉ cần sửa 1 chỗ → áp dụng khắp nơi
+================================================================ */
+
+/*
+  :root → Phần tử gốc của trang (tức là thẻ <html>)
+  Khai báo biến ở :root → dùng được ở BẤT KỲ đâu trong CSS
+  Cú pháp biến: --ten-bien: gia-tri;
+  Cách dùng:    color: var(--ten-bien);
+*/
+:root {
+  /* === NHÓM MÀU CHÍNH (xanh dương) === */
+  --primary:      #2563eb;   /* Màu chính: xanh đậm, dùng cho nút, tiêu đề, viền focus */
+  --primary-dark: #1d4ed8;   /* Xanh đậm hơn: hiệu ứng hover (di chuột vào) */
+  --primary-soft: #eff6ff;   /* Xanh rất nhạt: nền header bảng, đường kẻ tiêu đề card */
+
+  /* === NHÓM MÀU NGUY HIỂM (đỏ) === */
+  --danger:       #ef4444;   /* Màu đỏ: thông báo lỗi, nút xóa, viền khi input sai */
+  --danger-soft:  #fef2f2;   /* Đỏ rất nhạt: nền input khi có lỗi, nền nút xóa */
+
+  /* === MÀU PHỤ (hiện chưa dùng, dự phòng mở rộng sau) === */
+  --success:      #16a34a;   /* Xanh lá: thông báo thành công */
+  --warning:      #d97706;   /* Cam: cảnh báo */
+
+  /* === NHÓM MÀU NÚT SẮP XẾP (tím) === */
+  --sort-bg:      #7c3aed;   /* Nền nút sắp xếp */
+  --sort-hover:   #6d28d9;   /* Màu hover nút sắp xếp */
+
+  /* === MÀU NỀN & BỀ MẶT === */
+  --bg:           #f1f5f9;   /* Nền toàn trang: xám nhạt */
+  --surface:      #ffffff;   /* Nền card/form: trắng tinh */
+  --border:       #e2e8f0;   /* Màu viền: xám nhạt */
+  --text:         #1e293b;   /* Màu chữ chính: gần đen (dễ đọc hơn đen tuyệt đối) */
+  --text-muted:   #64748b;   /* Màu chữ phụ: xám, dùng cho label, placeholder */
+
+  /* === KÍCH THƯỚC & HIỆU ỨNG === */
+  --radius:       12px;                        /* Độ bo tròn góc card, nút */
+  --shadow:       0 4px 24px rgba(0,0,0,0.07); /* Đổ bóng nhẹ dưới card */
+  /*
+    rgba(0,0,0,0.07):
+      0,0,0   → màu đen
+      0.07    → độ trong suốt 7% (rất nhạt, tạo cảm giác nổi lên)
+  */
+
+  /* Font chữ: ưu tiên Be Vietnam Pro, nếu không có thì dùng sans-serif */
+  --font:         'Be Vietnam Pro', sans-serif;
+}
+
+
+/* Áp dụng font, màu nền, màu chữ mặc định cho toàn bộ trang */
+body {
+  font-family: var(--font);    /* Dùng biến font đã khai báo */
+  background: var(--bg);       /* Nền xám nhạt */
+  color: var(--text);          /* Chữ màu gần đen */
+  min-height: 100vh;           /* Chiều cao tối thiểu = 100% chiều cao màn hình */
+}
+
+
+/* ================================================================
+   3. HEADER  –  Thanh tiêu đề trên cùng
+================================================================ */
+
+.app-header {
+  background: var(--primary);                  /* Nền xanh đậm */
+  color: #fff;                                 /* Chữ trắng */
+  padding: 16px 32px;                          /* Khoảng cách trong: trên/dưới 16px, trái/phải 32px */
+  box-shadow: 0 2px 12px rgba(37,99,235,0.25); /* Đổ bóng xanh nhạt phía dưới header */
+}
+
+.header-inner {
+  display: flex;          /* Flexbox: xếp các phần tử con theo hàng ngang */
+  align-items: center;    /* Căn giữa theo chiều dọc (icon và chữ thẳng hàng) */
+  gap: 12px;              /* Khoảng cách giữa icon và tiêu đề */
+  max-width: 1400px;      /* Giới hạn chiều rộng tối đa (không bị dãn quá rộng trên màn hình lớn) */
+  margin: 0 auto;         /* Căn giữa: margin trái/phải = auto → tự cân bằng */
+}
+
+.header-logo { font-size: 28px; }                                       /* Icon emoji to hơn chữ */
+.app-header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.3px; } /* Chữ đậm, giãn nhẹ */
+
+
+/* ================================================================
+   4. MAIN LAYOUT  –  Bố cục 2 cột (Form bên trái | Bảng bên phải)
+================================================================ */
+
+.app-main {
+  display: grid;                        /* CSS Grid: chia lưới cột */
+  grid-template-columns: 340px 1fr;    /* Cột 1: cố định 340px | Cột 2: chiếm phần còn lại */
+  /*
+    1fr = 1 "fraction" (phần) của không gian còn lại
+    Ví dụ màn hình 1000px: cột 1 = 340px, cột 2 = 1000 - 340 - gap = ~636px
+  */
+  gap: 24px;           /* Khoảng cách giữa 2 cột */
+  max-width: 1400px;   /* Không rộng quá trên màn hình lớn */
+  margin: 28px auto;   /* Căn giữa trang, cách header 28px */
+  padding: 0 24px;     /* Khoảng cách hai bên để không dính sát mép */
+}
+
+/*
+  @media: Media Query – CSS "responsive" theo kích thước màn hình
+  max-width: 900px → Áp dụng khi màn hình NHỎ HƠN hoặc BẰNG 900px (tablet, mobile)
+*/
+@media (max-width: 900px) {
+  /* Trên màn hình nhỏ: bỏ 2 cột, chuyển thành 1 cột (form trên, bảng dưới) */
+  .app-main { grid-template-columns: 1fr; }
+}
+
+
+/* ================================================================
+   5. CARD  –  Khung trắng bo góc bao quanh form và bảng
+================================================================ */
+
+.card {
+  background: var(--surface);       /* Nền trắng */
+  border-radius: var(--radius);     /* Bo góc 12px */
+  box-shadow: var(--shadow);        /* Đổ bóng nhẹ */
+  padding: 28px 24px;               /* Khoảng cách bên trong */
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;                       /* Chữ đậm */
+  color: var(--primary);                  /* Màu xanh */
+  margin-bottom: 22px;                    /* Cách phần nội dung bên dưới */
+  padding-bottom: 12px;                   /* Khoảng cách trước đường kẻ */
+  border-bottom: 2px solid var(--primary-soft); /* Đường kẻ ngang xanh nhạt dưới tiêu đề */
+}
+
+
+/* ================================================================
+   6. FORM  –  Ô nhập liệu, label, radio button, thông báo lỗi
+================================================================ */
+
+/* Mỗi nhóm (label + input + error) cách nhau 16px */
+.form-group {
+  margin-bottom: 16px;
+}
+
+/* Label (nhãn) trên mỗi ô nhập */
+.form-group label {
+  display: block;              /* Xuống dòng, chiếm hết chiều ngang */
+  font-size: 13.5px;
+  font-weight: 600;            /* Chữ hơi đậm */
+  color: var(--text-muted);    /* Màu xám */
+  margin-bottom: 6px;          /* Cách ô input bên dưới 6px */
+  text-transform: uppercase;   /* Viết HOA tự động */
+  letter-spacing: 0.4px;       /* Giãn cách chữ một chút cho dễ đọc */
+}
+
+/* Dấu * màu đỏ báo hiệu trường bắt buộc */
+.required { color: var(--danger); }
+
+/* Style cho tất cả input type="text" trong form-group */
+.form-group input[type="text"] {
+  width: 100%;           /* Chiều rộng 100% của form-group cha */
+  padding: 10px 13px;    /* Khoảng cách trong ô: trên/dưới 10px, trái/phải 13px */
+  border: 1.5px solid var(--border);  /* Viền xám nhạt */
+  border-radius: 8px;    /* Bo góc nhẹ */
+  font-size: 14px;
+  font-family: var(--font);  /* Dùng cùng font với trang (input có font riêng mặc định) */
+  color: var(--text);
+  /*
+    transition: Hiệu ứng chuyển động mượt khi thuộc tính thay đổi
+    border-color 0.2s → viền đổi màu mất 0.2 giây
+    box-shadow 0.2s   → bóng đổ đổi mất 0.2 giây
+  */
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;         /* Bỏ viền xanh mặc định của trình duyệt khi focus */
+  background: #fafafa;   /* Nền hơi xám (không trắng tuyệt đối) */
+}
+
+/*
+  :focus → Khi người dùng đang click/gõ vào ô input
+  Tạo hiệu ứng "sáng lên" để người dùng biết đang nhập ô nào
+*/
+.form-group input[type="text"]:focus {
+  border-color: var(--primary);                    /* Viền đổi sang xanh */
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);     /* Vầng sáng xanh nhạt xung quanh */
+  background: #fff;                                /* Nền trắng hơn */
+}
+
+/*
+  .input-error → Class JS thêm vào khi validate thất bại
+  Đổi màu ô input sang đỏ để báo lỗi
+*/
+.form-group input.input-error {
+  border-color: var(--danger);      /* Viền đỏ */
+  background: var(--danger-soft);   /* Nền đỏ nhạt */
+}
+
+/* Nhóm các radio button nằm ngang */
+.radio-group {
+  display: flex;      /* Xếp hàng ngang */
+  gap: 20px;          /* Khoảng cách giữa "Nam" và "Nữ" */
+  padding: 6px 0;
+}
+
+/* Label bao quanh từng radio button (click chữ = click radio) */
+.radio-label {
+  display: flex;
+  align-items: center;   /* Icon và chữ thẳng hàng dọc */
+  gap: 6px;              /* Khoảng cách giữa ô tròn và chữ */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;       /* Con trỏ thành bàn tay khi di vào */
+  text-transform: none;  /* Không viết hoa (ghi đè rule của .form-group label) */
+  letter-spacing: 0;
+  color: var(--text);
+}
+/* accent-color: màu của ô tròn radio khi được chọn */
+.radio-label input { accent-color: var(--primary); width: 16px; height: 16px; }
+
+/* Thông báo lỗi bên dưới mỗi input */
+.error-msg {
+  display: block;           /* Xuống dòng */
+  font-size: 12px;
+  color: var(--danger);     /* Chữ đỏ */
+  margin-top: 4px;
+  min-height: 16px;         /* Luôn chiếm chỗ dù rỗng → tránh layout bị nhảy khi xuất hiện lỗi */
+}
+
+
+/* ================================================================
+   7. BUTTONS  –  Các loại nút bấm
+================================================================ */
+
+/* Khung chứa các nút form, xếp ngang */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* Style chung cho tất cả nút */
+.btn {
+  padding: 10px 20px;
+  border: none;              /* Xóa viền mặc định của <button> */
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font);  /* <button> có font riêng, phải ghi đè */
+  font-weight: 600;
+  cursor: pointer;           /* Con trỏ bàn tay */
+  transition: all 0.18s;     /* Hiệu ứng mượt cho tất cả thuộc tính */
+}
+
+/* Nút chính: xanh đậm (Lưu lại / Cập nhật) */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  flex: 1;   /* Chiếm hết không gian còn lại trong .form-actions */
+}
+/* Hover: đổi màu + nhích lên 1px tạo cảm giác "nhấn" */
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+/* Nút phụ: xám nhạt (Hủy) */
+.btn-secondary {
+  background: #f1f5f9;
+  color: var(--text-muted);
+}
+.btn-secondary:hover { background: #e2e8f0; }
+
+/* Nút sắp xếp: tím nổi bật */
+.btn-sort {
+  background: var(--sort-bg);
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 16px;
+  white-space: nowrap;   /* Không xuống dòng khi container hẹp */
+}
+.btn-sort:hover { background: var(--sort-hover); }
+
+
+/* ================================================================
+   8. TABLE TOOLBAR  –  Thanh công cụ phía trên bảng
+================================================================ */
+
+/* Thanh chứa ô tìm kiếm và nút sắp xếp, xếp ngang */
+.table-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: center;   /* Căn giữa dọc (ô input và nút cùng chiều cao) */
+}
+
+/* Ô tìm kiếm chiếm hết không gian còn lại (nút sắp xếp cố định) */
+.search-box { flex: 1; }
+
+.search-box input {
+  width: 100%;
+  padding: 9px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-box input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+
+/* ================================================================
+   9. TABLE  –  Bảng danh sách học viên
+================================================================ */
+
+/* Bọc ngoài bảng: xử lý tràn ngang trên màn hình nhỏ */
+.table-wrapper {
+  overflow-x: auto;   /* Xuất hiện thanh cuộn ngang nếu bảng quá rộng */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;   /* Gộp viền các ô lại (không bị viền đôi) */
+  font-size: 14px;
+}
+
+/* Hàng tiêu đề bảng: nền xanh nhạt */
+thead tr {
+  background: var(--primary-soft);
+}
+
+/* Ô tiêu đề cột */
+th {
+  text-align: left;        /* Căn trái (mặc định th là căn giữa) */
+  padding: 11px 14px;
+  font-weight: 700;
+  font-size: 12.5px;
+  text-transform: uppercase;   /* Viết hoa */
+  letter-spacing: 0.4px;
+  color: var(--primary);       /* Chữ xanh */
+  white-space: nowrap;         /* Không xuống dòng */
+}
+
+/* Ô dữ liệu */
+td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);   /* Đường kẻ ngang giữa các hàng */
+  color: var(--text);
+  vertical-align: middle;   /* Nội dung căn giữa theo chiều dọc trong ô */
+}
+
+/* Xóa đường kẻ dưới hàng cuối cùng (tránh trùng với viền card) */
+tbody tr:last-child td { border-bottom: none; }
+
+/* Hàng đổi màu nền khi di chuột vào → dễ đọc dữ liệu hơn */
+tbody tr:hover { background: #f8fafc; }
+
+/*
+  Badge (nhãn tròn) hiển thị Giới tính
+  Dùng thay vì text thẳng để nhìn trực quan hơn
+*/
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;   /* Bo tròn hoàn toàn (pill shape) */
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-nam { background: #dbeafe; color: #1d4ed8; }   /* Xanh dương nhạt */
+.badge-nu  { background: #fce7f3; color: #be185d; }   /* Hồng nhạt */
+
+/* Nút Sửa và Xóa trong cột Hành động */
+.action-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 11px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-right: 5px;   /* Khoảng cách giữa 2 nút */
+}
+.btn-edit   { background: #fef9c3; color: #92400e; }    /* Vàng nhạt */
+.btn-edit:hover   { background: #fde68a; }
+.btn-delete { background: var(--danger-soft); color: var(--danger); }  /* Đỏ nhạt */
+.btn-delete:hover { background: #fecaca; }
+
+/* Thông báo khi bảng trống */
+.empty-msg {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+/* Cột STT (cột đầu tiên): chữ xám nhạt hơn */
+td:first-child { color: var(--text-muted); font-weight: 500; }

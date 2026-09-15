@@ -1,0 +1,79 @@
+[
+  {
+    "iteration": 1,
+    "timestamp": "2026-09-04T00:02:01.524Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "page.evaluate: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: page.evaluate: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  },
+  {
+    "iteration": 2,
+    "timestamp": "2026-09-04T00:10:02.025Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "locator.click: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: locator.click: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  },
+  {
+    "iteration": 1,
+    "timestamp": "2026-09-04T00:32:29.952Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "locator.click: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: locator.click: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  },
+  {
+    "iteration": 1,
+    "timestamp": "2026-09-04T00:35:30.229Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "locator.count: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: locator.count: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  },
+  {
+    "iteration": 1,
+    "timestamp": "2026-09-04T00:40:19.680Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "locator.count: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: locator.count: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  },
+  {
+    "iteration": 1,
+    "timestamp": "2026-09-04T02:25:59.453Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "ProgressTracker.saveProgress is not a function",
+    "currentUrl": "https://portal.rikkei.edu.vn/learn/32/quiz/600-387",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: ProgressTracker.saveProgress is not a function",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": "D:\\Rikkei-Bootcamp-Workspace\\automation\\storage_state\\snapshots\\error_iter_1.png"
+  },
+  {
+    "iteration": 4,
+    "timestamp": "2026-09-04T09:27:16.323Z",
+    "errorCategory": "RUNTIME_FLOW_INTERRUPT",
+    "errorMessage": "page.evaluate: Target page, context or browser has been closed",
+    "currentUrl": "Không rõ",
+    "rootCause": "Ngoại lệ trong quá trình thực thi: page.evaluate: Target page, context or browser has been closed",
+    "healingAction": "Đặt lại trạng thái DOM, dọn dẹp Chromium Zombie và thử lại ở bài học tiếp theo.",
+    "autoAppliedFix": "RESET_DOM_AND_ZOMBIE_KILL",
+    "screenshotPath": null
+  }
+]

@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/scripts": true,
+        "**/About_Dataset": true,
+        "**/Draft-Tag.md": true,
+        "**/run_menu.bat": true,
+        "**/start_ollama.bat": true,
+        "**/rkc_comment_tracking.json": true,
+        "**/responsive_tips.md": true,
+        "**/VSCODE_SHORTCUTS_PRO.md": true,
+        "**/VSCODE_CODING_DIRECTIVES.md": true,
+        "**/add_back_buttons.py": true,
+        "**/css": true,
+        "**/My_unknow-Tag.html": true
+    }
+}

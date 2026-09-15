@@ -1,0 +1,98 @@
+{
+  "version": "2.0.0",
+  "system": "Rikkei Portal Autonomous Learning AI",
+  "updatedAt": "2026-09-04T07:40:15.000Z",
+  "totalSkills": 10,
+  "skills": [
+    {
+      "id": "SKILL-001",
+      "name": "RIGHT_PANEL_DEEP_SCROLL",
+      "category": "DOM_NAVIGATION",
+      "title": "Kỹ năng Cuộn Sâu Thanh Trượt Danh Mục Phải",
+      "taughtBy": "User (Thao tác kéo thanh trượt qua CHAY_QUAN_SAT_AI)",
+      "rule": "Khung bài học bên phải có thanh cuộn riêng biệt (overflow-y). Tuyệt đối không kiểm tra tĩnh trên đầu trang. Phải dùng page.mouse.wheel và element.scrollBy kéo thanh trượt xuống từng nấc (15 nấc x 400px) để quét trọn vẹn từ Lesson 10 đến Session 20.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-002",
+      "name": "SUB_ITEM_ACCORDION_DROPDOWN",
+      "category": "DOM_INTERACTION",
+      "title": "Kỹ năng Mở Rộng 2 Tầng Accordion Bài Học",
+      "taughtBy": "User (Ảnh giao diện & Thao tác mẫu)",
+      "rule": "Mỗi bài học là một hàng thả xuống (Accordion) có icon mũi tên. Bắt buộc phải click vào hàng bài học để bung 3 mục con bên trong: Video, Bài đọc, Bài tập trắc nghiệm.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-003",
+      "name": "SUB_ITEM_CHECKMARK_DETECTION",
+      "category": "WORKFLOW_OPTIMIZATION",
+      "title": "Kỹ năng Nhận Diện Tích Xanh Mục Con",
+      "taughtBy": "User (Hướng dẫn thực tế qua hình ảnh)",
+      "rule": "Kiểm tra icon tích xanh của từng mục con. Video và Bài đọc đã có tích xanh thì tự động BỎ QUA để tiết kiệm thời gian, bấm thẳng vào mục chưa có tích xanh (Bài tập trắc nghiệm).",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-004",
+      "name": "PERSISTENT_VIDEO_LOCK",
+      "title": "Kỹ năng Khóa Chặt Theo Dõi Video Đến Hết 100%",
+      "category": "MEDIA_PROCESSING",
+      "taughtBy": "User (Góp ý trực tiếp)",
+      "rule": "Khi video đang phát, tuyệt đối KHÔNG click linh tinh thoát ra ngoài. Theo dõi liên tục chu kỳ 1s/lần quét mọi iframe cho đến khi video chạy hết 100% thời lượng (10 - 30+ phút) và tự động Resume nếu bị tạm dừng.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-005",
+      "name": "SMART_QUIZ_2_PASS_100",
+      "category": "AI_INFERENCE",
+      "title": "Kỹ năng Giải Quiz Tự Sửa Sai Đạt 100%",
+      "taughtBy": "User (Quy định nghiệp vụ)",
+      "rule": "Làm bài lượt 1 -> Nếu chưa đạt 100%, tự động bấm 'Xem các câu mình sai' để học đáp án đúng vào Vector Store -> Bấm 'Làm lại' để giải lượt 2 đạt điểm tối đa 100%.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-006",
+      "name": "RECAPTCHA_HUMAN_IN_THE_LOOP",
+      "category": "SECURITY_BYPASS",
+      "title": "Kỹ năng Phối Hợp Vượt reCAPTCHA Đa Tầng",
+      "taughtBy": "User (Chiến lược bảo mật)",
+      "rule": "Khi xuất hiện reCAPTCHA dạng lưới ảnh 3x3, giữ nguyên trình duyệt để người học hỗ trợ, và lập tức tự động tiếp quản quyền điều khiển ngay khi có tích xanh.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-007",
+      "name": "VECTOR_KNOWLEDGE_EXTRACTION",
+      "category": "KNOWLEDGE_MANAGEMENT",
+      "title": "Kỹ năng Trích Xuất & Lưu Trữ Kho Tri Thức Vector",
+      "taughtBy": "Kiến trúc hệ thống & Yêu cầu người dùng",
+      "rule": "Tự động phân tách nội dung bài đọc và đáp án trắc nghiệm thành các bản ghi có cấu trúc phân cấp: Module -> Session -> Lesson -> Title -> RawContent -> Summary trong curriculum_vector_store.json.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-008",
+      "name": "SELF_HEALING_DIAGNOSTIC",
+      "category": "ERROR_RECOVERY",
+      "title": "Kỹ năng Tự Chẩn Đoán Lỗi & Tự Sửa Chữa (Self-Healing)",
+      "taughtBy": "User (Yêu cầu phân tích trước khi restart)",
+      "rule": "Mỗi khi phát sinh lỗi hoặc kết thúc giả, tự động chụp ảnh màn hình vào snapshots/, phân tích nguyên nhân gốc rễ, lưu vào error_diagnosis_log.json và áp dụng phương án khắc phục trước khi khởi chạy vòng lặp mới.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-009",
+      "name": "PERSISTENT_SESSION_TOKEN_GUARD",
+      "category": "AUTHENTICATION",
+      "title": "Kỹ năng Quản Lý Token Dài Hạn & Tự Nạp Phiên",
+      "taughtBy": "Kiến trúc hệ thống",
+      "rule": "Nạp trạng thái cookie và token từ auth.json (hạn dùng đến tháng 9/2026), tự động chuyển thẳng vào /learn/32 mà không cần đăng nhập lại nhiều lần.",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "SKILL-010",
+      "name": "AUTONOMOUS_10_ITERATION_ENGINE",
+      "category": "LOOP_EXECUTION",
+      "title": "Động Cơ Vòng Lặp 10 Lần Tự Vận Hành Đến Hết Session 20",
+      "taughtBy": "User (Mục tiêu chiến lược)",
+      "rule": "Thực hiện chu kỳ 10 vòng lặp bền bỉ, quét toàn diện Session 17 đến 20, tự động phân tích và lưu báo cáo vào iteration_analysis.json cho đến khi hoàn tất 100% mục tiêu.",
+      "status": "ACTIVE"
+    }
+  ]
+}

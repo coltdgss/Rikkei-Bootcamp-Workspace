@@ -1,0 +1,254 @@
+{
+  "badgeClasses": [
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge locked",
+      "text": "🔒 Đã khóa",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge pending",
+      "text": "○ Chưa hoàn thành",
+      "parent": "lesson-header-right"
+    }
+  ],
+  "lessonHeaders": [
+    {
+      "className": "MuiButtonBase-root MuiAccordionSummary-root Mui-expanded MuiAccordionSummary-gutters css-1oqimao",
+      "text": "Session 01 - Tổng quan về CSDL - LÝ THUYẾTChecklist cần làm",
+      "html": "<div class=\"MuiAccordionSummary-content Mui-expanded MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"learn__content--right__content__session\"><div class=\"learn__content--right__content__session__img\"><img src=\"/assets/imgs/learn/circle.png\" alt=\"icon\" style=\"width: 20px; height: 20px;\"></"
+    },
+    {
+      "className": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao",
+      "text": "Lesson 1: Tổng quan về CSDL (Database)✓ Đã hoàn thành",
+      "html": "<div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3"
+    },
+    {
+      "className": "lesson-header-wrapper",
+      "text": "Lesson 1: Tổng quan về CSDL (Database)✓ Đã hoàn thành",
+      "html": "<div class=\"lesson-header-left\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/bold/tick-circle'%3e%3cg%20id='tick-circle'%3e%3cpath%20id='Vector'%20d='M14.337%208.43672L14.337%208.4367"
+    },
+    {
+      "className": "lesson-header-left",
+      "text": "Lesson 1: Tổng quan về CSDL (Database)",
+      "html": "<img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/bold/tick-circle'%3e%3cg%20id='tick-circle'%3e%3cpath%20id='Vector'%20d='M14.337%208.43672L14.337%208.43678L14.3429%208.43068C14.7687%207."
+    },
+    {
+      "className": "lesson-title-container",
+      "text": "Lesson 1: Tổng quan về CSDL (Database)",
+      "html": "<span class=\"lesson-name-text\">Lesson 1: Tổng quan về CSDL (Database)</span>"
+    },
+    {
+      "className": "lesson-name-text",
+      "text": "Lesson 1: Tổng quan về CSDL (Database)",
+      "html": "Lesson 1: Tổng quan về CSDL (Database)"
+    },
+    {
+      "className": "MuiButtonBase-root MuiAccordionSummary-root Mui-expanded MuiAccordionSummary-gutters css-1oqimao",
+      "text": "Lesson 2: Mô hình quan hệ thực thể ER○ Chưa hoàn thành",
+      "html": "<div class=\"MuiAccordionSummary-content Mui-expanded MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 2: Mô hình quan hệ thực thể ER</span></div></div><div class"
+    },
+    {
+      "className": "lesson-header-wrapper",
+      "text": "Lesson 2: Mô hình quan hệ thực thể ER○ Chưa hoàn thành",
+      "html": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 2: Mô hình quan hệ thực thể ER</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>"
+    },
+    {
+      "className": "lesson-header-left",
+      "text": "Lesson 2: Mô hình quan hệ thực thể ER",
+      "html": "<div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 2: Mô hình quan hệ thực thể ER</span></div>"
+    },
+    {
+      "className": "lesson-title-container",
+      "text": "Lesson 2: Mô hình quan hệ thực thể ER",
+      "html": "<span class=\"lesson-name-text\">Lesson 2: Mô hình quan hệ thực thể ER</span>"
+    },
+    {
+      "className": "lesson-name-text",
+      "text": "Lesson 2: Mô hình quan hệ thực thể ER",
+      "html": "Lesson 2: Mô hình quan hệ thực thể ER"
+    },
+    {
+      "className": "MuiButtonBase-root Mui-disabled MuiAccordionSummary-root Mui-disabled MuiAccordionSummary-gutters css-1oqimao",
+      "text": "Lesson 3: Các bước thiết kế CSDL 🔒 Đã khóa",
+      "html": "<div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 3: Các bước thiết kế CSDL </span></div></div><div class=\"lesson-header-r"
+    },
+    {
+      "className": "lesson-header-wrapper",
+      "text": "Lesson 3: Các bước thiết kế CSDL 🔒 Đã khóa",
+      "html": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 3: Các bước thiết kế CSDL </span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge locked\">🔒 Đã khóa</div><div class=\"lesson-actions\"></div></div>"
+    },
+    {
+      "className": "lesson-header-left",
+      "text": "Lesson 3: Các bước thiết kế CSDL",
+      "html": "<div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 3: Các bước thiết kế CSDL </span></div>"
+    },
+    {
+      "className": "lesson-title-container",
+      "text": "Lesson 3: Các bước thiết kế CSDL",
+      "html": "<span class=\"lesson-name-text\">Lesson 3: Các bước thiết kế CSDL </span>"
+    },
+    {
+      "className": "lesson-name-text",
+      "text": "Lesson 3: Các bước thiết kế CSDL",
+      "html": "Lesson 3: Các bước thiết kế CSDL "
+    },
+    {
+      "className": "MuiButtonBase-root Mui-disabled MuiAccordionSummary-root Mui-disabled MuiAccordionSummary-gutters css-1oqimao",
+      "text": "Lesson 4: Thiết kế CSDL🔒 Đã khóa",
+      "html": "<div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Thiết kế CSDL</span></div></div><div class=\"lesson-header-right\"><div"
+    },
+    {
+      "className": "lesson-header-wrapper",
+      "text": "Lesson 4: Thiết kế CSDL🔒 Đã khóa",
+      "html": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Thiết kế CSDL</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge locked\">🔒 Đã khóa</div><div class=\"lesson-actions\"></div></div>"
+    },
+    {
+      "className": "lesson-header-left",
+      "text": "Lesson 4: Thiết kế CSDL",
+      "html": "<div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Thiết kế CSDL</span></div>"
+    },
+    {
+      "className": "lesson-title-container",
+      "text": "Lesson 4: Thiết kế CSDL",
+      "html": "<span class=\"lesson-name-text\">Lesson 4: Thiết kế CSDL</span>"
+    }
+  ],
+  "rightPanelText": [
+    "Danh sách bài học\n\n📊\n0/12 Bài học\n\nSession 01 - Tổng quan về CSDL - LÝ THUYẾT\n\nChecklist cần làm\nNộp Link Mindmap\nXem Kết Quả\nLesson 1: Tổng quan về CSDL (Database)\n✓ Đã hoàn thành\nLesson 2: Mô hình quan hệ thực thể ER\n○ Chưa hoàn thành\n💡 Gợi ý:Vui lòng chọn nội dung để bắt đầu học bài.\n\nVideo\n\nBài đọc\n\nBài tập trắc nghiệm\n\nBài kiểm tra\n\nLesson 3: Các bước thiết kế CSDL\n🔒 Đã khóa\nLesson 4: Thiết kế CSDL\n🔒 Đã khóa\n\nBài tập về nhà\n\nSession 02 - Tổng quan về MySQL - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 03 - Hệ thống kiến thức Session 01, 02 - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 04 - SQL cơ bản - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 05 - SQL nâng cao - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 06 - Hệ thống kiến thức Session 04,05 - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 07 - View & Index - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 08 - Procedure - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 09 - Hệ thống kiến thức Session 07,08 - LÝ THUYẾT\n\nChecklist cần làm\n\nSession 10 - Trigger - LÝ THUYẾT\n\nCh"
+  ]
+}

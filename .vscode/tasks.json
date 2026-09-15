@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "🚀 Khởi động Ollama Server",
+            "type": "shell",
+            "command": "ollama serve",
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Nút khởi động nhanh Ollama Server phục vụ cho AI offline trong VS Code"
+        }
+    ]
+}

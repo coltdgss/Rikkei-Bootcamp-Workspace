@@ -1,0 +1,181 @@
+{
+  "blocksDump": [
+    {
+      "className": "learn__content--right__item--block ",
+      "outerHTML": "<div class=\"learn__content--right__item--block \"><div class=\"learn__content--right__item--block__content\" style=\"width: 100%; display: flex; justify-content: space-between; align-items: center;\"><div style=\"display: flex; align-items: center; gap: 16px;\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/video-circle'%3e%3cg%20id='video-circle'%3e%3cpath%20id='Vector'%20d='M10.1399%207.21546L10.1399%207.21546L10.1421%207.2167L12.2829%208.44956C12.283%208.44962%2012.2832%208.44969%2012.2833%208.44975C13.0294%208.88143%2013.375%209.46381%2013.375%2010.0001C13.375%2010.5363%2013.0294%2011.1187%2012.2834%2011.5504C12.2832%2011.5504%2012.2831%2011.5505%2012.2829%2011.5506L10.1421%2012.7835L10.1421%2012.7834L10.1388%2012.7854C9.71824%2013.0319%209.31292%2013.1417%208.96662%2013.1417C8.69898%2013.1417%208.46045%2013.0789%208.24863%2012.958C7.78189%2012.6893%207.44995%2012.1039%207.44995%2011.2334V8.76675C7.44995%207.90334%207.78281%207.31004%208.24919%207.04187C8.71757%206.77255%209.38791%206.77738%2010.1399%207.21546ZM12.1661%2011.3334L12.1661%2011.3334L12.1681%2011.3323C12.6677%2011.0416%2013.1333%2010.5865%2013.1333%2010.0001C13.1333%209.41716%2012.6737%208.95341%2012.1642%208.6657L10.0256%207.43412C9.6777%207.23138%209.31579%207.10841%208.97495%207.10841C8.7874%207.10841%208.56914%207.14233%208.37166%207.26562C7.87798%207.56319%207.70828%208.18701%207.70828%208.",
+      "parentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "grandParentClass": "MuiAccordion-region",
+      "offsetTop": -2465.75
+    },
+    {
+      "className": "learn__content--right__item--block__content",
+      "outerHTML": "<div class=\"learn__content--right__item--block__content\" style=\"width: 100%; display: flex; justify-content: space-between; align-items: center;\"><div style=\"display: flex; align-items: center; gap: 16px;\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/video-circle'%3e%3cg%20id='video-circle'%3e%3cpath%20id='Vector'%20d='M10.1399%207.21546L10.1399%207.21546L10.1421%207.2167L12.2829%208.44956C12.283%208.44962%2012.2832%208.44969%2012.2833%208.44975C13.0294%208.88143%2013.375%209.46381%2013.375%2010.0001C13.375%2010.5363%2013.0294%2011.1187%2012.2834%2011.5504C12.2832%2011.5504%2012.2831%2011.5505%2012.2829%2011.5506L10.1421%2012.7835L10.1421%2012.7834L10.1388%2012.7854C9.71824%2013.0319%209.31292%2013.1417%208.96662%2013.1417C8.69898%2013.1417%208.46045%2013.0789%208.24863%2012.958C7.78189%2012.6893%207.44995%2012.1039%207.44995%2011.2334V8.76675C7.44995%207.90334%207.78281%207.31004%208.24919%207.04187C8.71757%206.77255%209.38791%206.77738%2010.1399%207.21546ZM12.1661%2011.3334L12.1661%2011.3334L12.1681%2011.3323C12.6677%2011.0416%2013.1333%2010.5865%2013.1333%2010.0001C13.1333%209.41716%2012.6737%208.95341%2012.1642%208.6657L10.0256%207.43412C9.6777%207.23138%209.31579%207.10841%208.97495%207.10841C8.7874%207.10841%208.56914%207.14233%208.37166%207.26562C7.87798%207.56319%207.70828%208.18701%207.70828%208.76675V11.2334C7.70828%2011.8056%207.86618%2012.44",
+      "parentClass": "learn__content--right__item--block ",
+      "grandParentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "offsetTop": -2455.75
+    },
+    {
+      "className": "learn__content--right__item--block__content__flex",
+      "outerHTML": "<div class=\"learn__content--right__item--block__content__flex\"><p class=\"learn__content--right__item--block__content__name\">Video</p></div>",
+      "parentClass": "",
+      "grandParentClass": "learn__content--right__item--block__content",
+      "offsetTop": -2455.75
+    },
+    {
+      "className": "learn__content--right__item--block__content__name",
+      "outerHTML": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "grandParentClass": "",
+      "offsetTop": -2455.75
+    },
+    {
+      "className": "learn__content--right__item--block false",
+      "outerHTML": "<div class=\"learn__content--right__item--block false\"><div class=\"learn__content--right__item--block__content\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/code-circle'%3e%3cg%20id='code-circle'%3e%3cpath%20id='Vector'%20d='M5.52965%209.6465L5.17609%2010.0001L5.52965%2010.3536L6.75465%2011.5786C6.75465%2011.5786%206.75465%2011.5786%206.75465%2011.5786C6.77617%2011.6001%206.78945%2011.6308%206.78945%2011.6667C6.78945%2011.7026%206.77616%2011.7333%206.75465%2011.7549C6.73998%2011.7695%206.72594%2011.778%206.71309%2011.7831C6.69978%2011.7885%206.68424%2011.7917%206.66654%2011.7917C6.64883%2011.7917%206.63329%2011.7885%206.61998%2011.7831C6.60713%2011.778%206.59309%2011.7695%206.57842%2011.7549L4.91176%2010.0882C4.89024%2010.0667%204.87695%2010.0359%204.87695%2010.0001C4.87695%209.96418%204.89024%209.93344%204.91176%209.91192L6.57842%208.24525C6.59995%208.22373%206.63069%208.21045%206.66654%208.21045C6.70239%208.21045%206.73312%208.22373%206.75465%208.24525C6.77616%208.26677%206.78945%208.29751%206.78945%208.33339C6.78945%208.36927%206.77617%208.40001%206.75465%208.42152C6.75465%208.42153%206.75465%208.42153%206.75465%208.42153L5.52965%209.6465Z'%20fill='%23505050'%20stroke='%23505050'/%3e%3cpath%20id='Vector_2'%20d='M14.4702%2010.3536L14.8238%2010.0001L14.4702%209.6465L13.2453%208.42153C13.2453%208.42153%2013.2453%208.42153%2013.2452%208.42152C13.2237%208.",
+      "parentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "grandParentClass": "MuiAccordion-region",
+      "offsetTop": -2418.75
+    },
+    {
+      "className": "learn__content--right__item--block__content",
+      "outerHTML": "<div class=\"learn__content--right__item--block__content\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/code-circle'%3e%3cg%20id='code-circle'%3e%3cpath%20id='Vector'%20d='M5.52965%209.6465L5.17609%2010.0001L5.52965%2010.3536L6.75465%2011.5786C6.75465%2011.5786%206.75465%2011.5786%206.75465%2011.5786C6.77617%2011.6001%206.78945%2011.6308%206.78945%2011.6667C6.78945%2011.7026%206.77616%2011.7333%206.75465%2011.7549C6.73998%2011.7695%206.72594%2011.778%206.71309%2011.7831C6.69978%2011.7885%206.68424%2011.7917%206.66654%2011.7917C6.64883%2011.7917%206.63329%2011.7885%206.61998%2011.7831C6.60713%2011.778%206.59309%2011.7695%206.57842%2011.7549L4.91176%2010.0882C4.89024%2010.0667%204.87695%2010.0359%204.87695%2010.0001C4.87695%209.96418%204.89024%209.93344%204.91176%209.91192L6.57842%208.24525C6.59995%208.22373%206.63069%208.21045%206.66654%208.21045C6.70239%208.21045%206.73312%208.22373%206.75465%208.24525C6.77616%208.26677%206.78945%208.29751%206.78945%208.33339C6.78945%208.36927%206.77617%208.40001%206.75465%208.42152C6.75465%208.42153%206.75465%208.42153%206.75465%208.42153L5.52965%209.6465Z'%20fill='%23505050'%20stroke='%23505050'/%3e%3cpath%20id='Vector_2'%20d='M14.4702%2010.3536L14.8238%2010.0001L14.4702%209.6465L13.2453%208.42153C13.2453%208.42153%2013.2453%208.42153%2013.2452%208.42152C13.2237%208.40001%2013.2104%208.36927%2013.2104%208.33339C13.2104%",
+      "parentClass": "learn__content--right__item--block false",
+      "grandParentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "offsetTop": -2408.75
+    },
+    {
+      "className": "learn__content--right__item--block__content__flex",
+      "outerHTML": "<div class=\"learn__content--right__item--block__content__flex\"><p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p></div>",
+      "parentClass": "learn__content--right__item--block__content",
+      "grandParentClass": "learn__content--right__item--block false",
+      "offsetTop": -2408.75
+    },
+    {
+      "className": "learn__content--right__item--block__content__name",
+      "outerHTML": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "grandParentClass": "learn__content--right__item--block__content",
+      "offsetTop": -2408.75
+    },
+    {
+      "className": "learn__content--right__item--block ",
+      "outerHTML": "<div class=\"learn__content--right__item--block \"><div class=\"learn__content--right__item--block__content\" style=\"width: 100%; display: flex; justify-content: space-between; align-items: center;\"><div style=\"display: flex; align-items: center; gap: 16px;\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/video-circle'%3e%3cg%20id='video-circle'%3e%3cpath%20id='Vector'%20d='M10.1399%207.21546L10.1399%207.21546L10.1421%207.2167L12.2829%208.44956C12.283%208.44962%2012.2832%208.44969%2012.2833%208.44975C13.0294%208.88143%2013.375%209.46381%2013.375%2010.0001C13.375%2010.5363%2013.0294%2011.1187%2012.2834%2011.5504C12.2832%2011.5504%2012.2831%2011.5505%2012.2829%2011.5506L10.1421%2012.7835L10.1421%2012.7834L10.1388%2012.7854C9.71824%2013.0319%209.31292%2013.1417%208.96662%2013.1417C8.69898%2013.1417%208.46045%2013.0789%208.24863%2012.958C7.78189%2012.6893%207.44995%2012.1039%207.44995%2011.2334V8.76675C7.44995%207.90334%207.78281%207.31004%208.24919%207.04187C8.71757%206.77255%209.38791%206.77738%2010.1399%207.21546ZM12.1661%2011.3334L12.1661%2011.3334L12.1681%2011.3323C12.6677%2011.0416%2013.1333%2010.5865%2013.1333%2010.0001C13.1333%209.41716%2012.6737%208.95341%2012.1642%208.6657L10.0256%207.43412C9.6777%207.23138%209.31579%207.10841%208.97495%207.10841C8.7874%207.10841%208.56914%207.14233%208.37166%207.26562C7.87798%207.56319%207.70828%208.18701%207.70828%208.",
+      "parentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "grandParentClass": "MuiAccordion-region",
+      "offsetTop": -2352.1875
+    },
+    {
+      "className": "learn__content--right__item--block__content",
+      "outerHTML": "<div class=\"learn__content--right__item--block__content\" style=\"width: 100%; display: flex; justify-content: space-between; align-items: center;\"><div style=\"display: flex; align-items: center; gap: 16px;\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/video-circle'%3e%3cg%20id='video-circle'%3e%3cpath%20id='Vector'%20d='M10.1399%207.21546L10.1399%207.21546L10.1421%207.2167L12.2829%208.44956C12.283%208.44962%2012.2832%208.44969%2012.2833%208.44975C13.0294%208.88143%2013.375%209.46381%2013.375%2010.0001C13.375%2010.5363%2013.0294%2011.1187%2012.2834%2011.5504C12.2832%2011.5504%2012.2831%2011.5505%2012.2829%2011.5506L10.1421%2012.7835L10.1421%2012.7834L10.1388%2012.7854C9.71824%2013.0319%209.31292%2013.1417%208.96662%2013.1417C8.69898%2013.1417%208.46045%2013.0789%208.24863%2012.958C7.78189%2012.6893%207.44995%2012.1039%207.44995%2011.2334V8.76675C7.44995%207.90334%207.78281%207.31004%208.24919%207.04187C8.71757%206.77255%209.38791%206.77738%2010.1399%207.21546ZM12.1661%2011.3334L12.1661%2011.3334L12.1681%2011.3323C12.6677%2011.0416%2013.1333%2010.5865%2013.1333%2010.0001C13.1333%209.41716%2012.6737%208.95341%2012.1642%208.6657L10.0256%207.43412C9.6777%207.23138%209.31579%207.10841%208.97495%207.10841C8.7874%207.10841%208.56914%207.14233%208.37166%207.26562C7.87798%207.56319%207.70828%208.18701%207.70828%208.76675V11.2334C7.70828%2011.8056%207.86618%2012.44",
+      "parentClass": "learn__content--right__item--block ",
+      "grandParentClass": "MuiAccordionDetails-root css-u7qq7e",
+      "offsetTop": -2342.1875
+    }
+  ],
+  "lesson10Dump": {
+    "accordionClass": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs",
+    "accordionHTML": "<div class=\"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs\" style=\"opacity: 1; background-color: transparent;\"><div class=\"MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao\" tabindex=\"0\" role=\"button\" aria-expanded=\"false\" aria-controls=\"panel9-content\" id=\"panel9-header\" style=\"cursor: pointer;\"><div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 10: Gắn sự kiện cho các phần tử HTML (Inline, on và addEventListener)</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div></div><div class=\"MuiAccordionSummary-expandIconWrapper css-1fx8m19\"><svg class=\"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv\" focusable=\"false\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" data-testid=\"ExpandMoreIcon\"><path d=\"M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z\"></path></svg></div></div><div class=\"MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-a0y2e3\" style=\"min-height: 0px;\"><div class=\"MuiCollapse-wrapper MuiCollapse-vertical css-hboir5\"><div class=\"MuiCollapse-wrapperInner MuiCollapse-vertical css-8atqhb\"><div aria-labelledby=\"panel9-header\" id=\"panel9-content\" role=\"region\" class=\"MuiAccordion-region\"><div class=\"MuiAccordionDetails-root css-u7qq7e\"><div class=\"lesson-tooltip\" style=\"margin-bottom: 12px; background: rgb(255, 243, 205); border: 1px solid rgb(255, 238, 186); border-radius: 8px; padding: 10px 16px; font-size: 14px; color: rgb(133, 100, 4); box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; position: relative; max-width: 300px; margin-left: 8px; opacity: 1; transform: none;\"><div style=\"position: absolute; top: -8px; left: 20px; width: 0px; height: 0px; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid rgb(255, 238, 186);\"></div><span style=\"font-weight: 600; margin-right: 4px;\">💡 Gợi ý:</span>Vui lòng chọn nội dung để bắt đầu học bài.</div><div class=\"learn__content--right__item--block \"><div class=\"learn__content--right__item--block__content\" style=\"width: 100%; display: flex; justify-content: space-between; align-items: center;\"><div style=\"display: flex; align-items: center; gap: 16px;\"><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/outline/video-circle'%3e%3cg%20id='video-circle'%3e%3cpath%20id='Vector'%20d='M10.1399%207.21546L10.1399%207.21546L10.1421%207.2167L12.2829%208.44956C12.283%208.44962%2012.2832%208.44969%2012.2833%208.44975C13.0294%208.88143%2013.375%209.46381%2013.375%2010.0001C13.375%2010.5363%2013.0294%2011.1187%2012.2834%2011.5504C12.2832%2011.5504%2012.2831%2011.5505%2012.2829%2011.5506L10.1421%2012.7835L10.1421%2012.7834L10.1388%2012.7854C9.71824%2013.0319%209.31292%2013.1417%208.96662%2013.1417C8.69898%2013.1417%208.46045%2013.0789%208.24863%2012.958C7.78189%2012.6893%207.44995%2012.1039%207.44995%2011.2334V8.76675C7.44995%207.90334%207.78281%207.31004%208.24919%207.04187C8.71757%206.77255%209.38791%206.77738%2010.1399%207.21546ZM12.1661%2011.3334L12.1661%2011.3334L12.1681%2011.3323C12.6677%2011.0416%2013.1333%2010.5865%2013.1333%2010.0001C13.1333%209.41716%2012.6737%208.95341%2012.1642%208.6657L10.0256%207.43412C9.6777%207.23138%209.31579%207.10841%208.97495%207.10841C8.7874%207.10841%208.56914%207.14233%208.37166%207.26562C7.87798%207.56319%207.70828%208.18701%207.70828%208.76675V11.2334C7.70828%2011.8056%207.86618%2012.4417%208.38094%2012.7401C8.89343%2013.0422%209.53093%2012.8536%2010.0254%2012.5662C10.0257%2012.566%2010.0261%2012.5658%2010.0264%2012.5656L12.1661%2011.3334Z'%20fill='%23505050'%20stroke='%23505050'/%3e%3cpath%20id='Vector_2'%20d='M10.0001%2018.4582C5.33456%2018.4582%201.54175%2014.6654%201.54175%209.99984C1.54175%205.33431%205.33456%201.5415%2010.0001%201.5415C14.6656%201.5415%2018.4584%205.33431%2018.4584%209.99984C18.4584%2014.6654%2014.6656%2018.4582%2010.0001%2018.4582ZM10.0001%201.7915C5.47394%201.7915%201.79175%205.47369%201.79175%209.99984C1.79175%2014.526%205.47394%2018.2082%2010.0001%2018.2082C14.5262%2018.2082%2018.2084%2014.526%2018.2084%209.99984C18.2084%205.47369%2014.5262%201.7915%2010.0001%201.7915Z'%20fill='%23505050'%20stroke='%23505050'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e\" alt=\"\"><div class=\"learn__content--right__item--block__content__flex\"><p class=\"learn__content--right__item--block__content__name\">Video</p></div></div><img src=\"data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='vuesax/bold/tick-circle'%3e%3cg%20id='tick-circle'%3e%3cpath%20id='Vector'%20d='M14.337%208.43672L14.337%208.4367",
+    "ariaExpanded": "false"
+  },
+  "badgeClasses": [
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    },
+    {
+      "className": "lesson-status-badge completed",
+      "text": "✓ Đã hoàn thành tất cả",
+      "parent": "lesson-header-right"
+    }
+  ]
+}

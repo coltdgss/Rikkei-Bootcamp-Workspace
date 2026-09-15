@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBW Project Dashboard</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 3rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(129, 140, 248, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .icon {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rikkei Bootcamp Workspace</h1>
+    <p class="subtitle">Bảng điều khiển các module học tập (Dashboard)</p>
+    
+    <div class="grid">
+        <a href="Rikkei-Bootcamp-Workspace/Module_1_Frontend/" class="card">
+            <h2><span class="icon">🌐</span> Module 1: Frontend</h2>
+            <p>Nền tảng về HTML, CSS, JavaScript cơ bản và các kỹ thuật xây dựng giao diện.</p>
+        </a>
+        <a href="Rikkei-Bootcamp-Workspace/Module_2_Database/" class="card">
+            <h2><span class="icon">💾</span> Module 2: Database</h2>
+            <p>Làm việc với cơ sở dữ liệu, SQL, và quản trị MySQL.</p>
+        </a>
+        <a href="Rikkei-Bootcamp-Workspace/Module_3_Java_Core/" class="card">
+            <h2><span class="icon">☕</span> Module 3: Java Core</h2>
+            <p>Lập trình hướng đối tượng (OOP) và các khái niệm cốt lõi của ngôn ngữ Java.</p>
+        </a>
+        <a href="Rikkei-Bootcamp-Workspace/Module_4_FE_IT/" class="card">
+            <h2><span class="icon">⚛️</span> Module 4: FE IT</h2>
+            <p>Kiến thức chuyên sâu về Frontend và các Framework hiện đại.</p>
+        </a>
+        <a href="Rikkei-Bootcamp-Workspace/Module_5_Java_Web/" class="card">
+            <h2><span class="icon">🚀</span> Module 5: Java Web</h2>
+            <p>Phát triển ứng dụng Web với Servlets, JSP, và Spring Boot.</p>
+        </a>
+    </div>
+</body>
+</html>

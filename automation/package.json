@@ -1,0 +1,29 @@
+{
+  "name": "rikkei-portal-automation",
+  "version": "1.0.0",
+  "description": "Playwright automation system for Rikkei Portal with Ollama AI integration",
+  "main": "run.js",
+  "type": "module",
+  "scripts": {
+    "start": "node run.js",
+    "auto": "node run.js --auto",
+    "manual-login": "node run.js --manual-login",
+    "import-cookie": "node run.js --import-cookie",
+    "login": "node run.js --login-only",
+    "check-env": "node run.js --check-env"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "rikkei-portal",
+    "ollama"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "playwright": "^1.50.1",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "domain": ".rikkei.edu.vn",
+    "expirationDate": 1788452826,
+    "hostOnly": false,
+    "httpOnly": false,
+    "name": "token",
+    "path": "/",
+    "sameSite": "lax",
+    "secure": true,
+    "session": false,
+    "storeId": "0",
+    "value": "your_token_value_here"
+  }
+]

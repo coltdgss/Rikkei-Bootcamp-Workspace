@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE html: Khai báo đây là tài liệu HTML5
+  Bắt buộc phải có ở dòng đầu tiên để trình duyệt hiểu đúng chuẩn HTML
+-->
+<html lang="vi">
+<!--
+  lang="vi": Khai báo ngôn ngữ của trang là tiếng Việt
+  Giúp trình duyệt và công cụ tìm kiếm hiểu đúng nội dung
+-->
+
+<head>
+  <!-- =====================================================
+       PHẦN HEAD: Cấu hình trang, không hiển thị ra màn hình
+  ===================================================== -->
+
+  <!-- Khai báo bảng mã ký tự UTF-8: hỗ trợ tiếng Việt có dấu -->
+  <meta charset="UTF-8" />
+
+  <!--
+    viewport: Cấu hình hiển thị trên thiết bị di động
+    width=device-width  → chiều rộng = chiều rộng màn hình thật
+    initial-scale=1.0   → không zoom khi mở trang
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Tiêu đề hiển thị trên tab trình duyệt -->
+  <title>Quản Lý Học Viên</title>
+
+  <!--
+    Kết nối sẵn tới Google Fonts để tải font nhanh hơn.
+    rel="preconnect" → trình duyệt kết nối trước khi cần dùng
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <!--
+    Tải font chữ "Be Vietnam Pro" từ Google Fonts
+    wght@300;400;500;600;700 → tải các độ đậm từ nhẹ đến đậm
+    display=swap            → dùng font hệ thống trước, thay bằng font tải về sau
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Liên kết file CSS bên ngoài để trang trí giao diện -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- =====================================================
+       PHẦN BODY: Toàn bộ nội dung hiển thị ra màn hình
+  ===================================================== -->
+
+  <!-- ===== THANH TIÊU ĐỀ TRÊN CÙNG ===== -->
+  <header class="app-header">
+    <!--
+      <header>: Thẻ ngữ nghĩa (semantic) đại diện cho phần đầu trang
+      class="app-header": Gắn class để CSS trang trí
+    -->
+
+    <div class="header-inner">
+      <!-- div.header-inner: Khung căn giữa nội dung header, giới hạn chiều rộng tối đa -->
+
+      <!-- Icon trang trí, dùng emoji thay ảnh cho đơn giản -->
+      <span class="header-logo">🎓</span>
+
+      <!-- Tiêu đề lớn nhất trên trang (h1 chỉ nên dùng 1 lần) -->
+      <h1>Quản Lý Học Viên</h1>
+    </div>
+  </header>
+
+
+  <!-- ===== NỘI DUNG CHÍNH: 2 PHẦN chia ngang (form | bảng) ===== -->
+  <main class="app-main">
+    <!--
+      <main>: Thẻ ngữ nghĩa chứa nội dung chính của trang
+      class="app-main": CSS sẽ chia 2 cột cho phần này (xem style.css)
+    -->
+
+
+    <!-- ═══════════════════════════════════════════════
+         PHẦN TRÁI: FORM NHẬP THÔNG TIN HỌC VIÊN
+    ═══════════════════════════════════════════════ -->
+    <section class="card form-card">
+      <!--
+        <section>: Thẻ ngữ nghĩa đại diện cho một khu vực độc lập
+        class="card": Khung trắng bo góc, đổ bóng (xem CSS)
+        class="form-card": Thêm class riêng nếu cần tùy chỉnh thêm sau
+      -->
+
+      <!-- Tiêu đề khu vực form -->
+      <h2 class="card-title">Thông tin học viên</h2>
+
+
+      <!-- ----- NHÓM: HỌ VÀ TÊN ----- -->
+      <div class="form-group">
+        <!--
+          div.form-group: Gom label + input + thông báo lỗi vào 1 khối
+          Mỗi trường thông tin là 1 form-group riêng biệt
+        -->
+
+        <!--
+          <label for="hoTen">: Nhãn liên kết với input có id="hoTen"
+          Khi click vào label → con trỏ tự nhảy vào input (UX tốt hơn)
+          <span class="required">*</span>: Dấu * màu đỏ báo hiệu bắt buộc
+        -->
+        <label for="hoTen">Họ và Tên <span class="required">*</span></label>
+
+        <!--
+          type="text": Ô nhập văn bản thông thường
+          id="hoTen": ID duy nhất, JS dùng getElementById('hoTen') để lấy giá trị
+          placeholder: Văn bản gợi ý hiển thị khi ô trống
+        -->
+        <input type="text" id="hoTen" placeholder="Vui lòng nhập tên" />
+
+        <!--
+          Ô hiển thị thông báo lỗi validate, ban đầu rỗng
+          id="err-hoTen": JS sẽ điền nội dung lỗi vào đây
+          class="error-msg": CSS tô màu đỏ, cỡ chữ nhỏ
+        -->
+        <span class="error-msg" id="err-hoTen"></span>
+      </div>
+
+
+      <!-- ----- NHÓM: EMAIL ----- -->
+      <div class="form-group">
+        <label for="email">Email <span class="required">*</span></label>
+        <input type="text" id="email" placeholder="Vui lòng nhập email" />
+        <!-- Tương tự hoTen, ô báo lỗi email sẽ hiện ở đây -->
+        <span class="error-msg" id="err-email"></span>
+      </div>
+
+
+      <!-- ----- NHÓM: SỐ ĐIỆN THOẠI ----- -->
+      <div class="form-group">
+        <label for="soDienThoai">Số điện thoại <span class="required">*</span></label>
+        <input type="text" id="soDienThoai" placeholder="Vui lòng nhập số điện thoại" />
+        <span class="error-msg" id="err-soDienThoai"></span>
+      </div>
+
+
+      <!-- ----- NHÓM: QUÊ QUÁN ----- -->
+      <div class="form-group">
+        <label for="queQuan">Quê quán <span class="required">*</span></label>
+        <input type="text" id="queQuan" placeholder="Vui lòng nhập địa chỉ quê quán" />
+        <span class="error-msg" id="err-queQuan"></span>
+      </div>
+
+
+      <!-- ----- NHÓM: GIỚI TÍNH (Radio Button) ----- -->
+      <div class="form-group">
+        <!-- Label này không có for="" vì nó mô tả nhóm radio, không phải 1 input cụ thể -->
+        <label>Giới tính</label>
+
+        <div class="radio-group">
+          <!-- Bọc các radio button vào div để CSS sắp xếp ngang hàng -->
+
+          <!--
+            Cách dùng radio button đúng chuẩn:
+            - Bọc <input> trong <label> → click vào chữ "Nam" cũng chọn được
+            - name="gioiTinh": Các radio cùng name → chỉ chọn được 1 cái
+            - value="Nam": Giá trị gửi đi khi chọn
+            - checked: Mặc định được chọn sẵn (yêu cầu đề bài: default = Nam)
+          -->
+          <label class="radio-label">
+            <input type="radio" name="gioiTinh" value="Nam" checked /> Nam
+          </label>
+
+          <label class="radio-label">
+            <input type="radio" name="gioiTinh" value="Nữ" /> Nữ
+          </label>
+        </div>
+      </div>
+
+
+      <!-- ----- NÚT BẤM FORM ----- -->
+      <div class="form-actions">
+        <!--
+          id="btnLuu": JS sẽ đổi text nút này thành "Cập nhật" khi ở chế độ sửa
+          onclick="handleLuu()": Gọi hàm handleLuu() trong app.js khi bấm
+          class="btn btn-primary": Nút xanh chính
+        -->
+        <button id="btnLuu" class="btn btn-primary" onclick="handleLuu()">💾 Lưu lại</button>
+
+        <!--
+          Nút Hủy: Chỉ hiện khi đang ở chế độ sửa (edit)
+          style="display:none": Ẩn mặc định, JS sẽ bật lên khi cần
+          onclick="handleHuy()": Gọi hàm hủy chỉnh sửa
+        -->
+        <button id="btnHuy" class="btn btn-secondary" onclick="handleHuy()" style="display:none">✕ Hủy</button>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════
+         PHẦN PHẢI: BẢNG DANH SÁCH HỌC VIÊN
+    ═══════════════════════════════════════════════ -->
+    <section class="card table-card">
+
+      <!-- Tiêu đề khu vực bảng -->
+      <h2 class="card-title">Danh sách học viên</h2>
+
+
+      <!-- ----- THANH CÔNG CỤ: TÌM KIẾM + SẮP XẾP ----- -->
+      <div class="table-toolbar">
+        <!-- div.table-toolbar: CSS sẽ xếp ô tìm kiếm và nút sắp xếp nằm ngang -->
+
+        <div class="search-box">
+          <!--
+            oninput="handleTimKiem()": Gọi hàm ngay khi người dùng gõ
+            (khác onclick: không cần bấm nút, tìm realtime luôn)
+            id="tuKhoa": JS đọc giá trị ô này để lọc danh sách
+          -->
+          <input type="text" id="tuKhoa" placeholder="🔍 Tìm kiếm tên học viên..." oninput="handleTimKiem()" />
+        </div>
+
+        <!--
+          Nút sắp xếp A→Z
+          onclick="handleSapXep()": Gọi hàm sắp xếp trong app.js
+          class="btn btn-sort": CSS màu tím khác biệt với nút lưu
+        -->
+        <button class="btn btn-sort" onclick="handleSapXep()">⇅ Sắp xếp A→Z</button>
+      </div>
+
+
+      <!-- ----- BẢNG DỮ LIỆU HỌC VIÊN ----- -->
+      <div class="table-wrapper">
+        <!--
+          div.table-wrapper: Bọc bảng để xử lý overflow (scroll ngang trên mobile)
+        -->
+
+        <table id="tblHocVien">
+          <!--
+            id="tblHocVien": Đặt id cho bảng (hiện không dùng trong JS
+            nhưng là thói quen đặt tên tốt, có thể dùng sau)
+          -->
+
+          <!-- PHẦN ĐẦU BẢNG: Hàng tiêu đề cột, không thay đổi -->
+          <thead>
+            <tr>
+              <th>#</th>           <!-- Số thứ tự -->
+              <th>Họ Tên</th>
+              <th>Email</th>
+              <th>Điện thoại</th>
+              <th>Quê quán</th>
+              <th>Giới tính</th>
+              <th>Hành động</th>   <!-- Cột chứa nút Sửa / Xoá -->
+            </tr>
+          </thead>
+
+          <!-- PHẦN THÂN BẢNG: Nội dung được tạo tự động bằng JavaScript -->
+          <tbody id="tbodyHocVien">
+            <!--
+              id="tbodyHocVien": JS sẽ tìm element này và chèn các hàng <tr> vào đây
+              Ban đầu rỗng, renderTable() sẽ tự điền khi trang load
+            -->
+          </tbody>
+        </table>
+
+        <!--
+          Thông báo khi chưa có học viên nào trong danh sách
+          style="display:none": Ẩn mặc định
+          JS sẽ hiện (display:block) khi mảng students rỗng
+        -->
+        <p id="emptyMsg" class="empty-msg" style="display:none">Chưa có học viên nào.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!--
+    Nhúng file JavaScript vào CUỐI body (không phải trong <head>)
+    Lý do: Phải đợi HTML load xong thì JS mới tìm thấy các element như
+    getElementById('hoTen'), getElementById('tbodyHocVien')...
+    Nếu để trong <head>, JS chạy trước khi HTML tạo xong → lỗi null
+  -->
+  <script src="app.js"></script>
+</body>
+</html>

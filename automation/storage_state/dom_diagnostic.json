@@ -1,0 +1,2558 @@
+{
+  "timestamp": "2026-09-04T01:56:20.390Z",
+  "badgeDump": [
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 11: Mouse & Keyboard event○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 11: Mouse &amp; Keyboard event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 11: Mouse & Keyboard event○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 11: Mouse &amp; Keyboard event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs",
+      "id": "",
+      "textContent": "Lesson 12: Form submit event○ Chưa hoàn thành💡 Gợi ý:Vui lòng chọn nội dung để bắt đầu học bài.Vide",
+      "childrenCount": 2,
+      "childrenTags": "DIV.MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao, DIV.MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-a0y2e3",
+      "innerHTML": "<div class=\"MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao\" tabindex=\"0\" role=\"button\" aria-expanded=\"false\" aria-controls=\"panel11-content\" id=\"panel11-header\" style=\"cursor: pointer;\"><div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 12: Form submit event</span></div></div><div clas",
+      "offsetWidth": 318,
+      "offsetHeight": 69,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionDetails-root css-u7qq7e"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao",
+      "id": "panel11-header",
+      "textContent": "Lesson 12: Form submit event○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl, DIV.MuiAccordionSummary-expandIconWrapper css-1fx8m19",
+      "innerHTML": "<div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 12: Form submit event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div></div><div class=\"MuiAccordionSummary-expandIconWrapper css-1fx8m19\"><svg class=\"MuiSvgIc",
+      "offsetWidth": 318,
+      "offsetHeight": 69,
+      "parentTag": "DIV",
+      "parentClass": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 12: Form submit event○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 12: Form submit event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 45,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 12: Form submit event○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 12: Form submit event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 45,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 1: Hệ thống kiến thức DOM + Event○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Hệ thống kiến thức DOM + Event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 1: Hệ thống kiến thức DOM + Event○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Hệ thống kiến thức DOM + Event</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 1: Tổng quan về browser storage○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Tổng quan về browser storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 1: Tổng quan về browser storage○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Tổng quan về browser storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 2: Session storage (01)○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 2: Session storage (01)</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 2: Session storage (01)○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 2: Session storage (01)</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 3: Session storage (02)○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 3: Session storage (02)</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 3: Session storage (02)○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 3: Session storage (02)</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs",
+      "id": "",
+      "textContent": "Lesson 4: Local Storage○ Chưa hoàn thành💡 Gợi ý:Vui lòng chọn nội dung để bắt đầu học bài.VideoBài ",
+      "childrenCount": 2,
+      "childrenTags": "DIV.MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao, DIV.MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-a0y2e3",
+      "innerHTML": "<div class=\"MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao\" tabindex=\"0\" role=\"button\" aria-expanded=\"false\" aria-controls=\"panel3-content\" id=\"panel3-header\" style=\"cursor: pointer;\"><div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Local Storage</span></div></div><div class=\"less",
+      "offsetWidth": 318,
+      "offsetHeight": 69,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionDetails-root css-u7qq7e"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao",
+      "id": "panel3-header",
+      "textContent": "Lesson 4: Local Storage○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl, DIV.MuiAccordionSummary-expandIconWrapper css-1fx8m19",
+      "innerHTML": "<div class=\"MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl\"><div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Local Storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div></div><div class=\"MuiAccordionSummary-expandIconWrapper css-1fx8m19\"><svg class=\"MuiSvgIcon-ro",
+      "offsetWidth": 318,
+      "offsetHeight": 69,
+      "parentTag": "DIV",
+      "parentClass": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1aj41gs"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 4: Local Storage○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Local Storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 45,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 4: Local Storage○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 4: Local Storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 45,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    },
+    {
+      "tag": "DIV",
+      "className": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl",
+      "id": "",
+      "textContent": "Lesson 1: Hệ thống kiến thức Browser Storage○ Chưa hoàn thành",
+      "childrenCount": 1,
+      "childrenTags": "DIV.lesson-header-wrapper",
+      "innerHTML": "<div class=\"lesson-header-wrapper\"><div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Hệ thống kiến thức Browser Storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-1oqimao"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-wrapper",
+      "id": "",
+      "textContent": "Lesson 1: Hệ thống kiến thức Browser Storage○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-header-left, DIV.lesson-header-right",
+      "innerHTML": "<div class=\"lesson-header-left\"><div class=\"lesson-title-container\"><span class=\"lesson-name-text\">Lesson 1: Hệ thống kiến thức Browser Storage</span></div></div><div class=\"lesson-header-right\"><div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div></div>",
+      "offsetWidth": 262,
+      "offsetHeight": 67,
+      "parentTag": "DIV",
+      "parentClass": "MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-l0jafl"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-header-right",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 2,
+      "childrenTags": "DIV.lesson-status-badge pending, DIV.lesson-actions",
+      "innerHTML": "<div class=\"lesson-status-badge pending\">○ Chưa hoàn thành</div><div class=\"lesson-actions\"></div>",
+      "offsetWidth": 124,
+      "offsetHeight": 37,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-wrapper"
+    },
+    {
+      "tag": "DIV",
+      "className": "lesson-status-badge pending",
+      "id": "",
+      "textContent": "○ Chưa hoàn thành",
+      "childrenCount": 0,
+      "childrenTags": "",
+      "innerHTML": "○ Chưa hoàn thành",
+      "offsetWidth": 124,
+      "offsetHeight": 27,
+      "parentTag": "DIV",
+      "parentClass": "lesson-header-right"
+    }
+  ],
+  "subItemDump": [
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -1455.75
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -1408.75
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -1342.1875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -1295.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -1251.015625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -1204.015625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -1115.0625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -1068.0625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -1023.890625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -976.890625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -932.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -885.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -838.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -796.765625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -749.765625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -660.8125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -613.8125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -502.46875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -455.46875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -366.515625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -319.515625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -208.171875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -161.171875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": -72.21875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": -25.21875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 21.78125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 68.78125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 41.34375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 500.15625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 547.15625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 613.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 660.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 727.28125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 774.28125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 885.625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 932.625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 999.1875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1046.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1135.140625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1182.140625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1248.703125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1295.703125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1407.046875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1454.046875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1610.171875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1657.171875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1746.125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1793.125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1837.296875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1884.296875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 1928.46875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 1975.46875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 2042.03125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 2089.03125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 2433.671875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 2480.671875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 2884.3125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 2931.3125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 2975.484375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3022.484375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3089.046875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3136.046875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3269.78125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3316.78125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3428.125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3475.125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3586.46875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3633.46875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3789.59375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3836.59375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 3925.546875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 3972.546875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4061.5
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 4108.5
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4175.0625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 4222.0625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4333.40625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 4380.40625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4469.359375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 4516.359375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4861
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 4908
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 4974.5625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5021.5625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5110.515625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5157.515625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5224.078125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5271.078125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5337.640625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5384.640625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5428.8125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5475.8125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5497.59375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5544.59375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5566.375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5613.375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 5657.546875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 5704.546875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6049.1875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6096.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6498.21875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6545.21875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6589.390625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6636.390625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6658.171875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6705.171875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6749.34375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6796.34375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6840.515625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6887.515625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 6931.6875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 6978.6875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 7345.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 7392.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 7436.890625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 7483.890625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 7530.890625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 7627.234375
+    },
+    {
+      "name": "Bài đọc",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài đọc</p>",
+      "isVisible": true,
+      "offsetTop": 7674.234375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 8228.875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 8275.875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 8657.125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 8704.125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 8748.296875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 8795.296875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 8884.25
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 8931.25
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9020.203125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9067.203125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9178.546875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9225.546875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9314.5
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9361.5
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9540.015625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9587.015625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9720.75
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9767.75
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9856.703125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 9903.703125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 9992.65625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10039.65625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 10406.6875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10453.6875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 10587.421875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10634.421875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 10678.59375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10725.59375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 10814.546875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10861.546875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 10883.328125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 10930.328125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11019.28125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11066.28125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11132.84375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11179.84375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11291.1875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11338.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11382.359375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11429.359375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11451.140625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11498.140625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11542.3125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11589.3125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 11933.953125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 11980.953125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 12360.59375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 12407.59375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 12563.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 12610.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 12699.671875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 12746.671875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 12835.625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 12882.625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 12971.578125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13018.578125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 13085.140625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13132.140625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 13288.265625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13335.265625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 13401.828125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13448.828125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 13537.78125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13584.78125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 13905.421875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13952.421875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 13999.421875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 14046.421875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14041.375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 14088.375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14199.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 14246.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14358.0625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 14405.0625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14449.234375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 14496.234375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14585.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 14976.828125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15023.828125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 15427.46875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15474.46875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 15518.640625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15565.640625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 15609.8125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15656.8125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 15745.765625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15792.765625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 15926.5
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 15973.5
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16017.671875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16064.671875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16086.453125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16133.453125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16155.234375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16202.234375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16224.015625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16271.015625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16315.1875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16362.1875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16662.046875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16709.046875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16820.390625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16867.390625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 16933.953125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 16980.953125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17025.125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17072.125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17138.6875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17185.6875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17252.25
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17299.25
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17343.421875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17390.421875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17434.59375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17481.59375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17525.765625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17572.765625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17661.71875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17708.71875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17752.890625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17799.890625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 17821.671875
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 17868.671875
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 18168.53125
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18215.53125
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 18574.390625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18621.390625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 18665.5625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18712.5625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 18756.734375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18803.734375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 18825.515625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18872.515625
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 18919.515625
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 19172.375
+    },
+    {
+      "name": "Bài tập thực hành",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Bài tập thực hành</p>",
+      "isVisible": true,
+      "offsetTop": 19219.375
+    },
+    {
+      "name": "Video",
+      "parentClass": "learn__content--right__item--block__content__flex",
+      "blockClass": "learn__content--right__item--block__content__flex",
+      "blockHtml": "<p class=\"learn__content--right__item--block__content__name\">Video</p>",
+      "isVisible": true,
+      "offsetTop": 19308.328125
+    }
+  ],
+  "sessionDump": [
+    {
+      "tag": "P",
+      "className": "learn__content--right__name",
+      "text": "Session 17: DOM & Event - LÝ THUYẾT",
+      "parentClass": "",
+      "nearbyHtml": "<div class=\"learn__content--right__content__session__img\"><img src=\"/assets/imgs/learn/tick-circle.png\" alt=\"icon\" style=\"width: 20px; height: 20px;\"></div><div style=\"flex: 1 1 0%;\"><p class=\"learn__content--right__name\">Session 17: DOM &amp; Event - LÝ THUYẾT</p><div style=\"margin-top: 8px;\"><button class=\"MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButton-colorPrimary css-15opokt\" tabindex=\"0\" type=\"button\"><span class=\"MuiButton-icon MuiButton-startIcon MuiButton-iconSizeSmall css-u0g51i\"><svg class=\"MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv\" focusable=\"false\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" data-testid=\"PlaylistAddCheckIcon\"><path d=\"M3 10h11v2H3zm0-4h11v2H3zm0 8h7v2H3zm17.59-2.07-4.25 4.24-2.12-2.12-1.41 1.41L16.34 19 22 13.34z\"></path></svg></span>Checklist cần làm<span class=\"MuiTouchRipple-root css-w0pj6f\"></span></button></div></div>"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.grid-container {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.grid-item {
+  background-color: #f07e7e;
+  color: #ffffff;
+  padding: 30px 20px;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 500;
+  border-radius: 4px;
+}
