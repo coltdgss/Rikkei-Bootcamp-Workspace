@@ -458,6 +458,9 @@
           <strong id="studioTargetTitle">Không gian thực hành SQL &amp; Quan sát bảng trực quan</strong>
         </div>
         <div class="sql-studio-actions">
+          <button type="button" class="studio-nav-btn" onclick="loadKobaniExample()" title="Nạp đề bài mẫu Cẩm nang thi MySQL Workbench (Đề Kobani) có chú thích chi tiết">
+            📋 Mẫu Đề Kobani
+          </button>
           <button type="button" class="studio-nav-btn" id="studioSidecarToggleBtn" onclick="toggleStudioSidecar()" title="Thu gọn / Mở rộng Preview bảng (Sidecar)">
             <span id="studioSidecarIcon">◧</span> <span id="studioSidecarText">Thu gọn Preview</span>
           </button>
@@ -2518,6 +2521,110 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       return html;
     }
 
+    async function executeSqlWithEngine(sql) {
+      if (!sql || !sql.trim()) {
+        return { ok: false, error: 'Chưa có câu lệnh SQL để thực thi.' };
+      }
+      try {
+        const engine = await getSqliteEngine();
+        const database = new engine.Database();
+
+        // Lọc bỏ an toàn các lệnh đặc thù MySQL để SQLite preview mượt mà không crash
+        let cleanSql = sql
+          .replace(/^[ \t]*CREATE\s+DATABASE\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*USE\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*SET\b.*$/gim, '-- $&')
+          .replace(/\bAUTO_INCREMENT\b/gi, '')
+          .replace(/CREATE\s+OR\s+REPLACE\s+VIEW/gi, 'CREATE VIEW')
+          .replace(/^[ \t]*.*(?:DELIMITER|\$\$).*$/gim, '-- $&')
+          .replace(/^[ \t]*CALL\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+VIEW\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+INDEX\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+TRIGGER\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+PROCEDURE\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*SELECT\s+@.*$/gim, '-- $&')
+          .replace(/CREATE\s+PROCEDURE[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Stored Procedure: MySQL Only */')
+          .replace(/CREATE\s+TRIGGER[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Trigger: MySQL Only */');
+
+        database.run(cleanSql);
+
+        const tableMatches = [...cleanSql.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
+        let tablesRendered = '';
+        let tableCount = 0;
+
+        if (tableMatches.length > 0) {
+          for (const m of tableMatches) {
+            const tName = m[1];
+            try {
+              const res = database.exec('SELECT * FROM "' + tName.replace(/"/g, '""') + '";');
+              if (res && res.length && res[0].columns.length) {
+                tablesRendered += renderSqlTableBlock(res[0], tName);
+                tableCount++;
+              } else {
+                const pragma = database.exec('PRAGMA table_info("' + tName.replace(/"/g, '""') + '");');
+                if (pragma && pragma.length && pragma[0].values.length) {
+                  const cols = pragma[0].values.map(col => col[1]);
+                  tablesRendered += renderSqlTableBlock({ columns: cols, values: [] }, tName);
+                  tableCount++;
+                }
+              }
+            } catch (err) {
+              console.warn("Lỗi đọc bảng " + tName, err);
+            }
+          }
+        }
+
+        // Quét thêm các câu lệnh CREATE VIEW
+        const viewMatches = [...cleanSql.matchAll(/CREATE\s+VIEW\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
+        if (viewMatches.length > 0) {
+          for (const vm of viewMatches) {
+            const vName = vm[1];
+            try {
+              const res = database.exec('SELECT * FROM "' + vName.replace(/"/g, '""') + '";');
+              if (res && res.length && res[0].columns.length) {
+                tablesRendered += renderSqlTableBlock(res[0], 'View (Bảng ảo): ' + vName);
+                tableCount++;
+              }
+            } catch (vErr) {
+              console.warn("Lỗi đọc view " + vName, vErr);
+            }
+          }
+        }
+
+        // Quét thêm các câu lệnh SELECT độc lập
+        const selectMatches = [...cleanSql.matchAll(/(SELECT[\s\S]+?;)/gi)];
+        if (selectMatches.length > 0) {
+          for (let i = 0; i < selectMatches.length; i++) {
+            const query = selectMatches[i][1];
+            if (/SELECT\s+\*\s+FROM\s+["`]?\w+["`]?\s*;?/i.test(query.trim())) continue;
+            try {
+              const qRes = database.exec(query);
+              if (qRes && qRes.length && qRes[0].columns.length) {
+                const querySummary = query.replace(/\s+/g, ' ').trim().substring(0, 50);
+                tablesRendered += renderSqlTableBlock(qRes[0], 'Kết quả SELECT: ' + querySummary + (querySummary.length >= 50 ? '...' : ''));
+                tableCount++;
+              }
+            } catch (qErr) {
+              // Bỏ qua lỗi query phụ
+            }
+          }
+        }
+
+        if (!tablesRendered) {
+          const generalRes = database.exec(cleanSql);
+          if (generalRes && generalRes.length) {
+            tablesRendered = renderSqlTableBlock(generalRes[0], 'Kết quả truy vấn');
+            tableCount++;
+          }
+        }
+
+        database.close();
+        return { ok: true, html: tablesRendered, count: tableCount };
+      } catch (error) {
+        return { ok: false, error: error.message || 'Lỗi cú pháp khi thực thi SQLite.' };
+      }
+    }
+
     let previewRunId = 0;
 
     async function previewBtvnSql() {
@@ -2532,63 +2639,17 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
         return;
       }
       status.textContent = 'SQL Engine: đang thực thi SQLite WebAssembly...';
-      try {
-        const engine = await getSqliteEngine();
-        const database = new engine.Database();
-        // Lọc bỏ an toàn các lệnh đặc thù MySQL (DATABASE, USE, DELIMITER, PROCEDURE, DROP VIEW, INDEX, VARIABLE) để SQLite preview mượt mà
-        let cleanSql = sql
-          .replace(/^[ \t]*CREATE\s+DATABASE\b.*$/gim, '-- $&')
-          .replace(/^[ \t]*USE\b.*$/gim, '-- $&')
-          .replace(/^[ \t]*.*(?:DELIMITER|\$\$).*$/gim, '-- $&')
-          .replace(/^[ \t]*CALL\b.*$/gim, '-- $&')
-          .replace(/^[ \t]*DROP\s+VIEW\b.*$/gim, '-- $&')
-          .replace(/^[ \t]*DROP\s+INDEX\b.*$/gim, '-- $&')
-          .replace(/^[ \t]*SELECT\s+@.*$/gim, '-- $&')
-          .replace(/CREATE\s+PROCEDURE[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Stored Procedure: MySQL Only */');
-        database.run(cleanSql);
-        
-        const tableMatches = [...sql.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
-        let tablesRendered = '';
-        
-        if (tableMatches.length > 0) {
-          for (const m of tableMatches) {
-            const tName = m[1];
-            try {
-              const res = database.exec('SELECT * FROM "' + tName.replace(/"/g, '""') + '";');
-              if (res && res.length && res[0].columns.length) {
-                tablesRendered += renderSqlTableBlock(res[0], tName);
-              } else {
-                const pragma = database.exec('PRAGMA table_info("' + tName.replace(/"/g, '""') + '");');
-                if (pragma && pragma.length && pragma[0].values.length) {
-                  const cols = pragma[0].values.map(col => col[1]);
-                  tablesRendered += renderSqlTableBlock({ columns: cols, values: [] }, tName);
-                }
-              }
-            } catch (err) {
-              console.warn("Lỗi đọc bảng " + tName, err);
-            }
-          }
-        }
-        
-        if (!tablesRendered) {
-          const generalRes = database.exec(sql);
-          if (generalRes && generalRes.length) {
-            tablesRendered = renderSqlTableBlock(generalRes[0], 'Kết quả truy vấn');
-          }
-        }
-        
-        if (runId !== previewRunId) {
-          database.close();
-          return;
-        }
-        
-        result.innerHTML = tablesRendered || '<div style="color:#666;padding:8px;">Lệnh SQL đã chạy thành công nhưng không có bảng nào để hiển thị.</div>';
-        status.textContent = 'SQL Engine: SQLite WebAssembly · thực thi thành công';
-        database.close();
-      } catch (error) {
+      const res = await executeSqlWithEngine(sql);
+      if (runId !== previewRunId) return;
+
+      if (!res.ok) {
         status.textContent = 'SQL Engine: lỗi cú pháp';
-        result.innerHTML = '<div style="color:#d63031;padding:6px;font-weight:bold;">❌ ' + escapeSqlHtml(error.message || 'Không thể thực thi SQL.') + '</div>';
+        result.innerHTML = '<div style="color:#d63031;padding:6px;font-weight:bold;">❌ ' + escapeSqlHtml(res.error) + '</div>';
+        return;
       }
+
+      result.innerHTML = res.html || '<div style="color:#666;padding:8px;">Lệnh SQL đã chạy thành công nhưng không có bảng nào để hiển thị.</div>';
+      status.textContent = 'SQL Engine: SQLite WebAssembly · thực thi thành công (' + (res.count || 0) + ' bảng/kết quả)';
     }
 
     const sqlFolderDbPromise = new Promise((resolve, reject) => {
@@ -3108,7 +3169,299 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
     // =========================================================================
     // SQL WORKBENCH STUDIO MODAL (Fullscreen popup /rk-ui)
     // =========================================================================
+    const kobaniDefaultExampleSql = `-- =============================================================================
+-- CẨM NANG THI & HƯỚNG DẪN THAO TÁC MYSQL WORKBENCH (ĐỀ KOBANI)
+-- Dự án: Hệ thống Quản lý Bán lẻ Chuỗi Cửa Hàng Tiện Lợi Kobani
+-- Kiến trúc: 4 Bảng (KhachHang -> SanPham -> DonHang -> ThanhToan)
+-- Chuẩn hóa: DDL · DML · SELECT · JOIN · GROUP BY · VIEW · INDEX · PROCEDURE
+-- =============================================================================
+
+-- =============================================================================
+-- PHẦN 1: DDL - TẠO DATABASE & THIẾT LẬP CẤU TRÚC 4 BẢNG
+-- Quy tắc thứ tự: Bảng Cha (Độc lập) tạo trước -> Bảng Con (Tham chiếu FK) tạo sau
+-- =============================================================================
+
+-- [Bước 1.0]: Tạo cơ sở dữ liệu mới và kích hoạt ngữ cảnh làm việc
+-- CREATE DATABASE: Tạo schema độc lập chứa các bảng của dự án Kobani.
+-- USE: Chỉ định MySQL thực hiện toàn bộ các truy vấn sau trên database này.
+CREATE DATABASE IF NOT EXISTS Chuoi_Konbini;
+USE Chuoi_Konbini;
+
+-- [Bước 1.1]: Tạo bảng Khách Hàng (Bảng Cha 1)
+-- - khachhang_id: Khóa chính (PRIMARY KEY), chuỗi tối đa 10 ký tự, định danh duy nhất mỗi khách hàng.
+-- - ho_ten: Kiểu VARCHAR(100), NOT NULL bắt buộc phải nhập tên, không được để trống.
+-- - email: Kiểu VARCHAR(100), UNIQUE đảm bảo không có 2 khách hàng nào trùng email.
+-- - so_dien_thoai: Chuỗi 15 ký tự, NOT NULL phục vụ liên hệ giao vận.
+-- - dia_chi: Chuỗi 200 ký tự lưu địa chỉ giao hàng của khách.
+CREATE TABLE IF NOT EXISTS KhachHang (
+    khachhang_id VARCHAR(10) PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    so_dien_thoai VARCHAR(15) NOT NULL,
+    dia_chi VARCHAR(200)
+);
+
+-- [Bước 1.2]: Tạo bảng Sản Phẩm (Bảng Cha 2)
+-- - sanpham_id: Khóa chính (PRIMARY KEY) định danh sản phẩm hàng hóa.
+-- - ten_san_pham: Tên món hàng, UNIQUE chống trùng lặp tên sản phẩm trong menu.
+-- - gia_ban: Kiểu số thập phân DECIMAL(12,2), ràng buộc CHECK (gia_ban > 0) ngăn giá âm hoặc bằng 0.
+-- - trang_thai: Tình trạng kinh doanh, DEFAULT 'Đang bán' tự gán giá trị mặc định khi chèn.
+-- - so_luong_ton: Số lượng tồn kho hiện tại (INT, NOT NULL).
+CREATE TABLE IF NOT EXISTS SanPham (
+    sanpham_id VARCHAR(10) PRIMARY KEY,
+    ten_san_pham VARCHAR(150) NOT NULL UNIQUE,
+    gia_ban DECIMAL(12,2) NOT NULL CHECK (gia_ban > 0),
+    trang_thai VARCHAR(50) NOT NULL DEFAULT 'Đang bán',
+    so_luong_ton INT NOT NULL
+);
+
+-- [Bước 1.3]: Tạo bảng Đơn Hàng (Bảng Con 1 - Nối KhachHang và SanPham)
+-- - donhang_id: Khóa chính tự động tăng dần (AUTO_INCREMENT).
+-- - khachhang_id: Khóa ngoại (FOREIGN KEY) tham chiếu tới bảng KhachHang.
+-- - sanpham_id: Khóa ngoại (FOREIGN KEY) tham chiếu tới bảng SanPham.
+-- - so_luong: Số lượng sản phẩm khách đặt mua, CHECK (so_luong > 0).
+-- - ngay_dat / ngay_giao: Ngày đặt và ngày giao hàng.
+-- - tong_tien: Tổng giá trị đơn hàng tính theo (số lượng * đơn giá + phụ phí).
+CREATE TABLE IF NOT EXISTS DonHang (
+    donhang_id INT PRIMARY KEY AUTO_INCREMENT,
+    khachhang_id VARCHAR(10) NOT NULL,
+    sanpham_id VARCHAR(10) NOT NULL,
+    so_luong INT NOT NULL CHECK (so_luong > 0),
+    ngay_dat DATE NOT NULL,
+    ngay_giao DATE,
+    tong_tien DECIMAL(12,2) DEFAULT 0,
+    CONSTRAINT fk_donhang_khachhang FOREIGN KEY (khachhang_id) REFERENCES KhachHang(khachhang_id),
+    CONSTRAINT fk_donhang_sanpham FOREIGN KEY (sanpham_id) REFERENCES SanPham(sanpham_id)
+);
+
+-- [Bước 1.4]: Tạo bảng Thanh Toán (Bảng Con 2 - Tham chiếu DonHang)
+-- - thanhtoan_id: Khóa chính tự tăng của giao dịch thanh toán.
+-- - donhang_id: Khóa ngoại liên kết tới đơn hàng tương ứng.
+-- - phuong_thuc_tt: Hình thức chi trả ('Credit Card', 'Cash', 'Bank Transfer', 'E-Wallet').
+-- - ngay_tt: Ngày thực hiện giao dịch thu tiền.
+-- - so_tien_tt: Số tiền khách thanh toán thực tế, CHECK (so_tien_tt > 0).
+CREATE TABLE IF NOT EXISTS ThanhToan (
+    thanhtoan_id INT PRIMARY KEY AUTO_INCREMENT,
+    donhang_id INT NOT NULL,
+    phuong_thuc_tt VARCHAR(50) NOT NULL,
+    ngay_tt DATE NOT NULL,
+    so_tien_tt DECIMAL(12,2) NOT NULL CHECK (so_tien_tt > 0),
+    CONSTRAINT fk_thanhtoan_donhang FOREIGN KEY (donhang_id) REFERENCES DonHang(donhang_id)
+);
+
+-- =============================================================================
+-- PHẦN 2: DML - NẠP DỮ LIỆU MẪU (INSERT INTO)
+-- Thứ tự chèn: Chèn bảng Cha trước, sau đó mới chèn bảng Con để không vi phạm FK
+-- =============================================================================
+
+-- [Bước 2.1]: Chèn 8 khách hàng mẫu vào bảng KhachHang
+INSERT INTO KhachHang (khachhang_id, ho_ten, email, so_dien_thoai, dia_chi) VALUES
+('KH001', 'Nguyen Van An', 'an.nguyen@example.com', '0911111111', 'Hanoi'),
+('KH002', 'Tran Thu Ha', 'ha.tran@example.com', '0922222222', 'Danang'),
+('KH003', 'Le Minh Khoa', 'khoa.le@example.com', '0933333333', 'Hanoi'),
+('KH004', 'Pham Quoc Bao', 'bao.pham@example.com', '0944444444', 'HCM'),
+('KH005', 'Hoang Minh Chau', 'chau.hoang@example.com', '0955555555', 'Haiphong'),
+('KH006', 'Do Thi Lan', 'lan.do@example.com', '0966666666', 'Hanoi'),
+('KH007', 'Bui Duc Long', 'long.bui@example.com', '0977777777', 'Hue'),
+('KH008', 'Vo Thanh Dat', 'dat.vo@example.com', '0988888888', 'Cantho');
+
+-- [Bước 2.2]: Chèn 8 sản phẩm đa dạng ngành hàng vào bảng SanPham
+INSERT INTO SanPham (sanpham_id, ten_san_pham, gia_ban, trang_thai, so_luong_ton) VALUES
+('SP001', 'Cà phê hạt Arabica 250g', 180.00, 'Đang bán', 50),
+('SP002', 'Trà ô long hộp thiếc', 120.00, 'Đang bán', 40),
+('SP003', 'Bánh quy bơ Kobani', 90.00, 'Ngừng bán', 0),
+('SP004', 'Bình giữ nhiệt inox', 350.00, 'Đang bán', 25),
+('SP005', 'Cốc sứ Kobani', 150.00, 'Đang bán', 60),
+('SP006', 'Máy pha cà phê mini', 800.00, 'Đang bán', 15),
+('SP007', 'Túi vải canvas', 120.00, 'Đang bán', 80),
+('SP008', 'Sổ tay bìa da', 200.00, 'Ngừng bán', 0);
+
+-- [Bước 2.3]: Chèn 10 đơn đặt hàng phát sinh trong tháng vào bảng DonHang
+INSERT INTO DonHang (donhang_id, khachhang_id, sanpham_id, so_luong, ngay_dat, ngay_giao, tong_tien) VALUES
+(1, 'KH001', 'SP001', 2, '2026-09-01', '2026-09-03', 0.00),
+(2, 'KH002', 'SP002', 1, '2026-09-02', '2026-09-04', 0.00),
+(3, 'KH003', 'SP003', 3, '2026-09-03', '2026-09-05', 0.00),
+(4, 'KH004', 'SP004', 1, '2026-09-04', '2026-09-06', 0.00),
+(5, 'KH005', 'SP005', 2, '2026-09-05', '2026-09-07', 0.00),
+(6, 'KH006', 'SP006', 1, '2026-09-06', '2026-09-08', 0.00),
+(7, 'KH007', 'SP007', 2, '2026-09-07', '2026-09-09', 0.00),
+(8, 'KH008', 'SP008', 1, '2026-09-08', '2026-09-10', 0.00),
+(9, 'KH001', 'SP004', 2, '2026-09-10', '2026-09-12', 0.00),
+(10, 'KH006', 'SP005', 1, '2026-09-12', '2026-09-14', 0.00);
+
+-- [Bước 2.4]: Chèn 10 bản ghi thanh toán tương ứng từng đơn vào bảng ThanhToan
+INSERT INTO ThanhToan (thanhtoan_id, donhang_id, phuong_thuc_tt, ngay_tt, so_tien_tt) VALUES
+(1, 1, 'Credit Card', '2026-09-01', 380.00),
+(2, 2, 'Cash', '2026-09-02', 140.00),
+(3, 3, 'Bank Transfer', '2026-09-03', 290.00),
+(4, 4, 'E-Wallet', '2026-09-04', 370.00),
+(5, 5, 'Credit Card', '2026-09-05', 320.00),
+(6, 6, 'Bank Transfer', '2026-09-06', 820.00),
+(7, 7, 'Cash', '2026-09-07', 260.00),
+(8, 8, 'E-Wallet', '2026-09-08', 220.00),
+(9, 9, 'Bank Transfer', '2026-09-10', 720.00),
+(10, 10, 'Cash', '2026-09-12', 170.00);
+
+-- =============================================================================
+-- PHẦN 3: DML - THAO TÁC CẬP NHẬT (UPDATE) & XÓA DỮ LIỆU (DELETE)
+-- =============================================================================
+
+-- [Bước 3.1]: Cập nhật tổng tiền cho các đơn hàng
+-- Cập nhật đơn 1 và đơn 2 dựa trên công thức: (Số lượng * Đơn giá) + Phí vận chuyển 20.00
+UPDATE DonHang SET tong_tien = (so_luong * 180.00) + 20.00 WHERE donhang_id = 1;
+UPDATE DonHang SET tong_tien = (so_luong * 120.00) + 20.00 WHERE donhang_id = 2;
+
+-- [Bước 3.2]: Xóa bản ghi thanh toán có điều kiện WHERE
+-- Xóa giao dịch thanh toán bằng tiền mặt (Cash) có số tiền nhỏ hơn 150.00
+DELETE FROM ThanhToan WHERE phuong_thuc_tt = 'Cash' AND so_tien_tt < 150.00;
+
+-- =============================================================================
+-- PHẦN 4: TRUY VẤN DỮ LIỆU (DQL - 10 BÀI TOÁN KINH ĐIỂN TRONG ĐỀ THI)
+-- =============================================================================
+
+-- [Câu 1]: Lấy danh sách khách hàng, sắp xếp theo họ tên theo bảng chữ cái A-Z
+-- Ý nghĩa: Dùng mệnh đề ORDER BY cột ASC (mặc định là tăng dần).
+SELECT khachhang_id, ho_ten, email, so_dien_thoai, dia_chi
+FROM KhachHang 
+ORDER BY ho_ten ASC;
+
+-- [Câu 2]: Lấy danh sách sản phẩm, sắp xếp theo giá bán từ đắt nhất đến rẻ nhất
+-- Ý nghĩa: Dùng mệnh đề ORDER BY gia_ban DESC (giảm dần từ cao xuống thấp).
+SELECT sanpham_id, ten_san_pham, gia_ban, trang_thai, so_luong_ton
+FROM SanPham 
+ORDER BY gia_ban DESC;
+
+-- [Câu 3]: Nối 3 bảng KhachHang - DonHang - SanPham để xem khách mua món gì
+-- Ý nghĩa: Dùng INNER JOIN nối các khóa ngoại tương ứng: dh.khachhang_id = kh.khachhang_id và dh.sanpham_id = sp.sanpham_id.
+SELECT kh.khachhang_id, kh.ho_ten, sp.ten_san_pham, dh.so_luong, dh.ngay_dat, dh.ngay_giao
+FROM DonHang dh
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id;
+
+-- [Câu 4]: Thống kê khách hàng và các khoản tiền đã thanh toán, xếp giảm dần
+-- Ý nghĩa: Ghép nối 3 bảng qua đơn hàng và thanh toán, sắp xếp theo số tiền chi trả.
+SELECT kh.khachhang_id, kh.ho_ten, tt.phuong_thuc_tt, tt.so_tien_tt, tt.ngay_tt
+FROM ThanhToan tt
+INNER JOIN DonHang dh ON tt.donhang_id = dh.donhang_id
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+ORDER BY tt.so_tien_tt DESC;
+
+-- [Câu 5]: Phân trang dữ liệu - Lấy 3 khách hàng bắt đầu từ vị trí thứ 2 (Trang 1)
+-- Ý nghĩa: LIMIT [số dòng muốn lấy] OFFSET [số dòng bỏ qua]. OFFSET 1 bỏ qua dòng 1, lấy 3 dòng tiếp theo.
+SELECT * FROM KhachHang 
+ORDER BY ho_ten ASC 
+LIMIT 3 OFFSET 1;
+
+-- [Câu 6]: Tìm khách hàng VIP có ít nhất 2 đơn hàng VÀ tổng thanh toán > 500
+-- Ý nghĩa: GROUP BY gom nhóm theo khách hàng, HAVING lọc kết quả trên hàm tập hợp COUNT() và SUM().
+SELECT kh.khachhang_id, kh.ho_ten, 
+       COUNT(DISTINCT dh.donhang_id) AS so_luong_don, 
+       SUM(tt.so_tien_tt) AS tong_tien_da_tra
+FROM KhachHang kh
+INNER JOIN DonHang dh ON kh.khachhang_id = dh.khachhang_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY kh.khachhang_id, kh.ho_ten
+HAVING COUNT(DISTINCT dh.donhang_id) >= 2 AND SUM(tt.so_tien_tt) > 500.00;
+
+-- [Câu 7]: Báo cáo sản phẩm đã bán có tổng thu < 1000 và có từ 2 khách mua khác nhau
+-- Ý nghĩa: Kết hợp GROUP BY sản phẩm với điều kiện HAVING trên doanh thu và số khách hàng duy nhất.
+SELECT sp.sanpham_id, sp.ten_san_pham, sp.gia_ban, 
+       SUM(tt.so_tien_tt) AS tong_tien_thanh_toan,
+       COUNT(DISTINCT dh.khachhang_id) AS so_khach_mua
+FROM SanPham sp
+INNER JOIN DonHang dh ON sp.sanpham_id = dh.sanpham_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY sp.sanpham_id, sp.ten_san_pham, sp.gia_ban
+HAVING SUM(tt.so_tien_tt) < 1000.00 AND COUNT(DISTINCT dh.khachhang_id) >= 2;
+
+-- [Câu 8]: Tổng hợp doanh thu phát sinh theo từng khách hàng có chi tiêu > 500
+SELECT kh.khachhang_id, kh.ho_ten, SUM(tt.so_tien_tt) AS tong_thanh_toan
+FROM KhachHang kh
+INNER JOIN DonHang dh ON kh.khachhang_id = dh.khachhang_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY kh.khachhang_id, kh.ho_ten
+HAVING SUM(tt.so_tien_tt) > 500.00;
+
+-- [Câu 9]: Tìm kiếm khách hàng theo điều kiện tên chứa 'Minh' HOẶC địa chỉ ở 'Hanoi'
+-- Ý nghĩa: Mệnh đề WHERE kết hợp toán tử LIKE với ký tự đại diện % (khớp mọi chuỗi ký tự).
+SELECT khachhang_id, ho_ten, email, so_dien_thoai, dia_chi
+FROM KhachHang
+WHERE ho_ten LIKE '%Minh%' OR dia_chi LIKE '%Hanoi%'
+ORDER BY ho_ten ASC;
+
+-- [Câu 10]: Phân trang danh sách sản phẩm giá cao nhất (Trang số 2: Lấy 3 sản phẩm tiếp theo sau 2 sản phẩm đầu)
+SELECT sanpham_id, ten_san_pham, gia_ban, so_luong_ton
+FROM SanPham 
+ORDER BY gia_ban DESC 
+LIMIT 3 OFFSET 2;
+
+-- =============================================================================
+-- PHẦN 5: ĐỐI TƯỢNG NÂNG CAO - VIEW (BẢNG ẢO) & INDEX (CHỈ MỤC TĂNG TỐC)
+-- =============================================================================
+
+-- [Bước 5.1]: Tạo VIEW lưu trữ sẵn danh sách sản phẩm và khách hàng đã đặt mua
+-- Ý nghĩa: View là một câu lệnh SELECT được đặt tên lưu trữ trong CSDL, giúp tái sử dụng truy vấn phức tạp mà không tốn dung lượng ổ đĩa.
+CREATE VIEW view_sanpham_khachhang_dat_hang AS
+SELECT sp.sanpham_id, sp.ten_san_pham, kh.khachhang_id, kh.ho_ten, dh.ngay_dat
+FROM DonHang dh
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id;
+
+-- Truy vấn trực tiếp từ bảng ảo VIEW vừa tạo:
+SELECT * FROM view_sanpham_khachhang_dat_hang;
+
+-- [Bước 5.2]: Tạo VIEW lọc khách hàng đặt mua các mặt hàng cao cấp (> 150)
+CREATE VIEW view_khachhang_donhang_gia_cao AS
+SELECT kh.khachhang_id, kh.ho_ten, sp.sanpham_id, sp.ten_san_pham, sp.gia_ban
+FROM DonHang dh
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id
+WHERE sp.gia_ban > 150.00;
+
+SELECT * FROM view_khachhang_donhang_gia_cao;
+
+-- [Bước 5.3]: Đánh chỉ mục INDEX trên cột ten_san_pham để tăng tốc độ tìm kiếm
+-- Ý nghĩa: Khi dữ liệu bảng lên tới hàng triệu dòng, Index giúp tìm kiếm với độ phức tạp O(log N) thay vì quét toàn bộ bảng (Full Table Scan).
+CREATE INDEX idx_sanpham_ten ON SanPham(ten_san_pham);
+
+-- =============================================================================
+-- PHẦN 6: STORED PROCEDURE & TRIGGER (CHUẨN CÚ PHÁP MYSQL WORKBENCH THỰC TẾ)
+-- Ghi chú: Khối lệnh DELIMITER và PROCEDURE dưới đây dùng trực tiếp trên MySQL Workbench khi thi.
+-- Trình duyệt (SQLite WebAssembly) sẽ tự động nhận diện và bảo toàn logic dữ liệu của bạn.
+-- =============================================================================
+
+-- Thủ tục 1: Thêm mới một khách hàng có kiểm tra tham số
+DELIMITER $$
+CREATE PROCEDURE add_khachhang (
+    IN p_khachhang_id VARCHAR(10),
+    IN p_ho_ten VARCHAR(100),
+    IN p_email VARCHAR(100),
+    IN p_so_dien_thoai VARCHAR(15),
+    IN p_dia_chi VARCHAR(200)
+)
+BEGIN
+    INSERT INTO KhachHang (khachhang_id, ho_ten, email, so_dien_thoai, dia_chi)
+    VALUES (p_khachhang_id, p_ho_ten, p_email, p_so_dien_thoai, p_dia_chi);
+END$$
+DELIMITER ;
+
+-- Gọi thử thủ tục Stored Procedure trên MySQL:
+-- CALL add_khachhang('KH009', 'Ngo Gia Bao', 'bao.ngo@example.com', '0909999999', 'Hanoi');
+`;
+
     let studioSidecarOpen = true;
+
+    function loadKobaniExample() {
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const studioTitle = document.getElementById('studioTargetTitle');
+      if (!studioEditor) return;
+      studioEditor.value = kobaniDefaultExampleSql;
+      if (studioTitle) {
+        studioTitle.textContent = 'Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani) [Mẫu chuẩn]';
+      }
+      runStudioSql();
+      toast('Đã nạp đề thi mẫu Kobani có đầy đủ chú thích chi tiết!');
+    }
 
     function openSqlStudioModal() {
       const modal = document.getElementById('sqlStudioModal');
@@ -3119,8 +3472,19 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
 
       if (!modal || !studioEditor) return;
 
-      studioEditor.value = btvnEditor ? btvnEditor.value : (currentBtvn.defaultSql || '');
-      studioTitle.textContent = currentBtvn.title ? ('Đang liên kết: ' + currentBtvn.title) : 'Không gian thực hành SQL & Quan sát bảng trực quan';
+      // Nạp đề Kobani làm ví dụ mẫu mặc định nếu chưa có bài tập hoặc đang ở mục Cẩm nang/BTOL3
+      const isDefaultTarget = !currentBtvnKey || currentBtvnKey === 's0_btol3' || currentBtvnKey === 'btvn1';
+      if (!studioEditor.value || isDefaultTarget || !btvnEditor || !btvnEditor.value || btvnEditor.value.trim().length === 0) {
+        studioEditor.value = kobaniDefaultExampleSql;
+        if (studioTitle) {
+          studioTitle.textContent = 'Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani) [Mẫu chuẩn]';
+        }
+      } else {
+        studioEditor.value = btvnEditor.value;
+        if (studioTitle) {
+          studioTitle.textContent = currentBtvn.title ? ('Đang liên kết: ' + currentBtvn.title) : 'Không gian thực hành SQL & Quan sát bảng trực quan';
+        }
+      }
 
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -3180,27 +3544,29 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       const sql = studioEditor.value.trim();
 
       if (!sql) {
-        studioResult.innerHTML = '<p style="color:#777;">Chưa có mã SQL. Hãy nhập câu lệnh CREATE TABLE, INSERT INTO, SELECT...</p>';
+        studioResult.innerHTML = '<p style="color:#777; font-size:12px; font-style:italic;">Chưa có mã SQL. Hãy nhập câu lệnh CREATE TABLE, INSERT INTO, SELECT...</p>';
+        if (studioStatus) studioStatus.textContent = 'Sẵn sàng';
+        if (studioRowCount) studioRowCount.textContent = '0 dòng hiển thị';
         return;
       }
 
-      studioStatus.textContent = 'SQLite WebAssembly: đang thực thi...';
-      const res = await runSqliteInBrowser(sql);
+      if (studioStatus) studioStatus.textContent = 'SQLite WebAssembly: đang thực thi...';
+      const res = await executeSqlWithEngine(sql);
 
       if (!res.ok) {
-        studioStatus.textContent = 'Lỗi thực thi SQL';
-        studioResult.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:10px; border-radius:5px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px;"><strong>✕ Lỗi cú pháp SQL:</strong><br>' + escapeMarkup(res.error) + '</div>';
+        if (studioStatus) studioStatus.textContent = 'Lỗi cú pháp SQL';
+        studioResult.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:12px; border-radius:6px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px; line-height:1.5;"><strong>✕ Lỗi thực thi SQL:</strong><br>' + escapeMarkup(res.error) + '</div>';
         if (studioRowCount) studioRowCount.textContent = 'Lỗi';
         return;
       }
 
-      studioStatus.textContent = 'SQLite: Thực thi thành công!';
-      if (res.tables && res.tables.length > 0) {
-        studioResult.innerHTML = res.tables.map(table => renderSqlTable(table)).join('<hr style="margin:14px 0; border:0; border-top:1px solid #e5e5e5;">');
-        if (studioRowCount) studioRowCount.textContent = res.tables.length + ' bảng dữ liệu';
+      if (studioStatus) studioStatus.textContent = 'SQLite: Thực thi thành công!';
+      if (res.html && res.html.trim().length > 0) {
+        studioResult.innerHTML = res.html;
+        if (studioRowCount) studioRowCount.textContent = (res.count || 1) + ' bảng/kết quả';
       } else {
-        studioResult.innerHTML = '<div style="color:#1f6b43; background:#f0fdf4; padding:10px; border-radius:5px; border:1px solid #bbf7d0;">✓ Các lệnh DDL / DML đã chạy thành công trong bộ nhớ SQLite! (Thêm câu lệnh SELECT để quan sát bảng dữ liệu bên dưới)</div>';
-        if (studioRowCount) studioRowCount.textContent = '0 dòng hiển thị';
+        studioResult.innerHTML = '<div style="color:#1f6b43; background:#f0fdf4; padding:12px; border-radius:6px; border:1px solid #bbf7d0; font-size:12px; line-height:1.5;">✓ Các lệnh DDL / DML đã thực thi thành công trong bộ nhớ SQLite!<br><small style="color:#555;">(Mẹo: Thêm câu lệnh <code>SELECT * FROM ten_bang;</code> để quan sát dữ liệu trực quan)</small></div>';
+        if (studioRowCount) studioRowCount.textContent = 'Thành công (0 dòng SELECT)';
       }
     }
 
