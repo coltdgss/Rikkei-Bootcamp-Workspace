@@ -35,6 +35,7 @@ Thumbs.db
 !/Module_4_FE_IT/
 !/Module_5_Java_Web/
 !/Dashboard_v1/
+!/api/
 
 # 5. Các file cấu hình deploy Vercel và giao diện tĩnh
 !/index.html

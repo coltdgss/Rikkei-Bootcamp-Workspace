@@ -377,18 +377,21 @@
           </section>
           <section class="board-section ai-section">
             <div class="ai-toolbar">
-              <h3><span class="board-number">6</span> Local Ollama AI Review</h3>
-              <span class="ai-model" id="ollama-status">Ollama: đang kiểm tra...</span>
+              <h3><span class="board-number">6</span> 🤖 AI Trợ Giảng Thông Minh (Google Gemini Cloud &amp; Ollama)</h3>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="ai-model" id="ai-status">AI: đang kiểm tra...</span>
+                <button type="button" style="padding:2px 7px;font-size:10px;border-radius:4px;border:1px solid #ccc;background:#fff;cursor:pointer;" onclick="configureApiKey()" title="Tùy chỉnh API Key Gemini">⚙️ Key</button>
+              </div>
             </div>
-            <p>AI chạy trên máy local để đọc SQL bài <strong>${escapeMarkup(data.title)}</strong>, chấm điểm, giải thích lỗi, gợi ý sửa và đánh giá thiết kế database.</p>
+            <p>Trợ giảng AI hỗ trợ đọc SQL bài <strong>${escapeMarkup(data.title)}</strong>, chấm điểm tự động, giải thích cú pháp, gợi ý sửa lỗi và đánh giá chuẩn hóa database. <em>(Hoạt động trực tiếp trên Vercel qua Gemini Cloud hoặc Local qua Ollama)</em>.</p>
             <div class="ai-actions">
-              <button type="button" onclick="checkOllamaStatus()">Kiểm tra Ollama</button>
-              <button type="button" onclick="askOllama('score')">Chấm điểm SQL</button>
-              <button type="button" onclick="askOllama('explain')">Giải thích lỗi</button>
-              <button type="button" onclick="askOllama('fix')">Gợi ý sửa lệnh</button>
-              <button type="button" onclick="askOllama('design')">Đánh giá Database</button>
+              <button type="button" onclick="checkAiStatus()">⚡ Kiểm tra AI</button>
+              <button type="button" class="primary" onclick="askAi('score')">🎯 Chấm điểm SQL</button>
+              <button type="button" onclick="askAi('explain')">💡 Giải thích lệnh</button>
+              <button type="button" onclick="askAi('fix')">🛠️ Gợi ý sửa lỗi</button>
+              <button type="button" onclick="askAi('design')">📐 Đánh giá CSDL</button>
             </div>
-            <div class="ai-result" id="ollama-result"></div>
+            <div class="ai-result" id="ai-result"></div>
           </section>
         </div>`;
 
@@ -398,7 +401,7 @@
 
       getSavedSqlFolder().then(updateSqlFolderStatus);
       previewBtvnSql();
-      checkOllamaStatus();
+      checkAiStatus();
     }
 
     const btvnDatabase = {
@@ -1244,7 +1247,7 @@ INSERT INTO order_items (order_id, product_id, quantity) VALUES
 ('ORD001', 'P02', 1),
 ('ORD002', 'P02', 2),
 ('ORD002', 'P03', 3);`
-      }
+      },
 
       s4_btvn1: {
         key: 's4_btvn1',
@@ -2050,64 +2053,197 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
 
     const ollamaUrl = 'http://127.0.0.1:11434';
     let ollamaModel = 'qwen2.5-coder:7b';
+    let activeAiProvider = 'gemini';
 
     function getCurrentSql() {
       const editor = document.getElementById('btvn-sql-editor');
       return editor ? editor.value.trim() : '';
     }
 
-    async function checkOllamaStatus() {
-      const status = document.getElementById('ollama-status');
-      if (!status) return false;
-      status.textContent = 'Ollama: đang kiểm tra...';
-      try {
-        const response = await fetch(ollamaUrl + '/api/tags');
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        const data = await response.json();
-        const models = (data.models || []).map((model) => model.name);
-        ollamaModel = models.find((model) => model === 'qwen2.5-coder:7b') || models.find((model) => model === 'qwen2.5-coder:1.5b-base') || models[0] || '';
-        status.textContent = 'Ollama: online · ' + (ollamaModel || 'chưa có model');
-        return true;
-      } catch (error) {
-        status.textContent = 'Ollama: offline';
-        return false;
+    function configureApiKey() {
+      const current = localStorage.getItem('gemini_custom_api_key') || '';
+      const masked = current ? (current.substring(0, 6) + '...' + current.slice(-4)) : 'chưa cấu hình (đang dùng key mặc định từ hệ thống)';
+      const input = window.prompt(
+        'Cấu hình Google Gemini API Key:\n\n' +
+        'Key hiện tại: ' + masked + '\n\n' +
+        '- Nếu dùng trên Vercel: Hệ thống đã tích hợp sẵn API Key bảo mật trong kho .env.\n' +
+        '- Bạn có thể nhập API Key cá nhân của bạn bên dưới nếu muốn thay thế (hoặc để trống để dùng mặc định):',
+        current
+      );
+      if (input !== null) {
+        const clean = input.trim();
+        if (clean) {
+          localStorage.setItem('gemini_custom_api_key', clean);
+          toast('Đã lưu custom Gemini API Key.');
+        } else {
+          localStorage.removeItem('gemini_custom_api_key');
+          toast('Đã xóa custom key, dùng key mặc định từ hệ thống.');
+        }
+        checkAiStatus();
       }
     }
 
+    async function checkAiStatus() {
+      const status = document.getElementById('ai-status');
+      if (!status) return 'offline';
+      status.textContent = 'AI: đang kiểm tra...';
+
+      // 1. Kiểm tra Vercel Serverless API (/api/ai)
+      try {
+        const res = await fetch('/api/ai', { method: 'GET' });
+        if (res.ok) {
+          const data = await res.json();
+          activeAiProvider = 'gemini';
+          status.textContent = 'Gemini Cloud: online (' + (data.model || 'flash') + ')';
+          status.style.color = '#0070f3';
+          return 'gemini';
+        }
+      } catch (e) {
+        // Môi trường không có /api (ví dụ file://)
+      }
+
+      // 2. Kiểm tra Local Ollama fallback
+      try {
+        const resOllama = await fetch(ollamaUrl + '/api/tags');
+        if (resOllama.ok) {
+          const data = await resOllama.json();
+          const models = (data.models || []).map((m) => m.name);
+          ollamaModel = models.find((m) => m === 'qwen2.5-coder:7b') || models.find((m) => m === 'qwen2.5-coder:1.5b-base') || models[0] || 'qwen2.5-coder';
+          activeAiProvider = 'ollama';
+          status.textContent = 'Ollama Local: online (' + ollamaModel + ')';
+          status.style.color = '#10b981';
+          return 'ollama';
+        }
+      } catch (e) {
+        // Ollama offline
+      }
+
+      // 3. Fallback có custom key trong localStorage
+      const customKey = localStorage.getItem('gemini_custom_api_key');
+      if (customKey) {
+        activeAiProvider = 'gemini-direct';
+        status.textContent = 'Gemini Client: online (custom key)';
+        status.style.color = '#0070f3';
+        return 'gemini-direct';
+      }
+
+      activeAiProvider = 'offline';
+      status.textContent = 'AI: offline (Vercel Cloud hoặc bật Ollama local)';
+      status.style.color = '#777';
+      return 'offline';
+    }
+
+    // Giữ tương thích ngược
+    const checkOllamaStatus = checkAiStatus;
+
     function buildOllamaPrompt(task, sql) {
-      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.btvn1;
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
       const taskText = {
         score: 'Chấm điểm SQL từ 0 đến 10 dựa trên yêu cầu đề bài. Nêu rõ điểm số, tiêu chí đạt, lỗi còn thiếu và mức độ hoàn thiện.',
         explain: 'Tìm và giải thích các lỗi cú pháp hoặc lỗi thiết kế thực thể/khóa chính/khóa ngoại. Giải thích bằng tiếng Việt thật dễ hiểu cho người mới học.',
         fix: 'Đưa ra toàn bộ khối lệnh SQL đã sửa chuẩn hóa hoàn chỉnh, sau đó giải thích ngắn gọn từng thay đổi.',
         design: 'Đánh giá chất lượng thiết kế CSDL: tính đúng đắn của thực thể, khóa chính, kiểu dữ liệu, các mối quan hệ (1-N, N-N), tính toàn vẹn tham chiếu và khả năng mở rộng.'
-      }[task];
-      return `Bạn là chuyên gia CSDL MySQL & SQLite hỗ trợ học viên bootcamp.\nĐề bài: ${data.title} (${data.readme.entity})\nYêu cầu lý thuyết: ${data.theory.join('; ')}\n\nNhiệm vụ: ${taskText}\n\nSQL hiện tại của học viên:\n${sql}\n\nHãy trả lời bằng tiếng Việt chuyên nghiệp, ngắn gọn, có cấu trúc rõ ràng và bám sát kiến trúc CSDL.`;
+      }[task] || 'Phân tích câu lệnh SQL.';
+      return `Bạn là chuyên gia CSDL MySQL & SQLite hỗ trợ học viên bootcamp.\nĐề bài: ${data.title || ''} (${data.readme?.entity || ''})\nYêu cầu lý thuyết: ${(data.theory || []).join('; ')}\n\nNhiệm vụ: ${taskText}\n\nSQL hiện tại của học viên:\n${sql}\n\nHãy trả lời bằng tiếng Việt chuyên nghiệp, ngắn gọn, có cấu trúc rõ ràng và bám sát kiến trúc CSDL.`;
     }
 
-    async function askOllama(task) {
-      const result = document.getElementById('ollama-result');
+    async function askAi(task) {
+      const result = document.getElementById('ai-result');
       const sql = getCurrentSql();
-      if (!result || !sql) return;
-      result.textContent = 'Ollama đang phân tích SQL của ' + (btvnDatabase[currentBtvnKey]?.title || '') + '...';
+      const currentBtvn = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
+
+      if (!result) return;
+      if (!sql) {
+        toast('Vui lòng nhập mã SQL vào khung soạn thảo trước khi nhờ AI trợ giúp.');
+        result.textContent = '⚠️ Ô soạn thảo SQL đang trống. Hãy viết hoặc dán code SQL vào ô bên trên.';
+        return;
+      }
+
+      result.textContent = '⏳ Trợ giảng AI đang phân tích câu lệnh SQL của bài "' + (currentBtvn.title || '') + '"...';
+
+      const customKey = localStorage.getItem('gemini_custom_api_key') || '';
+
+      // Thử gọi qua Vercel Serverless API trước (/api/ai)
       try {
-        const online = await checkOllamaStatus();
-        if (!online) {
-          result.textContent = 'Chưa kết nối được Ollama (offline). Vui lòng đảm bảo ứng dụng Ollama đang chạy.';
-          return;
-        }
-        const response = await fetch(ollamaUrl + '/api/generate', {
+        const response = await fetch('/api/ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model: ollamaModel, prompt: buildOllamaPrompt(task, sql), stream: false })
+          body: JSON.stringify({
+            action: task,
+            sql: sql,
+            btvnTitle: currentBtvn.title || '',
+            schema: currentBtvn.readme?.entity || '',
+            customKey: customKey
+          })
         });
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        const data = await response.json();
-        result.textContent = data.response || 'Ollama không trả về nội dung.';
-      } catch (error) {
-        result.textContent = 'Không thể gọi Ollama: ' + error.message + '. Kiểm tra server và model local.';
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.result) {
+            result.textContent = data.result;
+            return;
+          }
+        }
+      } catch (err) {
+        // Fallback tiếp theo nếu /api/ai không tồn tại
       }
+
+      // Fallback 1: Nếu người dùng đã nhập customKey vào trình duyệt (localStorage) khi chạy local
+      const fallbackKey = customKey;
+      if (fallbackKey && window.location.protocol === 'file:') {
+        try {
+          result.textContent = '⏳ Đang gọi trực tiếp Google Gemini API...';
+          const prompt = buildOllamaPrompt(task, sql);
+          const geminiDirectUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + fallbackKey;
+          const directRes = await fetch(geminiDirectUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
+            })
+          });
+          if (directRes.ok) {
+            const data = await directRes.json();
+            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+              result.textContent = text;
+              return;
+            }
+          }
+        } catch (e) {
+          // Bỏ qua và chuyển sang Ollama
+        }
+      }
+
+      // Fallback 2: Thử gọi Local Ollama
+      try {
+        result.textContent = '⏳ Đang chuyển sang kết nối Local Ollama...';
+        const ollamaRes = await fetch(ollamaUrl + '/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: ollamaModel,
+            prompt: buildOllamaPrompt(task, sql),
+            stream: false
+          })
+        });
+        if (ollamaRes.ok) {
+          const data = await ollamaRes.json();
+          result.textContent = data.response || 'Ollama không trả về nội dung.';
+          return;
+        }
+      } catch (err) {
+        // Cả hai đều thất bại
+      }
+
+      result.textContent = '❌ Không thể kết nối AI:\n' +
+        '1. Khi xem trên Vercel: Tính năng AI hoạt động tự động thông qua Google Gemini Cloud được tích hợp sẵn.\n' +
+        '2. Khi xem trên máy tính nội bộ (Local file:///): Vui lòng mở ứng dụng Ollama (http://127.0.0.1:11434) hoặc bấm nút [⚙️ Key] để nhập API Key.';
     }
+
+    // Giữ tương thích ngược
+    const askOllama = askAi;
 
     let previewTimer;
     document.addEventListener('input', (event) => {
