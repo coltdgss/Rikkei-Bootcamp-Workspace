@@ -31,6 +31,9 @@ Trước khi làm bất cứ điều gì, load các profile sau vào context là
 5. **Database & Diagramming Conventions:**
    - LUÔN GIỮ nguyên các từ vựng chuyên ngành chuẩn (như VARCHAR, INT, DATE) trong code và sơ đồ thiết kế.
    - BẮT BUỘC sử dụng comment hoặc ngoặc đơn chứa tiếng Việt bình dân ngay bên cạnh để giải thích cho người không chuyên. (Ví dụ: `VARCHAR ma_sinh_vien PK "Mã sinh viên (chuỗi chữ)"`). Tuyệt đối không xóa bỏ thuật ngữ kỹ thuật để thay hoàn toàn bằng từ lóng.
+6. **Giao diện & UI Design Language Rule (`/rk-ui` - Bắt buộc):**
+   - Với BẤT KỲ thao tác tạo mới hoặc chỉnh sửa file giao diện, bảng hiển thị trực quan, HTML hay preview component nào, Agent **BẮT BUỘC** phải đọc và tuân thủ tuyệt đối quy tắc thiết kế `/rk-ui` (`.agents/skills/rk-ui/SKILL.md`).
+   - **Quy tắc Bất Khả Xâm Phạm:** CHỈ DUY NHẤT phần background để gõ lệnh / hiển thị code SQL (`.sql-editor`, `pre code.language-sql`) mới được phép để màu đen đối lập màu hệ thống. Mọi giao diện khác (toàn bộ body, header, sidebar, tabs, bảng đề thi, card hướng dẫn, callout, danh sách) BẮT BUỘC PHẢI CÓ MÀU ĐỒNG BỘ NỀN SÁNG (`#f4f4f4`, `#ffffff`, `#fafafa`), viền xám (`#e5e5e5`), chữ đen (`#111111`) với ngôn ngữ thiết kế của hệ thống (`Dashboard_v1`), TUYỆT ĐỐI KHÔNG ĐƯỢC PHÉP LỆCH TONE (cấm áp dụng dark theme xanh đen / cyberpunk toàn trang).
 
 Sau khi load và verify xong, in 1 dòng trạng thái:
 `[COGNITIVE OS LOADED ✓] — V4.1 Fact-checked, accountable, and ready for deep reasoning.`
