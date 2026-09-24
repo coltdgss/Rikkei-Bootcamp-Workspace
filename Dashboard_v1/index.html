@@ -40,7 +40,9 @@
     summary::-webkit-details-marker { display: none; }
     summary::before { content: '+'; display: inline-block; width: 15px; color: var(--muted); }
     details[open] > summary::before { content: '-'; }
-    .module-summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .module-summary { display: flex; align-items: center; gap: 8px; }
+    .module-summary > span:first-of-type { flex: 1; text-align: left; }
+    .module-summary .status { margin-left: auto; text-align: right; flex-shrink: 0; }
     .status { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .08em; }
     .session-tree { padding: 0 8px 8px; }
     .session-tree details { margin: 4px 0; border: 0; border-radius: 5px; background: var(--soft); }
@@ -367,14 +369,14 @@
             <details><summary>Session 08–16 · JavaScript</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_08_JS_Basic/s81/s8_1.html" data-title="Bài 1 · JavaScript Basic" data-module="Module 1 · Frontend" data-session="Session 08">Bài 1 · JavaScript Basic</a><a class="item" href="../Module_1_Frontend/Session_13_Array/s13_1/index.html" data-title="Bài 1 · Array" data-module="Module 1 · Frontend" data-session="Session 13">Bài 1 · Array</a><a class="item" href="../Module_1_Frontend/Session_16_Funtion_Array_Method/s16_1/index.html" data-title="Bài 1 · Array Methods" data-module="Module 1 · Frontend" data-session="Session 16">Bài 1 · Array Methods</a></div></details>
           </div>
         </details>
-        <details open data-module="module 2 database">
+        <details data-module="module 2 database">
           <summary class="module-summary"><span>Module 2 · Database</span><span class="status">3 BTOL · 24 BTVN · 2 Theory</span></summary>
           <div class="session-tree">
-            <details open><summary>Session 00 · Ôn tập Online (BTOL)</summary><div class="items">
+            <details><summary>Session 00 · Ôn tập Online (BTOL)</summary><div class="items">
               <span class="item" data-title="BTOL 1 · Chờ nạp dữ liệu" data-module="Module 2 · Database" data-session="Session 00">BTOL 1 · (Chờ nạp dữ liệu)</span>
               <span class="item" data-title="BTOL 2 · Chờ nạp dữ liệu" data-module="Module 2 · Database" data-session="Session 00">BTOL 2 · (Chờ nạp dữ liệu)</span>
               <span class="item" data-btvn="s0_btol3" data-title="BTOL 3 · Quản lý chuỗi Konbini" data-module="Module 2 · Database" data-session="Session 00">BTOL 3 · Quản lý chuỗi Konbini</span>
-              <a class="item active" href="../Module_2_Database/huong_dan_thi_mysql_workbench.html" data-title="Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani)" data-module="Module 2 · Database" data-session="Session 00">📖 Cẩm nang thi MySQL Workbench (Đề Kobani)</a>
+              <a class="item" href="../Module_2_Database/huong_dan_thi_mysql_workbench.html" data-title="Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani)" data-module="Module 2 · Database" data-session="Session 00">📖 Cẩm nang thi MySQL Workbench (Đề Kobani)</a>
               <a class="item" href="../Module_2_Database/bvkt_database_fundamentals_konbini.html" data-title="BVKT · Từ ý tưởng đến database thật: hành trình xây MySQL cùng dự án Konbini" data-module="Module 2 · Database" data-session="Session 00">📑 BVKT · Database Fundamentals (Dự án Konbini)</a>
             </div></details>
             <details><summary>Session 01 · ERD & thực thể</summary><div class="items">
@@ -393,7 +395,7 @@
               <span class="item" data-btvn="s2_btvn5" data-title="BTVN 5 · Quản lý sinh viên - Lớp học" data-module="Module 2 · Database" data-session="Session 02">BTVN 5 · Quản lý sinh viên - Lớp học</span>
               <span class="item" data-btvn="s2_btvn6" data-title="BTVN 6 · Quản lý đơn hàng - Sản phẩm" data-module="Module 2 · Database" data-session="Session 02">BTVN 6 · Quản lý đơn hàng - Sản phẩm</span>
             </div></details>
-            <details open><summary>Session 03 · SQL cơ bản</summary><div class="items">
+            <details><summary>Session 03 · SQL cơ bản</summary><div class="items">
               <a class="item" href="../Module_2_Database/Session_03/theory3_ddl_basics.html" data-title="Theory 3 · SQL cơ bản &amp; DDL (Lý thuyết)" data-module="Module 2 · Database" data-session="Session 03">📖 Theory 3 · SQL cơ bản &amp; DDL (Lý thuyết)</a>
               <span class="item" data-btvn="s3_btvn1" data-title="BTVN 1 · Quản lý sinh viên - Lớp học" data-module="Module 2 · Database" data-session="Session 03">BTVN 1 · Quản lý sinh viên - Lớp học</span>
               <span class="item" data-btvn="s3_btvn2" data-title="BTVN 2 · Quản lý thư viện" data-module="Module 2 · Database" data-session="Session 03">BTVN 2 · Quản lý thư viện</span>
@@ -401,7 +403,7 @@
               <span class="item" data-btvn="s3_btvn4" data-title="BTVN 4 · Quản lý tài khoản người dùng" data-module="Module 2 · Database" data-session="Session 03">BTVN 4 · Quản lý tài khoản người dùng</span>
               <span class="item" data-btvn="s3_btvn5" data-title="BTVN 5 · Quản lý khóa học trực tuyến" data-module="Module 2 · Database" data-session="Session 03">BTVN 5 · Quản lý khóa học trực tuyến</span>
             </div></details>
-            <details open><summary>Session 04 · Thao tác dữ liệu (DML)</summary><div class="items">
+            <details><summary>Session 04 · Thao tác dữ liệu (DML)</summary><div class="items">
               <a class="item" href="../Module_2_Database/Session_04/theory4_dml.html" data-title="Theory 4 · Nhóm lệnh DML (Lý thuyết)" data-module="Module 2 · Database" data-session="Session 04">📖 Theory 4 · Nhóm lệnh DML (Lý thuyết)</a>
               <span class="item" data-btvn="s4_btvn1" data-title="BTVN 1 · Thêm dữ liệu sinh viên" data-module="Module 2 · Database" data-session="Session 04">BTVN 1 · Thêm dữ liệu sinh viên</span>
               <span class="item" data-btvn="s4_btvn2" data-title="BTVN 2 · Cập nhật và xóa dữ liệu" data-module="Module 2 · Database" data-session="Session 04">BTVN 2 · Cập nhật và xóa dữ liệu</span>
@@ -410,7 +412,7 @@
               <span class="item" data-btvn="s4_btvn5" data-title="BTVN 5 · Quản lý nhân viên" data-module="Module 2 · Database" data-session="Session 04">BTVN 5 · Quản lý nhân viên</span>
               <span class="item" data-btvn="s4_btvn6" data-title="BTVN 6 · Quản lý sản phẩm" data-module="Module 2 · Database" data-session="Session 04">BTVN 6 · Quản lý sản phẩm</span>
             </div></details>
-            <details open><summary>Session 05 · Hàm, Gom nhóm &amp; Nối bảng</summary><div class="items">
+            <details><summary>Session 05 · Hàm, Gom nhóm &amp; Nối bảng</summary><div class="items">
               <a class="item" href="../Module_2_Database/Session_05/theory5_functions_join.html" data-title="Theory 5 · Hàm, Gom nhóm &amp; JOIN (Lý thuyết)" data-module="Module 2 · Database" data-session="Session 05">📖 Theory 5 · Hàm &amp; JOIN (Lý thuyết)</a>
               <span class="item" data-btvn="s5_btvn1" data-title="BTVN 1 · Sử dụng các hàm SQL thông dụng" data-module="Module 2 · Database" data-session="Session 05">BTVN 1 · Sử dụng các hàm SQL thông dụng</span>
               <span class="item" data-btvn="s5_btvn2" data-title="BTVN 2 · Group by và Having" data-module="Module 2 · Database" data-session="Session 05">BTVN 2 · Group by và Having</span>
@@ -551,7 +553,7 @@
           .replace('Objectt', 'Object')
           .replace('Funtion', 'Function');
         return `
-        <details ${index === 0 ? 'open' : ''}><summary>${escapeMarkup(cleanSession)}</summary><div class="items">
+        <details><summary>${escapeMarkup(cleanSession)}</summary><div class="items">
           ${paths.map((path) => {
             const fileName = path.split('/').pop().replace(/\.html$/i, '');
             const title = fileName === 'index' ? path.split('/').slice(-2, -1)[0] : fileName;
@@ -3097,7 +3099,7 @@ Hãy trả lời bằng tiếng Việt sư phạm, định dạng Markdown rõ r
       document.getElementById('previewTitle').textContent = title;
       
       document.querySelectorAll('.item').forEach((node) => node.classList.toggle('active', node === item));
-      syncActiveMenu(item);
+      syncActiveMenu(item, isInitialLoad);
 
       if (btvnKey && btvnDatabase[btvnKey]) {
         document.getElementById('pageDescription').textContent = 'Bảng trực quan gồm lý thuyết, nội dung README, biểu đồ dữ liệu và sơ đồ quan hệ của ' + title + '.';
@@ -3123,33 +3125,62 @@ Hãy trả lời bằng tiếng Việt sư phạm, định dạng Markdown rõ r
       newTab.disabled = false;
     }
 
-    function syncActiveMenu(activeItem) {
+    function syncActiveMenu(activeItem, isInitial = false) {
       if (!activeItem) return;
-      let parent = activeItem.closest('details');
-      const activeDetails = [];
-      while (parent && parent.closest('.tree')) {
-        activeDetails.push(parent);
-        parent = parent.parentElement ? parent.parentElement.closest('details') : null;
+      const savedModule = sessionStorage.getItem('rk_active_module');
+
+      // Nếu là lần đầu mở trang trong phiên mới (chưa có lưu tạm): giữ TOÀN BỘ Module ở trạng thái ĐÓNG
+      if (isInitial && !savedModule) {
+        document.querySelectorAll('.tree details').forEach((d) => { d.open = false; });
+        return;
       }
-      document.querySelectorAll('.tree details').forEach((d) => {
-        if (activeDetails.includes(d)) {
-          d.open = true;
-        } else {
-          d.open = false;
+
+      // Xác định module cha cấp cao nhất (Module 1, 2, 3, 4, 5)
+      const targetTopModule = activeItem.closest('.tree > details[data-module]');
+      if (targetTopModule) {
+        // Nếu là khởi tạo trang mà có lưu tạm trong phiên, chỉ mở nếu trùng với module đã lưu
+        if (isInitial && savedModule && targetTopModule.dataset.module !== savedModule) {
+          return;
         }
-      });
+
+        // Accordion: mở module đích và tự động ĐÓNG toàn bộ các module khác
+        document.querySelectorAll('.tree > details[data-module]').forEach((m) => {
+          m.open = (m === targetTopModule);
+        });
+        sessionStorage.setItem('rk_active_module', targetTopModule.dataset.module);
+
+        // Mở Session con trực tiếp chứa bài học đang chọn, đóng các session anh em
+        const sessionDetail = activeItem.closest('.session-tree > details, .tree > details > details');
+        if (sessionDetail && sessionDetail.parentElement) {
+          sessionDetail.parentElement.querySelectorAll(':scope > details').forEach((sib) => {
+            sib.open = (sib === sessionDetail);
+          });
+        }
+      }
     }
 
-    // Tự động đóng các menu không thuộc nhánh đang chọn khi click ra ngoài sidebar
-    document.addEventListener('click', (event) => {
-      if (!event.target.closest('.sidebar')) {
-        const activeItem = document.querySelector('.tree .item.active');
-        if (activeItem) syncActiveMenu(activeItem);
-      }
+    // Quản lý Accordion cho các Module cấp cao nhất & lưu tạm theo phiên (sessionStorage)
+    const topModules = document.querySelectorAll('.tree > details[data-module]');
+    topModules.forEach((mod) => {
+      mod.addEventListener('toggle', () => {
+        if (mod.open) {
+          // Khi 1 module mở: đóng các module khác ngay lập tức (Single-open Accordion)
+          topModules.forEach((other) => {
+            if (other !== mod && other.open) other.open = false;
+          });
+          sessionStorage.setItem('rk_active_module', mod.dataset.module);
+        } else {
+          // Khi module bị đóng: nếu không còn module nào mở thì xóa lưu tạm
+          const anyOpen = Array.from(topModules).some((m) => m.open);
+          if (!anyOpen) {
+            sessionStorage.removeItem('rk_active_module');
+          }
+        }
+      });
     });
 
-    // Khi người dùng bấm mở một Session/Module khác, tự động thu gọn các mục đồng cấp
-    document.querySelectorAll('.tree details > summary').forEach((summary) => {
+    // Khi người dùng bấm mở một Session bên trong Module, tự động thu gọn các Session đồng cấp
+    document.querySelectorAll('.session-tree details > summary, .tree > details > details > summary').forEach((summary) => {
       summary.addEventListener('click', () => {
         const details = summary.parentElement;
         if (!details.open) {
