@@ -1,25 +1,43 @@
-# Bỏ qua các file và thư mục tạm thời, cache hệ thống
-.DS_Store
-Thumbs.db
+# =============================================================================
+# CHỈ THEO DÕI NỘI DUNG HỌC TẬP VÀ FRONTEND NỘP CHO GIẢNG VIÊN (WHITELIST)
+# BẢO MẬT TUYỆT ĐỐI: KHÔNG ĐẨY BẤT KỲ FILE BACKEND / SCRIPTS / BÍ MẬT HỆ THỐNG
+# =============================================================================
+
+# 1. Bỏ qua toàn bộ script backend, tự động hóa và cache
+scripts/
+scratch/
 __pycache__/
+*.py
 *.pyc
+*.bat
+*.cmd
 .env
 .idea/
 .vscode/
 
-# Whitelist các thư mục chính của dự án
+# 2. Bỏ qua các tài liệu ghi chú nội bộ, dataset riêng tư
+About_Dataset/
+Draft-Tag.md
+private_data_set/
+*.docx
+.DS_Store
+Thumbs.db
+
+# 3. Bỏ qua các cấu hình AI & Agents
+.agents/
+.claude/
+.gemini/
+
+# 4. CHỈ CHO PHÉP (WHITELIST) FRONTEND VÀ BÀI TẬP CỦA BOOTCAMP
 !/Module_1_Frontend/
 !/Module_2_Database/
 !/Module_3_Java_Core/
 !/Module_4_FE_IT/
 !/Module_5_Java_Web/
 !/Dashboard_v1/
-!/scripts/
 
-# Whitelist các file cấu hình và điều khiển
-!.gitignore
-!/vercel.json
+# 5. Các file cấu hình deploy Vercel và giao diện tĩnh
 !/index.html
-!/BANG_DIEU_KHIEN.bat
-!/run_menu.bat
+!/vercel.json
 !/README.md
+!.gitignore
