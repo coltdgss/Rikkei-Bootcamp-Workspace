@@ -502,64 +502,457 @@
     }
     .card li { margin-bottom: 5px; }
 
-    /* Bản đồ UI Workbench (Tab 2) */
-    .workbench-map {
-      background: var(--bg-soft);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px;
-      margin: 14px 0;
-      font-size: 12px;
-    }
-    .ui-toolbar {
+    /* =========================================================================
+       BẢN ĐỒ WORKBENCH TRỰC QUAN (TAB 2) - CHUẨN RK-UI MINIMALIST
+       ========================================================================= */
+    .wb-guide-container {
       display: flex;
-      gap: 8px;
-      align-items: center;
-      background: var(--white);
-      padding: 8px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--line);
-      margin-bottom: 12px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 20px;
     }
-    .tool-btn {
+
+    /* Các thẻ giai đoạn lớn (Stages) */
+    .wb-stage-card {
+      background: var(--white);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+    .wb-stage-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    .wb-stage-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      background: var(--white);
-      border: 1px solid #d0d7de;
-      padding: 5px 9px;
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #24292f;
-    }
-    .tool-btn.highlight {
+      justify-content: center;
+      width: 28px;
+      height: 28px;
       background: var(--black);
-      border-color: var(--black);
       color: var(--white);
-    }
-    .ui-grid {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-    .ui-panel {
-      background: var(--white);
-      border: 1px solid var(--line);
       border-radius: 6px;
-      padding: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
     }
-    .ui-panel-title {
-      font-size: 11px;
-      text-transform: uppercase;
+    .wb-stage-title {
+      font-size: 15px;
       font-weight: 800;
       color: var(--black);
-      letter-spacing: .06em;
-      margin-bottom: 8px;
+      letter-spacing: -.02em;
+    }
+    .wb-stage-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Khung giả lập Mockup MySQL Workbench */
+    .wb-window-mockup {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      margin: 16px 0;
+      font-size: 11.5px;
+    }
+    .wb-titlebar {
+      background: #e2e8f0;
+      padding: 6px 12px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid #cbd5e1;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+    }
+    .wb-window-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .wb-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #94a3b8;
+      display: inline-block;
+    }
+    .wb-dot.red { background: #ef4444; }
+    .wb-dot.yellow { background: #f59e0b; }
+    .wb-dot.green { background: #10b981; }
+
+    /* Thanh Menu cấp cao (Menu Bar) */
+    .wb-menubar {
+      background: #f1f5f9;
+      display: flex;
+      gap: 14px;
+      padding: 5px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 11px;
+      color: #1e293b;
+      font-weight: 600;
+      flex-wrap: wrap;
+    }
+    .wb-menu-item {
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .wb-menu-item:hover, .wb-menu-item.active {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* Thanh Toolbar chính (Main Toolbar) */
+    .wb-main-toolbar {
+      background: #ffffff;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .wb-tool-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 8px;
+      border-right: 1px solid #e2e8f0;
+    }
+    .wb-tool-group:last-child {
+      border-right: none;
+    }
+    .wb-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .wb-btn:hover {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+    .wb-btn.highlight-primary {
+      background: #111111;
+      border-color: #111111;
+      color: #ffffff;
+    }
+    .wb-btn.highlight-accent {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+      font-weight: 700;
+    }
+
+    /* Tab kết nối server (Home vs Connection) */
+    .wb-conn-tabs {
+      background: #e2e8f0;
+      display: flex;
+      gap: 2px;
+      padding: 4px 10px 0 10px;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    .wb-conn-tab {
+      padding: 5px 12px;
+      background: #cbd5e1;
+      border-radius: 5px 5px 0 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .wb-conn-tab.active {
+      background: #ffffff;
+      color: #0f172a;
+      border-top: 2px solid #111111;
+    }
+
+    /* Thanh Editor Toolbar (Tia sét & công cụ truy vấn) */
+    .wb-editor-bar {
+      background: #f8fafc;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+
+    /* Khung phân chia 2 cột của Workbench */
+    .wb-split-content {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 380px;
+      background: #ffffff;
+    }
+
+    /* Cột trái Navigator */
+    .wb-navigator {
+      border-right: 1px solid #e2e8f0;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .wb-nav-header {
+      padding: 8px 10px;
+      background: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 11px;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .wb-nav-tree {
+      padding: 10px;
+      font-family: var(--font-code);
+      font-size: 11px;
+      line-height: 1.8;
+      color: #1e293b;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .wb-tree-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .wb-tree-item:hover {
+      background: #e2e8f0;
+    }
+    .wb-tree-item.selected {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+    }
+    .wb-tree-item.trash {
+      color: #dc2626;
+      text-decoration: line-through;
+    }
+    .wb-nav-footer-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid #e2e8f0;
+      background: #e2e8f0;
+      gap: 1px;
+    }
+    .wb-nav-footer-tab {
+      padding: 6px 8px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: pointer;
+    }
+    .wb-nav-footer-tab.active {
+      background: #ffffff;
+      color: #0f172a;
+      border-top: 2px solid #111111;
+    }
+
+    /* Khung phải: SQL Query Editor & Action Output */
+    .wb-main-view {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .wb-query-tabs {
+      background: #f1f5f9;
+      display: flex;
+      gap: 2px;
+      padding: 4px 8px 0 8px;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    .wb-query-tab {
+      padding: 4px 10px;
+      background: #e2e8f0;
+      border-radius: 4px 4px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wb-query-tab.active {
+      background: var(--code-bg);
+      color: #ffffff;
+      border-top: 2px solid #3b82f6;
+    }
+    .wb-code-area {
+      background: var(--code-bg);
+      color: var(--code-text);
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      line-height: 1.6;
+      padding: 12px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    /* Bảng đáy Action Output */
+    .wb-output-box {
+      border-top: 2px solid #cbd5e1;
+      background: #ffffff;
+    }
+    .wb-output-header {
+      padding: 5px 10px;
+      background: #f1f5f9;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .wb-output-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      font-family: var(--font-system);
+    }
+    .wb-output-table th {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      text-align: left;
+      padding: 5px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+    .wb-output-table td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+    .wb-output-table tr:hover {
+      background: #f8fafc;
+    }
+    .wb-output-table .status-ok {
+      color: #16a34a;
+      font-weight: 700;
+    }
+    .wb-output-table .status-err {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    /* Bảng từ điển Menu & Thao tác */
+    .wb-dictionary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 11.5px;
+    }
+    .wb-dictionary-table th, .wb-dictionary-table td {
+      border: 1px solid var(--line-table);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .wb-dictionary-table th {
+      background: #f1f1f1;
+      color: var(--black);
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .wb-dictionary-table td strong {
+      color: var(--black);
+    }
+    .wb-dictionary-table code {
+      font-family: var(--font-code);
+      background: #f4f4f4;
+      padding: 2px 5px;
+      border-radius: 4px;
+      border: 1px solid #e5e5e5;
+      font-size: 11px;
+    }
+
+    /* Phím tắt KBD */
+    kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      font-family: var(--font-code);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #24292f;
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      box-shadow: inset 0 -1px 0 #d0d7de;
+      margin: 0 2px;
+    }
+
+    /* Các thẻ Card bước dạng Flow Grid */
+    .wb-step-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .wb-step-card-item {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.15s ease;
+    }
+    .wb-step-card-item:hover {
+      border-color: var(--black);
+    }
+    .wb-step-num-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .wb-step-circle {
+      width: 20px;
+      height: 20px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
     }
 
     /* Sơ đồ 5 bước (Tab 3) */
@@ -1134,57 +1527,534 @@ DELIMITER ;
       </div>
     </div>
 
-    <!-- TAB 2: THAO TÁC WORKBENCH -->
+    <!-- TAB 2: THAO TÁC WORKBENCH TOÀN TẬP TỪ A - Z -->
     <div id="tab-workbench" class="tab-content" style="display:none;">
-      <div class="card" id="sec-workbench">
-        <h2>🖥️ 2. Bản đồ giao diện & Nút bấm quan trọng nhất trên MySQL Workbench</h2>
-        <p>Trên màn hình MySQL Workbench của bạn (như trong ảnh thực tế), hãy làm chủ <strong>4 vị trí cốt tử</strong> sau:</p>
+      <div class="wb-guide-container">
 
-        <div class="workbench-map">
-          <div class="ui-toolbar">
-            <span style="font-size:11px;color:var(--text-muted);margin-right:8px;font-weight:700;">Thanh công cụ Editor:</span>
-            <div class="tool-btn highlight" title="Tia sét 1">⚡ <span>Tia sét 1 (Run All)</span> <small style="opacity:0.7">Ctrl+Shift+Enter</small></div>
-            <div class="tool-btn highlight" title="Tia sét 2 (RẤT QUAN TRỌNG)">⚡| <span>Tia sét 2 (Run Dòng Hiện Tại)</span> <small style="color:#f59e0b">Ctrl+Enter</small></div>
-            <div class="tool-btn">💾 <span>Lưu file (Ctrl+S)</span></div>
-            <div class="tool-btn">🧹 <span>Xóa chữ</span></div>
+        <!-- THẺ MỞ ĐẦU TỔNG QUAN -->
+        <div class="card" style="margin-bottom:0;">
+          <h2>🖥️ 2. Bản đồ thao tác MySQL Workbench từ A – Z (Dành cho người mới bắt đầu)</h2>
+          <p>Tài liệu này được biên soạn đặc biệt cho học viên <strong>giỏi thao tác máy tính nhưng chưa từng dùng MySQL Workbench</strong>. Hướng dẫn cầm tay chỉ việc từ khi vừa bật ứng dụng, mở kết nối server, tạo tab gõ lệnh, xóa sạch dữ liệu cũ đến khi lưu file nộp bài đạt điểm tối đa.</p>
+        </div>
+
+        <!-- CHẶNG 1: MỞ SERVER TỪ MÀN HÌNH HOME -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">1</span>
+            <div>
+              <div class="wb-stage-title">Chặng 1: Bắt đầu từ màn hình chính (Home 🏠) & Mở kết nối Server</div>
+              <div class="wb-stage-subtitle">Cách mở kết nối và xử lý khi server MySQL chưa khởi động</div>
+            </div>
           </div>
 
-          <div class="ui-grid">
-            <div class="ui-panel">
-              <div class="ui-panel-title">
-                <span>SCHEMAS (Cột trái)</span>
-                <span style="cursor:pointer;color:var(--black);font-weight:bold;" title="Nút Refresh cực kỳ quan trọng">🔄 Refresh</span>
+          <p>Khi bạn vừa mở phần mềm <strong>MySQL Workbench</strong> từ màn hình máy tính, giao diện chào mừng <em>(Welcome to MySQL Workbench)</em> sẽ hiện ra:</p>
+
+          <div class="wb-step-cards">
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">1</span>
+                <span>Tìm ô kết nối (MySQL Connections)</span>
               </div>
-              <p style="font-size:11.5px;color:#555;margin-bottom:6px;">Chứa danh sách CSDL. <strong>Quy tắc vàng:</strong> Sau khi gõ <span class="tag">CREATE DATABASE</span>, bạn BẮT BUỘC phải bấm nút <strong>🔄 Refresh</strong> ở góc trên thanh SCHEMAS này thì CSDL mới hiển thị ra cây thư mục!</p>
-              <div style="font-size:11px;font-family:var(--font-code);color:#222;background:#f7f7f7;padding:8px;border-radius:4px;border:1px solid #e5e5e5;line-height:1.8;">
-                📁 CuaHangKobani<br>
-                &nbsp;&nbsp;├ 📄 Tables (KhachHang, SanPham...)<br>
-                &nbsp;&nbsp;├ 👁️ Views<br>
-                &nbsp;&nbsp;└ ⚙️ Stored Procedures
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Nhìn vào giữa màn hình, khu vực <strong>MySQL Connections</strong>. Bạn sẽ thấy một ô chữ nhật mang tên <strong><code>rikkei</code></strong> (hoặc <strong><code>Local instance MySQL80</code></strong>) kèm thông tin <em>root | localhost:3306</em>.
+              </p>
+              <div style="background:#f1f5f9;padding:6px 10px;border-radius:5px;font-size:11px;font-weight:600;color:#1e293b;border:1px solid #cbd5e1;">
+                🖱️ Thao tác: <strong>Nhấp đúp chuột trái (Double-click)</strong> trực tiếp vào ô này.
               </div>
             </div>
 
-            <div class="ui-panel">
-              <div class="ui-panel-title">
-                <span>SQL Query Editor (Ô soạn thảo giữa)</span>
-                <span style="color:#16a34a;font-weight:bold;">Đang hoạt động</span>
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">2</span>
+                <span>Nhập mật khẩu tài khoản Root (Nếu có hỏi)</span>
               </div>
-              <p style="font-size:11.5px;color:#555;">Nơi gõ code. Đặt con trỏ chuột vào câu lệnh muốn thực thi rồi bấm phím tắt <span class="tag" style="background:#111;color:#fff;font-weight:bold;">Ctrl + Enter</span>.</p>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Một cửa sổ pop-up <em>"Connect to MySQL Server"</em> sẽ xuất hiện yêu cầu mật khẩu:
+                <br>• Gõ mật khẩu bạn đã cài khi cài MySQL (hoặc mật khẩu phòng thi giáo viên cung cấp).
+                <br>• Tích chọn ô: <strong>☑ Save password in vault</strong> để không bị hỏi lại lần sau.
+              </p>
+              <div style="background:#f1f5f9;padding:6px 10px;border-radius:5px;font-size:11px;font-weight:600;color:#1e293b;border:1px solid #cbd5e1;">
+                🖱️ Thao tác: Bấm nút <strong>OK</strong> để đăng nhập vào máy chủ.
+              </div>
+            </div>
+
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">3</span>
+                <span>Xử lý nếu gặp lỗi không kết nối được</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Nếu báo lỗi <em>"Cannot connect to Database Server"</em> ➔ Do dịch vụ MySQL trên Windows chưa bật:
+                <br>• Bấm phím <kbd>Windows</kbd> + <kbd>R</kbd> ➔ Gõ <code>services.msc</code> ➔ Enter.
+                <br>• Tìm dịch vụ tên <strong>MySQL80</strong> ➔ Chuột phải chọn <strong>Start</strong>.
+              </p>
+              <div style="background:#f0fdf4;padding:6px 10px;border-radius:5px;font-size:11px;font-weight:600;color:#166534;border:1px solid #bbf7d0;">
+                ✅ Khi kết nối thành công: Tab làm việc mang tên <strong><code>rikkei ✕</code></strong> xuất hiện trên cùng!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHẶNG 2: TẠO PHẦN GÕ LỆNH SQL MỚI -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">2</span>
+            <div>
+              <div class="wb-stage-title">Chặng 2: Tạo phần gõ lệnh SQL mới (New SQL Query Tab)</div>
+              <div class="wb-stage-subtitle">3 cách mở khung soạn thảo lệnh nhanh chóng và chuyên nghiệp</div>
+            </div>
+          </div>
+
+          <p>Để bắt đầu viết các câu lệnh SQL giải bài thi, bạn cần mở một trang soạn thảo trắng (Query Tab). Hãy sử dụng 1 trong 3 cách sau:</p>
+
+          <div class="wb-step-cards">
+            <div class="wb-step-card-item" style="border:2px solid var(--black);">
+              <div class="wb-step-num-badge">
+                <span style="color:#d97706;font-size:13px;">⭐</span>
+                <span>Cách 1 (Nhanh nhất - Chuẩn chuyên gia): Phím tắt</span>
+              </div>
+              <p style="font-size:12.5px;color:#111;line-height:1.6;font-weight:600;">
+                Nhấn tổ hợp phím: <kbd>Ctrl</kbd> + <kbd>T</kbd>
+              </p>
+              <p style="font-size:11.5px;color:#555;">
+                Ngay lập tức một tab mới xuất hiện bên cạnh tab cũ (ví dụ <strong><code>SQL File 1</code></strong> hoặc <strong><code>SQL File 4*</code></strong> như trong ảnh thực tế của bạn).
+              </p>
+            </div>
+
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">2</span>
+                <span>Cách 2: Nút bấm trên thanh công cụ (Toolbar)</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Nhìn lên thanh công cụ nằm ngay bên dưới menu <code>File</code> / <code>Edit</code>. Bạn sẽ thấy biểu tượng hình <strong>tờ giấy có hình tia sét và dấu cộng nhỏ ở góc</strong> (tooltip: <em>"Create a new SQL tab for executing queries"</em>).
+              </p>
+              <div style="background:#f1f5f9;padding:6px 10px;border-radius:5px;font-size:11px;font-weight:600;color:#1e293b;border:1px solid #cbd5e1;">
+                🖱️ Thao tác: Click chuột trái 1 lần vào biểu tượng <strong><code>SQL+</code></strong> đó.
+              </div>
+            </div>
+
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">3</span>
+                <span>Cách 3: Menu File trên cùng</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Trên thanh menu trên cùng của cửa sổ MySQL Workbench:
+                <br>• Click vào menu <strong>File</strong> ở góc trên bên trái.
+                <br>• Chọn dòng đầu tiên: <strong>New Query Tab</strong>.
+              </p>
+              <div style="background:#f1f5f9;padding:6px 10px;border-radius:5px;font-size:11px;font-weight:600;color:#1e293b;border:1px solid #cbd5e1;">
+                🖱️ Thao tác: <strong>File ➔ New Query Tab</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHẶNG 3: DỌN DẸP & XÓA BỘ DATA CŨ -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">3</span>
+            <div>
+              <div class="wb-stage-title">Chặng 3: Dọn dẹp sạch sẽ bộ dữ liệu cũ (Clean Slate & Reset)</div>
+              <div class="wb-stage-subtitle">Xóa các database bài tập cũ để tránh lỗi trùng bảng và điểm thi bị sai lệch</div>
+            </div>
+          </div>
+
+          <div class="callout warning" style="margin-top:0;">
+            <strong>Tại sao phải xóa dữ liệu cũ?</strong> Trong ảnh thực tế của bạn, máy đang có sẵn các database từ các buổi học trước như: <span class="tag">nippon_coffee</span>, <span class="tag">rippon_coffee</span>, <span class="tag">student_db</span>. Nếu bạn làm bài thi mà chưa dọn dẹp hoặc chạy đè lên database cũ, MySQL sẽ báo lỗi: <em>"Table 'KhachHang' already exists"</em> hoặc truy vấn ra nhầm dữ liệu của bài cũ khiến bài thi bị chấm điểm sai!
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+            <!-- Cách 1: Code SQL -->
+            <div style="background:#ffffff;border:1px solid var(--line-strong);border-radius:8px;padding:14px;">
+              <div style="font-weight:800;font-size:12.5px;color:var(--black);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                <span>⚡ Phương pháp 1: Dọn dẹp bằng Code SQL (Khuyên dùng trong phòng thi)</span>
+              </div>
+              <p style="font-size:11.5px;color:#555;margin-bottom:8px;">Gõ các câu lệnh này ngay trên dòng đầu tiên của tab soạn thảo rồi bấm <kbd>Ctrl</kbd> + <kbd>Enter</kbd>:</p>
               
-              <div style="margin-top:10px;background:#f7f7f7;padding:10px;border-radius:4px;border:1px solid #e5e5e5;">
-                <div style="color:var(--black);font-size:10.5px;font-weight:700;margin-bottom:4px;text-transform:uppercase;">Action Output (Bảng trạng thái ở đáy màn hình):</div>
-                <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;">
-                  <span style="color:#15803d;font-weight:600;">🟢 Tích xanh: Câu lệnh thành công (Số dòng tác động: 1 row affected)</span>
-                  <span style="color:#dc2626;font-weight:600;">🔴 Dấu X đỏ: Lỗi cú pháp (Xem cột Message để biết lỗi dòng nào)</span>
+              <!-- SACRED EXCEPTION: CHỈ CODE SQL MỚI NỀN ĐEN -->
+              <pre style="background:var(--code-bg);color:var(--code-text);padding:10px;border-radius:6px;font-family:var(--font-code);font-size:11px;line-height:1.6;overflow-x:auto;"><code>-- 1. Xóa bài thi cũ nếu đã tạo dở trước đó
+DROP DATABASE IF EXISTS CuaHangKobani;
+
+-- 2. Xóa các database rác buổi học trước (nếu muốn)
+DROP DATABASE IF EXISTS student_db;
+DROP DATABASE IF EXISTS nippon_coffee;
+DROP DATABASE IF EXISTS rippon_coffee;
+
+-- 3. Tạo CSDL bài thi mới trắng tinh và USE ngay
+CREATE DATABASE CuaHangKobani;
+USE CuaHangKobani;</code></pre>
+              <p style="font-size:11px;color:#16a34a;font-weight:600;margin-top:6px;">👉 Nhờ có mệnh đề <code>IF EXISTS</code>, dù database đó chưa từng tồn tại máy tính cũng không bị báo lỗi đỏ!</p>
+            </div>
+
+            <!-- Cách 2: Bằng chuột -->
+            <div style="background:#ffffff;border:1px solid var(--line-strong);border-radius:8px;padding:14px;">
+              <div style="font-weight:800;font-size:12.5px;color:var(--black);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+                <span>🖱️ Phương pháp 2: Xóa bằng chuột trên cây SCHEMAS</span>
+              </div>
+              <p style="font-size:11.5px;color:#555;margin-bottom:8px;">Nếu muốn xóa tận gốc các database rác bằng giao diện đồ họa:</p>
+              <ol style="font-size:11.5px;color:#333;padding-left:16px;line-height:1.7;">
+                <li>Nhìn vào cột trái <strong>Navigator</strong>, đảm bảo tab dưới đáy đang chọn <strong>Schemas</strong>.</li>
+                <li>Nhấp chuột phải vào tên Database muốn xóa (ví dụ <span class="tag">student_db</span> hoặc <span class="tag">nippon_coffee</span>).</li>
+                <li>Chọn dòng menu: <strong>Drop Schema...</strong></li>
+                <li>Một hộp thoại cảnh báo hiện lên, bấm nút <strong>Drop Now</strong> <em>(Xóa vĩnh viễn ngay lập tức)</em>.</li>
+                <li>Bấm nút <strong>🔄 Refresh</strong> ở góc trên cột SCHEMAS để cập nhật lại danh sách.</li>
+              </ol>
+
+              <div class="callout danger" style="margin-top:10px;margin-bottom:0;padding:8px 12px;font-size:11px;">
+                <strong>⛔ CẢNH BÁO TỬ HUYỆT:</strong> Tuyệt đối <strong>KHÔNG ĐƯỢC XÓA</strong> 3 database hệ thống: <strong><code>sys</code></strong>, <strong><code>sakila</code></strong>, <strong><code>world</code></strong>! Nếu lỡ tay xóa <code>sys</code>, MySQL sẽ bị hỏng nhân hệ thống và không thể chấm bài được.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHẶNG 4: BẢN ĐỒ GIAO DIỆN TRỰC QUAN MÔ PHỎNG WORKBENCH -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">4</span>
+            <div>
+              <div class="wb-stage-title">Chặng 4: Bản đồ giao diện trực quan mô phỏng MySQL Workbench thực tế</div>
+              <div class="wb-stage-subtitle">Hình ảnh mô phỏng đúng 100% màn hình máy tính của bạn — Bấm vào từng khu vực để xem giải thích</div>
+            </div>
+          </div>
+
+          <p>Dưới đây là sơ đồ mô phỏng cửa sổ MySQL Workbench thực tế của bạn (khớp với ảnh chụp). Hãy nắm rõ từng khu vực chức năng:</p>
+
+          <!-- KHUNG MOCKUP GIAO DIỆN WORKBENCH THEO CHUẨN RK-UI -->
+          <div class="wb-window-mockup">
+            <!-- 1. Titlebar -->
+            <div class="wb-titlebar">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="wb-window-dots">
+                  <span class="wb-dot red"></span>
+                  <span class="wb-dot yellow"></span>
+                  <span class="wb-dot green"></span>
+                </div>
+                <span>🐬 MySQL Workbench - [rikkei]</span>
+              </div>
+              <span style="font-size:10px;color:#64748b;">Phiên bản 8.0 CE · Connected as root@localhost:3306</span>
+            </div>
+
+            <!-- 2. Menu Bar -->
+            <div class="wb-menubar">
+              <span class="wb-menu-item active">File</span>
+              <span class="wb-menu-item">Edit</span>
+              <span class="wb-menu-item">View</span>
+              <span class="wb-menu-item" style="color:#d97706;font-weight:700;">Query (⚡)</span>
+              <span class="wb-menu-item">Database</span>
+              <span class="wb-menu-item">Server</span>
+              <span class="wb-menu-item">Tools</span>
+              <span class="wb-menu-item">Scripting</span>
+              <span class="wb-menu-item">Help</span>
+            </div>
+
+            <!-- 3. Main Toolbar -->
+            <div class="wb-main-toolbar">
+              <div class="wb-tool-group">
+                <button class="wb-btn highlight-accent" title="Cách 2: Tạo tab SQL mới (Ctrl+T)">
+                  <span>📄⚡+</span> <span>SQL+ (Tạo Tab Mới)</span>
+                </button>
+                <button class="wb-btn" title="Mở file SQL có sẵn (Ctrl+O)">
+                  <span>📁</span> <span>Open...</span>
+                </button>
+                <button class="wb-btn" title="Lưu bài thi vào máy tính (Ctrl+S)">
+                  <span>💾</span> <span>Save (Ctrl+S)</span>
+                </button>
+              </div>
+              <div class="wb-tool-group">
+                <span style="font-size:10.5px;color:#64748b;font-weight:600;">Kết nối hiện tại:</span>
+                <span style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">rikkei (root@localhost)</span>
+              </div>
+            </div>
+
+            <!-- 4. Tab kết nối Server -->
+            <div class="wb-conn-tabs">
+              <div class="wb-conn-tab">🏠 Home</div>
+              <div class="wb-conn-tab active">rikkei ✕</div>
+            </div>
+
+            <!-- 5. Editor Action Bar (Thanh tia sét) -->
+            <div class="wb-editor-bar">
+              <button class="wb-btn" title="Tia sét 1: Chạy toàn bộ file (Ctrl+Shift+Enter)">
+                ⚡ <span>Tia sét 1 (Run All)</span> <small style="color:#64748b;">Ctrl+Shift+Enter</small>
+              </button>
+              <button class="wb-btn highlight-primary" title="Tia sét 2: VŨ KHÍ TỐI THƯỢNG PHÒNG THI! Đặt con trỏ ở câu nào chạy đúng câu đó (Ctrl+Enter)">
+                ⚡| <span>Tia sét 2 (Run Dòng Này)</span> <small style="color:#f59e0b;font-weight:700;">Ctrl+Enter</small>
+              </button>
+              <button class="wb-btn" title="Dừng câu lệnh đang chạy bị treo">
+                🛑 <span>Stop</span>
+              </button>
+              <button class="wb-btn" title="Xóa trắng chữ">
+                🧹 <span>Clear</span>
+              </button>
+              <button class="wb-btn" title="Tự động căn lề làm đẹp code (Ctrl+B)">
+                🪄 <span>Format SQL (Ctrl+B)</span>
+              </button>
+              <div style="margin-left:auto;display:flex;align-items:center;gap:6px;font-size:10.5px;color:#64748b;">
+                <span>Limit to:</span>
+                <select style="font-size:10.5px;padding:2px 6px;border:1px solid #cbd5e1;border-radius:3px;">
+                  <option>1000 rows</option>
+                  <option>Don't Limit</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 6. Thân chia 2 cột thực tế -->
+            <div class="wb-split-content">
+              <!-- CỘT TRÁI: NAVIGATOR & SCHEMAS -->
+              <div class="wb-navigator">
+                <div>
+                  <div class="wb-nav-header">
+                    <span>SCHEMAS (Cây CSDL)</span>
+                    <button class="wb-btn" style="padding:2px 6px;font-size:10px;background:#ffffff;" title="QUY TẮC SỐNG CÒN: Sau khi CREATE hoặc DROP Database, phải ấn nút này thì danh sách mới hiện ra!">
+                      🔄 Refresh
+                    </button>
+                  </div>
+                  <div class="wb-nav-tree">
+                    <div class="wb-tree-item selected">
+                      <span>📂</span> <strong>CuaHangKobani</strong>
+                    </div>
+                    <div style="padding-left:16px;color:#475569;">
+                      <div>├ 📄 Tables (4 bảng)</div>
+                      <div>├ 👁️ Views</div>
+                      <div>└ ⚙️ Stored Procedures</div>
+                    </div>
+                    <div class="wb-tree-item trash" title="Database cũ từ buổi trước - Cần xóa để tránh xung đột">
+                      <span>📁</span> <span>nippon_coffee</span> <small>(cũ)</small>
+                    </div>
+                    <div class="wb-tree-item trash" title="Database cũ từ buổi trước - Cần xóa để tránh xung đột">
+                      <span>📁</span> <span>rippon_coffee</span> <small>(cũ)</small>
+                    </div>
+                    <div class="wb-tree-item trash" title="Database cũ từ buổi trước - Cần xóa để tránh xung đột">
+                      <span>📁</span> <span>student_db</span> <small>(cũ)</small>
+                    </div>
+                    <div class="wb-tree-item" style="color:#64748b;" title="Database hệ thống - CẤM XÓA!">
+                      <span>📁</span> <span>sakila</span> <small>(system)</small>
+                    </div>
+                    <div class="wb-tree-item" style="color:#dc2626;font-weight:700;" title="DATABASE LÕI CỦA MYSQL - TUYỆT ĐỐI CẤM XÓA!">
+                      <span>🔒</span> <span>sys</span> <small>(CẤM XÓA!)</small>
+                    </div>
+                    <div class="wb-tree-item" style="color:#64748b;" title="Database hệ thống - CẤM XÓA!">
+                      <span>📁</span> <span>world</span> <small>(system)</small>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Đáy cột trái: 2 tab Administration vs Schemas (BẪY HỌC VIÊN HAY GẶP) -->
+                <div>
+                  <div style="background:#fffbeb;padding:6px 8px;font-size:10px;color:#92400e;border-top:1px solid #fde68a;">
+                    ⚠️ <strong>Bẫy mất database:</strong> Nếu lỡ tay click nhầm vào <em>Administration</em>, danh sách CSDL sẽ biến mất. Chỉ cần click lại tab <strong>Schemas</strong> bên dưới!
+                  </div>
+                  <div class="wb-nav-footer-tabs">
+                    <div class="wb-nav-footer-tab">Administration</div>
+                    <div class="wb-nav-footer-tab active">Schemas</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CỘT PHẢI: KHUNG SOẠN THẢO VÀ ACTION OUTPUT -->
+              <div class="wb-main-view">
+                <!-- Tab bài làm SQL -->
+                <div class="wb-query-tabs">
+                  <div class="wb-query-tab">SQL File 1 ✕</div>
+                  <div class="wb-query-tab active">SQL File 4* ✕</div>
+                  <div class="wb-query-tab" style="cursor:pointer;" title="Mở thêm tab mới">+</div>
+                </div>
+
+                <!-- Khung code SQL Editor (SACRED EXCEPTION: NỀN ĐEN DUY NHẤT) -->
+                <div class="wb-code-area">
+                  <span style="color:#888;">-- 1. Tạo và kích hoạt CSDL bài thi Kobani</span><br>
+                  <span style="color:#60a5fa;font-weight:700;">CREATE DATABASE</span> <span style="color:#f59e0b;">CuaHangKobani</span>;<br>
+                  <span style="color:#60a5fa;font-weight:700;">USE</span> <span style="color:#f59e0b;">CuaHangKobani</span>;<br><br>
+                  <span style="color:#888;">-- 2. Tắt chế độ Safe Update để UPDATE/DELETE không bị chặn (Lỗi 1175)</span><br>
+                  <span style="color:#60a5fa;font-weight:700;">SET</span> SQL_SAFE_UPDATES = <span style="color:#34d399;">0</span>;<br><br>
+                  <span style="color:#888;">-- Đặt con trỏ chuột vào dòng này và bấm Ctrl + Enter để chạy:</span><br>
+                  <span style="color:#60a5fa;font-weight:700;">SELECT</span> * <span style="color:#60a5fa;font-weight:700;">FROM</span> KhachHang;
+                </div>
+
+                <!-- Bảng đáy Action Output (Cửa sổ thông báo kết quả) -->
+                <div class="wb-output-box">
+                  <div class="wb-output-header">
+                    <span>Action Output (Bảng trạng thái thực thi lệnh)</span>
+                    <span style="font-size:10px;color:#64748b;">Xem tích xanh 🟢 hoặc lỗi đỏ 🔴 tại đây</span>
+                  </div>
+                  <table class="wb-output-table">
+                    <thead>
+                      <tr>
+                        <th style="width:30px;">#</th>
+                        <th style="width:70px;">Time</th>
+                        <th>Action</th>
+                        <th>Message</th>
+                        <th style="width:80px;">Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="status-ok">🟢</td>
+                        <td>22:30:15</td>
+                        <td><code>CREATE DATABASE CuaHangKobani</code></td>
+                        <td>1 row(s) affected</td>
+                        <td>0.015 sec</td>
+                      </tr>
+                      <tr>
+                        <td class="status-ok">🟢</td>
+                        <td>22:30:16</td>
+                        <td><code>USE CuaHangKobani</code></td>
+                        <td>0 row(s) affected</td>
+                        <td>0.000 sec</td>
+                      </tr>
+                      <tr style="background:#fef2f2;">
+                        <td class="status-err">🔴</td>
+                        <td>22:30:20</td>
+                        <td><code>SELECT * FROM DonHang</code></td>
+                        <td style="color:#dc2626;font-weight:600;">Error Code: 1046. No database selected (Chưa USE database)</td>
+                        <td>0.000 sec</td>
+                      </tr>
+                      <tr style="background:#fef2f2;">
+                        <td class="status-err">🔴</td>
+                        <td>22:30:25</td>
+                        <td><code>UPDATE SanPham SET gia_ban = 50000</code></td>
+                        <td style="color:#dc2626;font-weight:600;">Error Code: 1175. You are using safe update mode (Cần chạy SET SQL_SAFE_UPDATES = 0;)</td>
+                        <td>0.000 sec</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="callout warning">
-          <strong>🔥 Bí kíp thi đạt điểm cao:</strong> Đừng bao giờ bôi đen toàn bộ bài rồi bấm nút chạy hết một lần! Hãy viết câu nào, đặt con trỏ chuột vào câu đó và bấm <span class="tag">Ctrl + Enter</span>, nhìn xuống đáy màn hình thấy tích xanh 🟢 rồi mới làm tiếp câu sau.
+        <!-- CHẶNG 5: TỪ ĐIỂN MENU & PHÍM TẮT PHÒNG THI -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">5</span>
+            <div>
+              <div class="wb-stage-title">Chặng 5: Từ điển Menu & Bảng phím tắt quyền năng phòng thi</div>
+              <div class="wb-stage-subtitle">Ý nghĩa chuẩn xác của từng nút bấm và menu trong MySQL Workbench</div>
+            </div>
+          </div>
+
+          <p>Nắm vững bảng thuật ngữ này giúp bạn thao tác nhanh gấp 3 lần và không bao giờ bị bỡ ngỡ trước bất kỳ lỗi nào:</p>
+
+          <table class="wb-dictionary-table">
+            <thead>
+              <tr>
+                <th style="width:160px;">Vị trí / Menu</th>
+                <th style="width:170px;">Tên chức năng / Phím tắt</th>
+                <th>Tác dụng trong bài thi & Hướng dẫn sử dụng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Menu File</strong></td>
+                <td><strong>New Query Tab</strong><br><kbd>Ctrl</kbd> + <kbd>T</kbd></td>
+                <td>Mở tab soạn thảo SQL mới trắng tinh để viết code bài thi.</td>
+              </tr>
+              <tr>
+                <td><strong>Menu File</strong></td>
+                <td><strong>Save Script</strong><br><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                <td>Lưu toàn bộ bài làm vào ổ đĩa. <em>Lưu ý: Luôn bấm Ctrl + S sau mỗi câu lệnh hoàn thành!</em></td>
+              </tr>
+              <tr>
+                <td><strong>Menu File</strong></td>
+                <td><strong>Open SQL Script</strong><br><kbd>Ctrl</kbd> + <kbd>O</kbd></td>
+                <td>Mở một file <code>.sql</code> có sẵn trên máy tính (ví dụ file đề bài giáo viên gửi).</td>
+              </tr>
+              <tr>
+                <td><strong>Menu Edit</strong></td>
+                <td><strong>Format SQL Query</strong><br><kbd>Ctrl</kbd> + <kbd>B</kbd></td>
+                <td><strong>Vũ khí làm đẹp code:</strong> Tự động căn lề, thụt dòng câu lệnh SQL cực kỳ ngay ngắn và chuyên nghiệp để giáo viên chấm điểm tối đa.</td>
+              </tr>
+              <tr>
+                <td><strong>Editor Toolbar</strong></td>
+                <td><strong>⚡| Tia sét 2</strong><br><kbd>Ctrl</kbd> + <kbd>Enter</kbd></td>
+                <td><strong>NÚT CỐT TỬ PHÒNG THI:</strong> Chỉ thực thi DUY NHẤT câu lệnh tại vị trí con trỏ chuột đang đứng. Giúp bạn kiểm soát từng bước mà không chạy nhầm toàn bộ bài!</td>
+              </tr>
+              <tr>
+                <td><strong>Editor Toolbar</strong></td>
+                <td><strong>⚡ Tia sét 1</strong><br><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd></td>
+                <td>Chạy TOÀN BỘ file từ dòng 1 đến hết (hoặc chạy đoạn code đang được bôi đen).</td>
+              </tr>
+              <tr>
+                <td><strong>Editor Toolbar</strong></td>
+                <td><strong>🧹 Clear (Cây chổi)</strong></td>
+                <td>Xóa trắng nội dung chữ trong ô soạn thảo hiện tại.</td>
+              </tr>
+              <tr>
+                <td><strong>Cột trái SCHEMAS</strong></td>
+                <td><strong>🔄 Nút Refresh</strong></td>
+                <td><strong>Bắt buộc bấm:</strong> Mỗi khi chạy câu lệnh <code>CREATE DATABASE</code>, <code>CREATE TABLE</code> hoặc <code>CREATE PROCEDURE</code>, phải ấn nút này thì bảng mới hiện ra ở cột trái!</td>
+              </tr>
+              <tr>
+                <td><strong>Đáy cột trái</strong></td>
+                <td><strong>Tab Schemas</strong></td>
+                <td>Hiển thị danh sách các Cơ sở dữ liệu và Bảng. Luôn luôn giữ ở tab này.</td>
+              </tr>
+              <tr>
+                <td><strong>Action Output</strong></td>
+                <td><strong>🟢 Tích xanh</strong></td>
+                <td>Câu lệnh thành công mỹ mãn. Đọc cột <em>Message</em> để xem số dòng bị tác động (ví dụ: <em>1 row affected</em>).</td>
+              </tr>
+              <tr>
+                <td><strong>Action Output</strong></td>
+                <td><strong>🔴 Dấu X đỏ</strong></td>
+                <td>Câu lệnh bị lỗi. Đọc ngay mã lỗi <em>(Error Code)</em> ở cột Message để sửa (Xem Chặng 3 & Tab 4).</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <!-- CHẶNG 6: QUY TRÌNH LƯU VÀ NỘP BÀI THI CUỐI GIỜ -->
+        <div class="wb-stage-card">
+          <div class="wb-stage-header">
+            <span class="wb-stage-badge">6</span>
+            <div>
+              <div class="wb-stage-title">Chặng 6: Quy trình lưu và nộp bài thi cuối giờ (Đảm bảo an toàn 100%)</div>
+              <div class="wb-stage-subtitle">Tránh sự cố mất bài hoặc nộp file trắng 0KB trước khi hết giờ thi</div>
+            </div>
+          </div>
+
+          <div class="wb-step-cards">
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">1</span>
+                <span>Lưu file bài làm (.sql)</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Nhấn tổ hợp phím <kbd>Ctrl</kbd> + <kbd>S</kbd> (hoặc vào menu <strong>File ➔ Save Script As...</strong>).
+                <br>• Chọn thư mục lưu bài (ví dụ thư mục <em>Desktop</em> hoặc <em>D:\BaiThi</em>).
+                <br>• Đặt tên file theo đúng cú pháp quy chế thi: <strong><code>HoVaTen_MaHocVien_MonDatabase.sql</code></strong> (Ví dụ: <code>NguyenVanA_RK01_Kobani.sql</code>).
+              </p>
+            </div>
+
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">2</span>
+                <span>Chạy kiểm tra tổng thể lần cuối</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Trước khi đóng ứng dụng, đặt con trỏ chuột chạy các câu lệnh kiểm tra:
+                <br>• <code>SHOW TABLES;</code> ➔ Kiểm tra xem đã đủ 4 bảng đề bài yêu cầu chưa.
+                <br>• <code>SELECT COUNT(*) FROM KhachHang;</code> ➔ Kiểm tra dữ liệu mẫu đã vào đủ chưa.
+              </p>
+            </div>
+
+            <div class="wb-step-card-item">
+              <div class="wb-step-num-badge">
+                <span class="wb-step-circle">3</span>
+                <span>Kiểm tra dung lượng file nộp</span>
+              </div>
+              <p style="font-size:12px;color:#444;line-height:1.55;">
+                Mở thư mục chứa file ngoài Windows:
+                <br>• Kiểm tra dung lượng file <strong>phải lớn hơn 0 KB</strong> (thường từ 3 KB – 10 KB).
+                <br>• Chuột phải chọn <em>Open with ➔ Notepad</em> để xem chắc chắn toàn bộ code SQL đã được ghi vào đĩa trước khi tải lên link nộp bài của Rikkei.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
