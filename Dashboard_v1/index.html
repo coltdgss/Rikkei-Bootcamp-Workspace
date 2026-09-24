@@ -26,7 +26,8 @@
     button, input, select, textarea { font-family: inherit; font-size: inherit; }
     .app { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; height: auto; background: var(--white); }
     .sidebar { min-width: 0; border-right: 1px solid var(--line); background: #fafafa; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
-    .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 18px 18px 16px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 18px 18px 16px; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; transition: opacity 0.15s ease; }
+    .brand:hover { opacity: 0.8; }
     .brand strong { font-size: 1.2rem; letter-spacing: -.04em; }
     .brand span { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
     .side-tools { display: flex; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
@@ -220,22 +221,24 @@
     .studio-nav-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
       border: 1px solid #d0d7de;
       border-radius: 6px;
       background: #fff;
       color: #24292f;
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 13.5px;
       cursor: pointer;
       transition: all 0.15s ease;
+      user-select: none;
     }
     .studio-nav-btn:hover { background: #f3f4f6; border-color: #111; color: #111; }
     .studio-nav-btn.primary { background: var(--black); border-color: var(--black); color: #fff; }
     .studio-nav-btn.primary:hover { background: #333; }
-    .studio-nav-btn.close-btn { border-color: #dc2626; color: #dc2626; }
-    .studio-nav-btn.close-btn:hover { background: #dc2626; color: #fff; }
+    .studio-nav-btn.close-btn { border-color: #fca5a5; color: #dc2626; font-size: 14px; }
+    .studio-nav-btn.close-btn:hover { background: #dc2626; border-color: #dc2626; color: #fff; }
 
     .sql-studio-body {
       flex: 1;
@@ -301,18 +304,24 @@
     }
     .studio-ai-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     .studio-ai-btn {
-      border: 1px solid #222;
-      border-radius: 5px;
-      padding: 5px 9px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
       background: #fff;
       color: #111;
       cursor: pointer;
-      font-size: 10px;
-      font-weight: 700;
+      font-size: 13px;
       transition: all 0.15s ease;
+      user-select: none;
     }
-    .studio-ai-btn:hover { background: #111; color: #fff; }
-    .studio-ai-btn.primary { background: #111; color: #fff; }
+    .studio-ai-btn:hover { background: #111; border-color: #111; color: #fff; }
+    .studio-ai-btn.primary { background: #111; border-color: #111; color: #fff; }
+    .studio-ai-btn.primary:hover { background: #333; }
     .studio-ai-result-box {
       margin-top: 8px;
       max-height: 180px;
@@ -338,7 +347,7 @@
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand"><strong>RK Workspace</strong><span>Dashboard v1</span></div>
+      <a href="https://rk25-workspace.vercel.app/Dashboard_v1" class="brand" title="Mở Dashboard RK Workspace trên Vercel"><strong>RK Workspace</strong><span>Dashboard v1</span></a>
       <div class="side-tools"><input class="search" id="search" type="search" placeholder="Tìm Module, Session, BTVN..." /></div>
       <div class="tree">
         <div class="tree-title">Toàn bộ menu thư mục</div>
@@ -458,21 +467,11 @@
           <strong id="studioTargetTitle">Không gian thực hành SQL &amp; Quan sát bảng trực quan</strong>
         </div>
         <div class="sql-studio-actions">
-          <button type="button" class="studio-nav-btn" onclick="loadKobaniExample()" title="Nạp đề bài mẫu Cẩm nang thi MySQL Workbench (Đề Kobani) có chú thích chi tiết">
-            📋 Mẫu Đề Kobani
-          </button>
-          <button type="button" class="studio-nav-btn" id="studioSidecarToggleBtn" onclick="toggleStudioSidecar()" title="Thu gọn / Mở rộng Preview bảng (Sidecar)">
-            <span id="studioSidecarIcon">◧</span> <span id="studioSidecarText">Thu gọn Preview</span>
-          </button>
-          <button type="button" class="studio-nav-btn primary" onclick="runStudioSql()" title="Chạy SQL (Ctrl+Enter)">
-            ▶ Chạy &amp; Preview
-          </button>
-          <button type="button" class="studio-nav-btn" onclick="saveStudioSql()" title="Lưu câu lệnh SQL">
-            💾 Lưu SQL
-          </button>
-          <button type="button" class="studio-nav-btn close-btn" onclick="closeSqlStudioModal()" title="Đóng Studio (Esc)">
-            ✕ Đóng
-          </button>
+          <button type="button" class="studio-nav-btn" onclick="loadKobaniExample()" title="📋 Nạp đề bài mẫu Cẩm nang thi MySQL Workbench (Đề Kobani) có chú thích chi tiết">📋</button>
+          <button type="button" class="studio-nav-btn" id="studioSidecarToggleBtn" onclick="toggleStudioSidecar()" title="◧ Thu gọn / Mở rộng Preview bảng (Sidecar)"><span id="studioSidecarIcon">◧</span></button>
+          <button type="button" class="studio-nav-btn primary" onclick="runStudioSql()" title="▶ Chạy &amp; Preview SQL (Ctrl+Enter)">▶</button>
+          <button type="button" class="studio-nav-btn" onclick="saveStudioSql()" title="💾 Lưu file SQL (.sql)">💾</button>
+          <button type="button" class="studio-nav-btn close-btn" onclick="closeSqlStudioModal()" title="✕ Đóng SQL Studio (Esc)">✕</button>
         </div>
       </div>
 
@@ -480,10 +479,10 @@
         <!-- Left Pane: Dedicated SQL Editor (ONLY SQL HAS BLACK BACKGROUND #111111 per /rk-ui) -->
         <div class="studio-pane studio-editor-pane" id="studioEditorPane">
           <div class="studio-pane-bar">
-            <span>📝 SOẠN THẢO SQL (MySQL 8.0 &amp; SQLite)</span>
+            <span style="display:inline-flex; align-items:center; gap:6px;">📝 SOẠN THẢO SQL (MySQL 8.0 &amp; SQLite) <span style="display:inline-flex; align-items:center; gap:3px; color:#10b981; font-size:9.5px; font-weight:700; background:#f0fdf4; border:1px solid #bbf7d0; padding:1px 6px; border-radius:4px;" title="Chế độ Tự động Review / Live Preview đang bật">● LIVE AUTO-RUN</span></span>
             <span id="studioEngineStatus" style="color: #888; font-size: 10px;">SQLite WebAssembly sẵn sàng</span>
           </div>
-          <textarea id="studio-sql-editor" class="studio-sql-textarea" spellcheck="false" placeholder="Nhập câu lệnh SQL CREATE TABLE, INSERT INTO, SELECT..."></textarea>
+          <textarea id="studio-sql-editor" class="studio-sql-textarea" spellcheck="false" placeholder="Nhập câu lệnh SQL CREATE TABLE, INSERT INTO, SELECT..." oninput="scheduleStudioAutoRun()"></textarea>
         </div>
 
         <!-- Right Pane: Table Preview Sidecar (Expandable / Collapsible like Antigravity) -->
@@ -504,12 +503,12 @@
             <span class="ai-model" id="studio-ai-status">AI: đang kiểm tra...</span>
           </div>
           <div style="display:flex; align-items:center; gap:6px;">
-            <button type="button" class="studio-ai-btn" onclick="checkStudioAiStatus()">⚡ Kiểm tra AI</button>
-            <button type="button" class="studio-ai-btn primary" onclick="askStudioAi('score')">🎯 Chấm điểm SQL</button>
-            <button type="button" class="studio-ai-btn" onclick="askStudioAi('explain')">💡 Giải thích</button>
-            <button type="button" class="studio-ai-btn" onclick="askStudioAi('fix')">🛠️ Sửa lỗi</button>
-            <button type="button" class="studio-ai-btn" onclick="askStudioAi('design')">📐 Đánh giá CSDL</button>
-            <button type="button" class="studio-ai-btn" onclick="configureApiKey()" title="Cấu hình Gemini API Key">⚙️ Key</button>
+            <button type="button" class="studio-ai-btn" onclick="checkStudioAiStatus()" title="⚡ Kiểm tra kết nối AI (Google Gemini Cloud)">⚡</button>
+            <button type="button" class="studio-ai-btn primary" onclick="askStudioAi('score')" title="🎯 Chấm điểm câu lệnh SQL (Thang điểm 10)">🎯</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('explain')" title="💡 Giải thích chi tiết cú pháp &amp; ý nghĩa lệnh SQL">💡</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('fix')" title="🛠️ Phân tích lỗi và gợi ý sửa mã SQL">🛠️</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('design')" title="📐 Đánh giá kiến trúc &amp; chuẩn hóa CSDL">📐</button>
+            <button type="button" class="studio-ai-btn" onclick="configureApiKey()" title="⚙️ Cấu hình Google Gemini API Key">⚙️</button>
           </div>
         </div>
         <div id="studio-ai-result" class="studio-ai-result-box" style="display:none;"></div>
@@ -2763,6 +2762,11 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       toast('Đã tải xuống ' + data.sqlFileName + '.');
     }
 
+    function getEffectiveGeminiApiKey() {
+      const stored = localStorage.getItem('gemini_custom_api_key');
+      return (stored && stored.trim()) ? stored.trim() : '';
+    }
+
     const ollamaUrl = 'http://127.0.0.1:11434';
     let ollamaModel = 'qwen2.5-coder:7b';
     let activeAiProvider = 'gemini';
@@ -2773,23 +2777,23 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
     }
 
     function configureApiKey() {
-      const current = localStorage.getItem('gemini_custom_api_key') || '';
-      const masked = current ? (current.substring(0, 6) + '...' + current.slice(-4)) : 'chưa cấu hình (đang dùng key mặc định từ hệ thống)';
+      const current = getEffectiveGeminiApiKey();
+      const masked = current ? (current.substring(0, 6) + '...' + current.slice(-4)) : 'mặc định (bảo mật qua Vercel Cloud)';
       const input = window.prompt(
         'Cấu hình Google Gemini API Key:\n\n' +
         'Key hiện tại: ' + masked + '\n\n' +
-        '- Nếu dùng trên Vercel: Hệ thống đã tích hợp sẵn API Key bảo mật trong kho .env.\n' +
-        '- Bạn có thể nhập API Key cá nhân của bạn bên dưới nếu muốn thay thế (hoặc để trống để dùng mặc định):',
+        '- Trên Vercel: Hệ thống ưu tiên tự động dùng GEMINI_API_KEY bảo mật từ biến môi trường máy chủ (.env).\n' +
+        '- Nếu chạy Local hoặc muốn dùng Key cá nhân trên trình duyệt, dán Key vào đây (chỉ lưu LocalStorage máy bạn, không bao giờ lộ lên Git):',
         current
       );
       if (input !== null) {
         const clean = input.trim();
         if (clean) {
           localStorage.setItem('gemini_custom_api_key', clean);
-          toast('Đã lưu custom Gemini API Key.');
+          toast('Đã lưu Gemini API Key vào trình duyệt.');
         } else {
           localStorage.removeItem('gemini_custom_api_key');
-          toast('Đã xóa custom key, dùng key mặc định từ hệ thống.');
+          toast('Đã xóa custom key, dùng mặc định từ máy chủ Vercel.');
         }
         checkAiStatus();
       }
@@ -2797,8 +2801,13 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
 
     async function checkAiStatus() {
       const status = document.getElementById('ai-status');
-      if (!status) return 'offline';
-      status.textContent = 'AI: đang kiểm tra...';
+      const studioStatus = document.getElementById('studio-ai-status');
+      const setStatusText = (text, color) => {
+        if (status) { status.textContent = text; status.style.color = color; }
+        if (studioStatus) { studioStatus.textContent = text; studioStatus.style.color = color; }
+      };
+
+      setStatusText('AI: đang kiểm tra...', '#777');
 
       // 1. Kiểm tra Vercel Serverless API (/api/ai)
       try {
@@ -2806,15 +2815,23 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
         if (res.ok) {
           const data = await res.json();
           activeAiProvider = 'gemini';
-          status.textContent = 'Gemini Cloud: online (' + (data.model || 'flash') + ')';
-          status.style.color = '#0070f3';
+          const modelName = data.model || 'gemini-1.5-flash';
+          setStatusText('Gemini Cloud: online (' + modelName + ')', '#0070f3');
           return 'gemini';
         }
       } catch (e) {
-        // Môi trường không có /api (ví dụ file://)
+        // Không có route /api/ai (ví dụ chạy file:// hoặc static server)
       }
 
-      // 2. Kiểm tra Local Ollama fallback
+      // 2. Kiểm tra nếu có Custom Key lưu trong trình duyệt
+      const customKey = getEffectiveGeminiApiKey();
+      if (customKey) {
+        activeAiProvider = 'gemini-direct';
+        setStatusText('Gemini Cloud: online (Custom Key)', '#0070f3');
+        return 'gemini-direct';
+      }
+
+      // 3. Kiểm tra Local Ollama fallback
       try {
         const resOllama = await fetch(ollamaUrl + '/api/tags');
         if (resOllama.ok) {
@@ -2822,41 +2839,71 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           const models = (data.models || []).map((m) => m.name);
           ollamaModel = models.find((m) => m === 'qwen2.5-coder:7b') || models.find((m) => m === 'qwen2.5-coder:1.5b-base') || models[0] || 'qwen2.5-coder';
           activeAiProvider = 'ollama';
-          status.textContent = 'Ollama Local: online (' + ollamaModel + ')';
-          status.style.color = '#10b981';
+          setStatusText('Ollama Local: online (' + ollamaModel + ')', '#10b981');
           return 'ollama';
         }
       } catch (e) {
         // Ollama offline
       }
 
-      // 3. Fallback có custom key trong localStorage
-      const customKey = localStorage.getItem('gemini_custom_api_key');
-      if (customKey) {
-        activeAiProvider = 'gemini-direct';
-        status.textContent = 'Gemini Client: online (custom key)';
-        status.style.color = '#0070f3';
-        return 'gemini-direct';
-      }
-
       activeAiProvider = 'offline';
-      status.textContent = 'AI: offline (Vercel Cloud hoặc bật Ollama local)';
-      status.style.color = '#777';
+      setStatusText('AI: offline (Sẵn sàng kết nối Gemini / Ollama)', '#777');
       return 'offline';
     }
 
-    // Giữ tương thích ngược
     const checkOllamaStatus = checkAiStatus;
 
+    function buildGeminiPrompt(task, sql, btvn) {
+      const data = btvn || btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
+      const title = data.title || 'SQL Workbench Studio';
+      const schema = data.readme?.entity || 'Cơ sở dữ liệu Quan hệ MySQL 8.0';
+      const theory = (data.theory || []).join('; ');
+      const taskDescriptions = {
+        score: 'Nhiệm vụ: Chấm điểm câu lệnh SQL của học viên theo thang điểm 10. Nêu rõ: Điểm số [X/10], Đánh giá tổng quan, Ưu điểm cú pháp/ràng buộc, Điểm cần cải thiện, Gợi ý nâng cao theo chuẩn MySQL 8.0.',
+        explain: 'Nhiệm vụ: Giải thích chi tiết, dễ hiểu từng câu lệnh SQL (Pipeline xử lý, từng mệnh đề, ý nghĩa thực thi) cho người mới bắt đầu học.',
+        fix: 'Nhiệm vụ: Tìm lỗi cú pháp hoặc logic trong câu lệnh SQL và đưa ra bản code đã sửa hoàn chỉnh 100% trong khối ```sql ... ``` kèm giải thích ngắn gọn.',
+        design: 'Nhiệm vụ: Đánh giá chất lượng thiết kế CSDL: tính đúng đắn của thực thể, khóa chính, kiểu dữ liệu, các mối quan hệ (1-N, N-N), tính toàn vẹn tham chiếu và khả năng mở rộng/đánh chỉ mục Index.'
+      };
+      return `Bạn là Trợ giảng AI chuyên gia Cơ sở dữ liệu và MySQL tại Rikkei Academy.
+Đề bài: ${title}
+Kiến trúc bảng: ${schema}
+${theory ? 'Yêu cầu lý thuyết: ' + theory + '\n' : ''}
+${taskDescriptions[task] || 'Phân tích câu lệnh SQL.'}
+
+Mã SQL hiện tại của học viên:
+\`\`\`sql
+${sql}
+\`\`\`
+
+Hãy trả lời bằng tiếng Việt sư phạm, định dạng Markdown rõ ràng, chuyên nghiệp và súc tích.`;
+    }
+
     function buildOllamaPrompt(task, sql) {
-      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
-      const taskText = {
-        score: 'Chấm điểm SQL từ 0 đến 10 dựa trên yêu cầu đề bài. Nêu rõ điểm số, tiêu chí đạt, lỗi còn thiếu và mức độ hoàn thiện.',
-        explain: 'Tìm và giải thích các lỗi cú pháp hoặc lỗi thiết kế thực thể/khóa chính/khóa ngoại. Giải thích bằng tiếng Việt thật dễ hiểu cho người mới học.',
-        fix: 'Đưa ra toàn bộ khối lệnh SQL đã sửa chuẩn hóa hoàn chỉnh, sau đó giải thích ngắn gọn từng thay đổi.',
-        design: 'Đánh giá chất lượng thiết kế CSDL: tính đúng đắn của thực thể, khóa chính, kiểu dữ liệu, các mối quan hệ (1-N, N-N), tính toàn vẹn tham chiếu và khả năng mở rộng.'
-      }[task] || 'Phân tích câu lệnh SQL.';
-      return `Bạn là chuyên gia CSDL MySQL & SQLite hỗ trợ học viên bootcamp.\nĐề bài: ${data.title || ''} (${data.readme?.entity || ''})\nYêu cầu lý thuyết: ${(data.theory || []).join('; ')}\n\nNhiệm vụ: ${taskText}\n\nSQL hiện tại của học viên:\n${sql}\n\nHãy trả lời bằng tiếng Việt chuyên nghiệp, ngắn gọn, có cấu trúc rõ ràng và bám sát kiến trúc CSDL.`;
+      return buildGeminiPrompt(task, sql);
+    }
+
+    async function callGeminiDirect(prompt, apiKey) {
+      const key = apiKey || getEffectiveGeminiApiKey();
+      if (!key) throw new Error('Chưa có Gemini API Key.');
+      const model = 'gemini-1.5-flash';
+      const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key);
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 2048
+          }
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        const errMsg = data.error?.message || ('Lỗi Google Gemini (Mã: ' + res.status + ')');
+        throw new Error(errMsg);
+      }
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Google Gemini không trả về nội dung.';
     }
 
     async function askAi(task) {
@@ -2871,11 +2918,12 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
         return;
       }
 
-      result.textContent = '⏳ Trợ giảng AI đang phân tích câu lệnh SQL của bài "' + (currentBtvn.title || '') + '"...';
+      result.innerHTML = '<div style="display:flex; align-items:center; gap:8px; color:#0070f3; font-weight:600; font-size:12px;">' +
+        '<span>⏳</span> Google Gemini AI đang phân tích câu lệnh SQL của bài "' + escapeSqlHtml(currentBtvn.title || '') + '"...</div>';
 
-      const customKey = localStorage.getItem('gemini_custom_api_key') || '';
+      const apiKey = getEffectiveGeminiApiKey();
 
-      // Thử gọi qua Vercel Serverless API trước (/api/ai)
+      // 1. Thử gọi qua Vercel Serverless API trước (/api/ai)
       try {
         const response = await fetch('/api/ai', {
           method: 'POST',
@@ -2885,7 +2933,7 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
             sql: sql,
             btvnTitle: currentBtvn.title || '',
             schema: currentBtvn.readme?.entity || '',
-            customKey: customKey
+            customKey: apiKey
           })
         });
 
@@ -2897,38 +2945,24 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           }
         }
       } catch (err) {
-        // Fallback tiếp theo nếu /api/ai không tồn tại
+        // Fallback tiếp theo
       }
 
-      // Fallback 1: Nếu người dùng đã nhập customKey vào trình duyệt (localStorage) khi chạy local
-      const fallbackKey = customKey;
-      if (fallbackKey && window.location.protocol === 'file:') {
+      // 2. Fallback gọi trực tiếp Google Gemini API
+      if (apiKey) {
         try {
-          result.textContent = '⏳ Đang gọi trực tiếp Google Gemini API...';
-          const prompt = buildOllamaPrompt(task, sql);
-          const geminiDirectUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + fallbackKey;
-          const directRes = await fetch(geminiDirectUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: prompt }] }],
-              generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
-            })
-          });
-          if (directRes.ok) {
-            const data = await directRes.json();
-            const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (text) {
-              result.textContent = text;
-              return;
-            }
+          const prompt = buildGeminiPrompt(task, sql, currentBtvn);
+          const reply = await callGeminiDirect(prompt, apiKey);
+          if (reply) {
+            result.textContent = reply;
+            return;
           }
-        } catch (e) {
-          // Bỏ qua và chuyển sang Ollama
+        } catch (err2) {
+          console.warn('Direct Gemini call failed:', err2);
         }
       }
 
-      // Fallback 2: Thử gọi Local Ollama
+      // 3. Fallback Local Ollama
       try {
         result.textContent = '⏳ Đang chuyển sang kết nối Local Ollama...';
         const ollamaRes = await fetch(ollamaUrl + '/api/generate', {
@@ -2945,23 +2979,23 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           result.textContent = data.response || 'Ollama không trả về nội dung.';
           return;
         }
-      } catch (err) {
-        // Cả hai đều thất bại
+      } catch (e) {
+        // Ollama offline
       }
 
-      result.textContent = '❌ Không thể kết nối AI:\n' +
-        '1. Khi xem trên Vercel: Tính năng AI hoạt động tự động thông qua Google Gemini Cloud được tích hợp sẵn.\n' +
-        '2. Khi xem trên máy tính nội bộ (Local file:///): Vui lòng mở ứng dụng Ollama (http://127.0.0.1:11434) hoặc bấm nút [⚙️ Key] để nhập API Key.';
+      result.textContent = '❌ Không thể kết nối AI. Vui lòng kiểm tra mạng hoặc click ⚙ Key để cập nhật API Key.';
     }
 
-    // Giữ tương thích ngược
     const askOllama = askAi;
 
     let previewTimer;
     document.addEventListener('input', (event) => {
-      if (event.target.id !== 'btvn-sql-editor') return;
-      window.clearTimeout(previewTimer);
-      previewTimer = window.setTimeout(() => previewBtvnSql(), 500);
+      if (event.target.id === 'btvn-sql-editor') {
+        window.clearTimeout(previewTimer);
+        previewTimer = window.setTimeout(() => previewBtvnSql(), 350);
+      } else if (event.target.id === 'studio-sql-editor') {
+        scheduleStudioAutoRun();
+      }
     });
 
     let historyStack = [];
@@ -3516,7 +3550,7 @@ DELIMITER ;
       const grid = document.getElementById('studioWorkspaceGrid');
       const previewPane = document.getElementById('studioPreviewPane');
       const icon = document.getElementById('studioSidecarIcon');
-      const text = document.getElementById('studioSidecarText');
+      const toggleBtn = document.getElementById('studioSidecarToggleBtn');
 
       if (!grid || !previewPane) return;
 
@@ -3525,13 +3559,23 @@ DELIMITER ;
         previewPane.style.display = 'flex';
         grid.style.gridTemplateColumns = '1fr 1fr';
         if (icon) icon.textContent = '◧';
-        if (text) text.textContent = 'Thu gọn Preview';
+        if (toggleBtn) toggleBtn.title = '◧ Thu gọn Preview bảng (Sidecar)';
       } else {
         previewPane.style.display = 'none';
         grid.style.gridTemplateColumns = '1fr';
         if (icon) icon.textContent = '◨';
-        if (text) text.textContent = 'Mở rộng Preview bảng';
+        if (toggleBtn) toggleBtn.title = '◨ Mở rộng Preview bảng (Sidecar)';
       }
+    }
+
+    let studioAutoRunTimer = null;
+    function scheduleStudioAutoRun() {
+      clearTimeout(studioAutoRunTimer);
+      const studioStatus = document.getElementById('studioEngineStatus');
+      if (studioStatus) studioStatus.textContent = 'SQLite: đang đợi gõ...';
+      studioAutoRunTimer = setTimeout(() => {
+        runStudioSql();
+      }, 350);
     }
 
     async function runStudioSql() {
@@ -3588,18 +3632,10 @@ DELIMITER ;
     }
 
     async function checkStudioAiStatus() {
-      const status = document.getElementById('studio-ai-status');
-      if (!status) return;
-      const provider = await checkAiStatus();
-      if (provider === 'gemini') {
-        status.textContent = 'Gemini Cloud: online (Vercel API)';
-        status.style.color = '#0070f3';
-      } else if (provider === 'ollama') {
-        status.textContent = 'Ollama Local: online';
-        status.style.color = '#10b981';
-      } else {
-        status.textContent = 'AI: offline (Gemini Cloud hoặc Ollama)';
-        status.style.color = '#777';
+      await checkAiStatus();
+      const prov = activeAiProvider;
+      if (prov === 'gemini' || prov === 'gemini-direct') {
+        toast('Gemini Cloud AI đang trực tuyến sẵn sàng hỗ trợ!');
       }
     }
 
@@ -3613,14 +3649,16 @@ DELIMITER ;
       result.style.display = 'block';
 
       if (!sql) {
-        result.textContent = '⚠️ Ô soạn thảo SQL trong Studio đang trống.';
+        result.textContent = '⚠️ Ô soạn thảo SQL trong Studio đang trống. Hãy nhập hoặc nạp câu lệnh SQL trước khi nhờ AI trợ giúp.';
         return;
       }
 
-      result.textContent = '⏳ Trợ giảng AI đang phân tích câu lệnh SQL...';
-      const customKey = localStorage.getItem('gemini_custom_api_key') || '';
+      result.innerHTML = '<div style="display:flex; align-items:center; gap:8px; color:#0070f3; font-weight:600; font-size:12px;">' +
+        '<span>⏳</span> Google Gemini AI đang phân tích và xử lý câu lệnh SQL...</div>';
 
-      // Ưu tiên Vercel Serverless API (/api/ai)
+      const apiKey = getEffectiveGeminiApiKey();
+
+      // 1. Ưu tiên Vercel Serverless API (/api/ai)
       try {
         const response = await fetch('/api/ai', {
           method: 'POST',
@@ -3628,9 +3666,9 @@ DELIMITER ;
           body: JSON.stringify({
             action: task,
             sql: sql,
-            btvnTitle: currentBtvn.title || 'SQL Workbench Studio',
-            schema: currentBtvn.readme?.entity || '',
-            customKey: customKey
+            btvnTitle: currentBtvn.title || 'SQL Workbench Studio (Đề Kobani)',
+            schema: currentBtvn.readme?.entity || 'Chuỗi cửa hàng tiện lợi Kobani: KhachHang, SanPham, DonHang, ThanhToan',
+            customKey: apiKey
           })
         });
         if (response.ok) {
@@ -3644,7 +3682,21 @@ DELIMITER ;
         // Fallback
       }
 
-      // Fallback local Ollama
+      // 2. Fallback gọi trực tiếp Google Gemini Cloud API bằng Key tích hợp
+      if (apiKey) {
+        try {
+          const prompt = buildGeminiPrompt(task, sql, currentBtvn);
+          const reply = await callGeminiDirect(prompt, apiKey);
+          if (reply) {
+            result.textContent = reply;
+            return;
+          }
+        } catch (geminiErr) {
+          console.warn('Direct Gemini call failed:', geminiErr);
+        }
+      }
+
+      // 3. Fallback Local Ollama nếu đang chạy cục bộ
       try {
         result.textContent = '⏳ Đang kết nối Local Ollama...';
         const ollamaRes = await fetch(ollamaUrl + '/api/generate', {
@@ -3665,7 +3717,7 @@ DELIMITER ;
         // Fail
       }
 
-      result.textContent = '❌ Không thể kết nối AI (Kiểm tra Vercel Cloud API hoặc bật Ollama local).';
+      result.textContent = '❌ Không thể kết nối AI (Kiểm tra kết nối mạng hoặc cấu hình Key tại nút ⚙).';
     }
 
     document.addEventListener('keydown', (e) => {
