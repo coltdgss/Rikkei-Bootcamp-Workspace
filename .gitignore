@@ -1,0 +1,24 @@
+# =============================================================================
+# BẢO MẬT TUYỆT ĐỐI: CHẶN TOÀN BỘ AI AGENTS, BÍ MẬT HỆ THỐNG & BACKEND
+# =============================================================================
+
+# Chặn AI agent skills, prompts, workflows
+.agents/
+.claude/
+.gemini/
+
+# Chặn toàn bộ file batch điều khiển
+*.bat
+*.cmd
+
+# Chặn tài liệu riêng tư và dataset nội bộ
+private_data_set/
+RK-JOB/
+HN_JS220313_BS_[NGUYEN_VAN_TRUNG]/
+ielts_video_presentation.html
+
+# Cache hệ thống
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
