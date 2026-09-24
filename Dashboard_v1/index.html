@@ -25,7 +25,7 @@
     body { min-height: 100vh; overflow: auto; }
     button, input, select, textarea { font-family: inherit; font-size: inherit; }
     .app { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; height: auto; background: var(--white); }
-    .sidebar { min-width: 0; border-right: 1px solid var(--line); background: #fafafa; display: flex; flex-direction: column; }
+    .sidebar { min-width: 0; border-right: 1px solid var(--line); background: #fafafa; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; }
     .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 18px 18px 16px; border-bottom: 1px solid var(--line); }
     .brand strong { font-size: 1.2rem; letter-spacing: -.04em; }
     .brand span { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
@@ -49,10 +49,10 @@
     .item:hover, .item.active { background: var(--black); color: var(--white); }
     .item.disabled { color: #aaa; cursor: default; }
     .main { min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 20px; min-height: 62px; border-bottom: 1px solid var(--line); background: var(--white); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 20px; min-height: 62px; border-bottom: 1px solid var(--line); background: var(--white); position: sticky; top: 0; z-index: 1000; }
     .crumb { color: var(--muted); font-size: 11px; }
     .crumb strong { color: var(--black); font-size: 14px; }
-    .actions { display: flex; gap: 8px; }
+    .actions { display: flex; align-items: center; gap: 8px; }
     .button { border: 1px solid var(--line); border-radius: 7px; background: var(--white); color: var(--black); padding: 8px 11px; cursor: pointer; font-size: 11px; font-weight: 700; }
     .button:hover, .button.primary { background: var(--black); color: var(--white); border-color: var(--black); }
     .content { min-height: 0; flex: 1; display: flex; flex-direction: column; }
@@ -121,17 +121,17 @@
     .relation-line::after { content: attr(data-rel); position: absolute; top: -11px; left: 50%; transform: translateX(-50%); color: #111; font-size: 11px; font-weight: bold; background: #fff; padding: 1px 7px; border: 1px solid #999; border-radius: 10px; line-height: 1.3; white-space: nowrap; }
     .relation-note { margin: 8px 0 0; color: #777; text-align: center; font-size: 10px; }
     .sql-section { grid-column: 1 / -1; }
-    .sql-workbench { display: grid; grid-template-columns: minmax(0, 1.15fr) 145px minmax(230px, .85fr); gap: 10px; align-items: center; }
+    .sql-workbench { display: grid; grid-template-columns: minmax(0, 1.25fr) 48px minmax(230px, .95fr); gap: 10px; align-items: center; }
     .sql-editor { width: 100%; min-height: 170px; resize: vertical; border: 1px solid #d5d5d5; border-radius: 6px; padding: 11px; background: #111; color: #f5f5f5; font: 12px/1.6 var(--font-code); }
     .sql-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 9px; }
     .sql-actions button { border: 1px solid #222; border-radius: 5px; padding: 7px 10px; background: #fff; color: #111; cursor: pointer; font-size: 10px; font-weight: 700; }
     .sql-actions button.primary { background: #111; color: #fff; }
     .sql-actions button.ollama { border-color: #2d6b4d; color: #1f6b43; }
-    .sql-save-center { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
-    .sql-save-center button { width: 100%; border: 1px solid #222; border-radius: 5px; padding: 9px 8px; background: #111; color: #fff; cursor: pointer; font-size: 10px; font-weight: 700; line-height: 1.35; }
-    .sql-save-center button:hover { background: #333; }
-    .sql-save-center button.preview-center { background: #fff; color: #111; }
-    .sql-save-center button.preview-center:hover { background: #111; color: #fff; }
+    .sql-save-center { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 48px; }
+    .sql-save-center button.sql-icon-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid #222; border-radius: 6px; background: #111; color: #fff; cursor: pointer; transition: all 0.15s ease; }
+    .sql-save-center button.sql-icon-btn:hover { background: #333; }
+    .sql-save-center button.sql-icon-btn.preview-center { background: #fff; color: #111; border-color: #222; }
+    .sql-save-center button.sql-icon-btn.preview-center:hover { background: #111; color: #fff; }
     .sql-result { min-height: 170px; max-height: 260px; overflow: auto; padding: 10px; border: 1px solid #ddd; border-radius: 6px; color: #666; font-size: 11px; background: #fafafa; }
     .sql-result table { width: 100%; border-collapse: collapse; font-size: 10px; }
     .sql-result th, .sql-result td { border: 1px solid #ddd; padding: 7px; text-align: left; }
@@ -146,6 +146,191 @@
     .ai-result { margin-top: 12px; min-height: 62px; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; color: #444; font-size: 11px; line-height: 1.6; white-space: pre-wrap; }
     .ai-result:empty { display: none; }
     .ai-model { color: #777; font-size: 10px; }
+
+    /* SQL STUDIO TRIGGER BUTTON (Nhấp nháy đỏ) & FULLSCREEN POPUP */
+    @keyframes sqlPulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); border-color: #dc2626; }
+      50% { box-shadow: 0 0 0 7px rgba(220, 38, 38, 0); border-color: #ef4444; }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); border-color: #dc2626; }
+    }
+    .sql-studio-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      color: #dc2626;
+      border: 1.5px solid #dc2626;
+      border-radius: 7px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      animation: sqlPulseRed 2s infinite ease-in-out;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .sql-studio-trigger:hover { background: #dc2626; color: #ffffff; }
+    .sql-studio-badge {
+      display: inline-block;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: .06em;
+    }
+    .sql-studio-trigger:hover .sql-studio-badge { background: #ffffff; color: #dc2626; }
+
+    .sql-studio-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(17, 17, 17, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .sql-studio-container {
+      width: 98vw;
+      height: 96vh;
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+      overflow: hidden;
+    }
+    .sql-studio-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+    .sql-studio-title-box { display: flex; align-items: center; gap: 10px; }
+    .sql-studio-title-box strong { font-size: 13.5px; color: var(--black); }
+    .sql-studio-actions { display: flex; align-items: center; gap: 8px; }
+    .studio-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      background: #fff;
+      color: #24292f;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .studio-nav-btn:hover { background: #f3f4f6; border-color: #111; color: #111; }
+    .studio-nav-btn.primary { background: var(--black); border-color: var(--black); color: #fff; }
+    .studio-nav-btn.primary:hover { background: #333; }
+    .studio-nav-btn.close-btn { border-color: #dc2626; color: #dc2626; }
+    .studio-nav-btn.close-btn:hover { background: #dc2626; color: #fff; }
+
+    .sql-studio-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 0;
+      background: #fff;
+    }
+    .studio-pane {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      min-width: 0;
+      position: relative;
+    }
+    .studio-editor-pane { border-right: 1px solid var(--line); }
+    .studio-pane-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      background: #f8f8f8;
+      border-bottom: 1px solid var(--line);
+      font-size: 10px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+    .studio-sql-textarea {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: none;
+      resize: none;
+      padding: 14px 16px;
+      background: #111111; /* CHỈ DUY NHẤT SQL NỀN ĐEN */
+      color: #f5f5f5;
+      font: 13px/1.65 var(--font-code);
+      tab-size: 2;
+    }
+    .studio-result-view {
+      flex: 1;
+      overflow: auto;
+      padding: 14px;
+      background: #ffffff;
+      color: #333;
+      font-size: 11px;
+    }
+    .studio-result-view table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .studio-result-view th, .studio-result-view td { border: 1px solid #dedede; padding: 8px 10px; text-align: left; }
+    .studio-result-view th { background: #f1f1f1; font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: .05em; }
+    .studio-result-view tr:hover td { background: #fafafa; }
+
+    .studio-ai-footer {
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+      padding: 8px 16px;
+      flex-shrink: 0;
+    }
+    .studio-ai-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .studio-ai-btn {
+      border: 1px solid #222;
+      border-radius: 5px;
+      padding: 5px 9px;
+      background: #fff;
+      color: #111;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      transition: all 0.15s ease;
+    }
+    .studio-ai-btn:hover { background: #111; color: #fff; }
+    .studio-ai-btn.primary { background: #111; color: #fff; }
+    .studio-ai-result-box {
+      margin-top: 8px;
+      max-height: 180px;
+      overflow-y: auto;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      color: #333;
+      font-size: 11px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    @media (max-width: 768px) {
+      .sql-studio-body { grid-template-columns: 1fr; }
+      .studio-editor-pane { border-right: 0; border-bottom: 1px solid var(--line); }
+      .studio-ai-bar { flex-direction: column; align-items: flex-start; }
+    }
     @media (max-width: 700px) { .board-grid, .sql-workbench { grid-template-columns: 1fr; } }
     @media (max-width: 800px) { .app { display: block; height: auto; } .sidebar { max-height: 52vh; border-right: 0; border-bottom: 1px solid var(--line); } .main { min-height: 70vh; } .topbar { align-items: flex-start; flex-direction: column; } .preview-wrap { min-height: 500px; } }
   </style>
@@ -199,7 +384,8 @@
               <span class="item" data-btvn="s2_btvn5" data-title="BTVN 5 · Quản lý sinh viên - Lớp học" data-module="Module 2 · Database" data-session="Session 02">BTVN 5 · Quản lý sinh viên - Lớp học</span>
               <span class="item" data-btvn="s2_btvn6" data-title="BTVN 6 · Quản lý đơn hàng - Sản phẩm" data-module="Module 2 · Database" data-session="Session 02">BTVN 6 · Quản lý đơn hàng - Sản phẩm</span>
             </div></details>
-            <details><summary>Session 03 · SQL cơ bản</summary><div class="items">
+            <details open><summary>Session 03 · SQL cơ bản</summary><div class="items">
+              <a class="item" href="../Module_2_Database/Session_03/theory3_ddl_basics.html" data-title="Theory 3 · SQL cơ bản &amp; DDL (Lý thuyết)" data-module="Module 2 · Database" data-session="Session 03">📖 Theory 3 · SQL cơ bản &amp; DDL (Lý thuyết)</a>
               <span class="item" data-btvn="s3_btvn1" data-title="BTVN 1 · Quản lý sinh viên - Lớp học" data-module="Module 2 · Database" data-session="Session 03">BTVN 1 · Quản lý sinh viên - Lớp học</span>
               <span class="item" data-btvn="s3_btvn2" data-title="BTVN 2 · Quản lý thư viện" data-module="Module 2 · Database" data-session="Session 03">BTVN 2 · Quản lý thư viện</span>
               <span class="item" data-btvn="s3_btvn3" data-title="BTVN 3 · Quản lý đơn hàng - Sản phẩm" data-module="Module 2 · Database" data-session="Session 03">BTVN 3 · Quản lý đơn hàng - Sản phẩm</span>
@@ -233,7 +419,7 @@
       </div>
     </aside>
     <main class="main">
-      <header class="topbar"><div class="crumb"><span id="crumbModule">Dashboard v1</span> &nbsp;›&nbsp; <strong id="crumbTitle">Chọn một bài tập</strong></div><div class="actions"><button class="button" id="syncDriveBtn" type="button" onclick="triggerSyncDrive()" title="Đồng bộ tự động từ giáo trình RK-MODULE2-DATABASE trên Google Drive">⚡ Đồng bộ RK-Drive</button><button class="button" id="newTab" type="button">Mở tab mới</button><button class="button primary" id="openPage" type="button">Mở trang</button></div></header>
+      <header class="topbar"><div class="crumb"><span id="crumbModule">Dashboard v1</span> &nbsp;›&nbsp; <strong id="crumbTitle">Chọn một bài tập</strong></div><div class="actions"><button class="sql-studio-trigger" id="sqlStudioTriggerBtn" type="button" onclick="openSqlStudioModal()" title="Mở SQL Studio Full màn hình (Soạn thảo &amp; Preview tương tác)"><span class="sql-studio-badge">SQL</span> <span>Studio</span></button><button class="button" id="syncDriveBtn" type="button" onclick="triggerSyncDrive()" title="Đồng bộ tự động từ giáo trình RK-MODULE2-DATABASE trên Google Drive">⚡ Đồng bộ RK-Drive</button><button class="button" id="newTab" type="button">Mở tab mới</button><button class="button primary" id="openPage" type="button">Mở trang</button></div></header>
       <div class="content">
         <section class="intro"><h1 id="pageTitle">Learning Dashboard</h1><p id="pageDescription">Sidebar bên trái là cây thư mục học tập. Chọn một BTVN hoặc trang module để hiển thị HTML trực tiếp trong khung preview bên phải.</p><div class="stats"><div class="stat"><strong>5</strong><span>Modules</span></div><div class="stat"><strong>16</strong><span>Sessions M1</span></div><div class="stat"><strong>12</strong><span>Sessions M2</span></div><div class="stat"><strong>Live</strong><span>HTML Preview</span></div></div></section>
         <section class="preview-wrap" id="previewWrap">
@@ -262,6 +448,71 @@
     </main>
   </div>
   <div class="toast" id="toast"></div>
+
+  <!-- SQL WORKBENCH STUDIO MODAL (Fullscreen popup /rk-ui) -->
+  <div id="sqlStudioModal" class="sql-studio-modal" style="display: none;">
+    <div class="sql-studio-container">
+      <div class="sql-studio-header">
+        <div class="sql-studio-title-box">
+          <span class="sql-studio-badge">SQL STUDIO</span>
+          <strong id="studioTargetTitle">Không gian thực hành SQL &amp; Quan sát bảng trực quan</strong>
+        </div>
+        <div class="sql-studio-actions">
+          <button type="button" class="studio-nav-btn" id="studioSidecarToggleBtn" onclick="toggleStudioSidecar()" title="Thu gọn / Mở rộng Preview bảng (Sidecar)">
+            <span id="studioSidecarIcon">◧</span> <span id="studioSidecarText">Thu gọn Preview</span>
+          </button>
+          <button type="button" class="studio-nav-btn primary" onclick="runStudioSql()" title="Chạy SQL (Ctrl+Enter)">
+            ▶ Chạy &amp; Preview
+          </button>
+          <button type="button" class="studio-nav-btn" onclick="saveStudioSql()" title="Lưu câu lệnh SQL">
+            💾 Lưu SQL
+          </button>
+          <button type="button" class="studio-nav-btn close-btn" onclick="closeSqlStudioModal()" title="Đóng Studio (Esc)">
+            ✕ Đóng
+          </button>
+        </div>
+      </div>
+
+      <div class="sql-studio-body" id="studioWorkspaceGrid">
+        <!-- Left Pane: Dedicated SQL Editor (ONLY SQL HAS BLACK BACKGROUND #111111 per /rk-ui) -->
+        <div class="studio-pane studio-editor-pane" id="studioEditorPane">
+          <div class="studio-pane-bar">
+            <span>📝 SOẠN THẢO SQL (MySQL 8.0 &amp; SQLite)</span>
+            <span id="studioEngineStatus" style="color: #888; font-size: 10px;">SQLite WebAssembly sẵn sàng</span>
+          </div>
+          <textarea id="studio-sql-editor" class="studio-sql-textarea" spellcheck="false" placeholder="Nhập câu lệnh SQL CREATE TABLE, INSERT INTO, SELECT..."></textarea>
+        </div>
+
+        <!-- Right Pane: Table Preview Sidecar (Expandable / Collapsible like Antigravity) -->
+        <div class="studio-pane studio-preview-pane" id="studioPreviewPane">
+          <div class="studio-pane-bar">
+            <span>📊 PREVIEW BẢNG DỮ LIỆU</span>
+            <span id="studioRowCount" style="color: #666; font-size: 10px;">Tự động render</span>
+          </div>
+          <div id="studio-sql-result" class="studio-result-view">SQLite Preview sẽ hiển thị ở đây.</div>
+        </div>
+      </div>
+
+      <!-- Integrated AI Review Section (Khung 6 in Fullscreen Studio) -->
+      <div class="studio-ai-footer">
+        <div class="studio-ai-bar">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <strong>🤖 AI Trợ Giảng Thông Minh (Google Gemini Cloud &amp; Ollama)</strong>
+            <span class="ai-model" id="studio-ai-status">AI: đang kiểm tra...</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button type="button" class="studio-ai-btn" onclick="checkStudioAiStatus()">⚡ Kiểm tra AI</button>
+            <button type="button" class="studio-ai-btn primary" onclick="askStudioAi('score')">🎯 Chấm điểm SQL</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('explain')">💡 Giải thích</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('fix')">🛠️ Sửa lỗi</button>
+            <button type="button" class="studio-ai-btn" onclick="askStudioAi('design')">📐 Đánh giá CSDL</button>
+            <button type="button" class="studio-ai-btn" onclick="configureApiKey()" title="Cấu hình Gemini API Key">⚙️ Key</button>
+          </div>
+        </div>
+        <div id="studio-ai-result" class="studio-ai-result-box" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
   <script>
     const module1Files = [
       'Session_01_HTML_Basic/bai1_heading.html', 'Session_01_HTML_Basic/bai2_paragraph.html', 'Session_01_HTML_Basic/bai5_cv_ca_nhan.html',
@@ -367,8 +618,19 @@
             <div class="sql-workbench">
               <textarea class="sql-editor" id="btvn-sql-editor" spellcheck="false"></textarea>
               <div class="sql-save-center">
-                <button type="button" onclick="saveBtvnSql()">Chọn folder<br>&amp; Lưu SQL</button>
-                <button class="preview-center" id="btvn-preview-button" type="button" onclick="previewBtvnSql()">Preview bảng</button>
+                <button type="button" onclick="saveBtvnSql()" title="Chọn folder &amp; Lưu file SQL" class="sql-icon-btn" aria-label="Lưu SQL">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                </button>
+                <button class="preview-center sql-icon-btn" id="btvn-preview-button" type="button" onclick="previewBtvnSql()" title="Preview bảng dữ liệu" aria-label="Preview bảng">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
               </div>
               <div class="sql-result" id="btvn-sql-result">SQLite Preview sẽ hiển thị ở đây.</div>
             </div>
@@ -1247,6 +1509,395 @@ INSERT INTO order_items (order_id, product_id, quantity) VALUES
 ('ORD001', 'P02', 1),
 ('ORD002', 'P02', 2),
 ('ORD002', 'P03', 3);`
+      },
+
+      s3_btvn1: {
+        key: 's3_btvn1',
+        title: 'BTVN 1 · Quản lý sinh viên - Lớp học (DDL & Quan hệ 1-N)',
+        readmeFolder: 'BTVN_S3_1_QuanLySinhVienLopHoc',
+        sqlFileName: 'BTVN_S3_1_QuanLySinhVienLopHoc.sql',
+        theory: [
+          'Lệnh CREATE TABLE khởi tạo cấu trúc bảng, xác định kiểu dữ liệu cho từng thuộc tính.',
+          'Khóa ngoại FOREIGN KEY thiết lập mối quan hệ 1-N: Bảng lớp học (classes) là bảng cha, bảng sinh viên (students) là con.',
+          'Ràng buộc CHECK (max_students > 0) và UNIQUE (email) bảo đảm tính toàn vẹn dữ liệu.'
+        ],
+        readme: {
+          entity: 'classes (1) ||--o{ students (N)',
+          attributes: 'classes(class_id, class_name, room_number, max_students) | students(student_id, full_name, date_of_birth, gender, email, class_id)',
+          pk: 'classes: class_id | students: student_id',
+          note: 'Thiết kế cấu trúc bảng quản lý sinh viên và lớp học với ràng buộc toàn vẹn khóa ngoại.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'class_id', key: 'PK', desc: 'Mã lớp học (Khóa chính classes)' },
+          { type: 'VARCHAR(100)', field: 'class_name', key: '-', desc: 'Tên lớp học' },
+          { type: 'INT', field: 'max_students', key: 'CHECK', desc: 'Sĩ số tối đa > 0 (DEFAULT 45)' },
+          { type: 'VARCHAR(20)', field: 'student_id', key: 'PK', desc: 'Mã sinh viên (Khóa chính students)' },
+          { type: 'VARCHAR(100)', field: 'full_name', key: '-', desc: 'Họ và tên sinh viên' },
+          { type: 'VARCHAR(100)', field: 'email', key: 'UNIQUE', desc: 'Email độc nhất không trùng lặp' },
+          { type: 'VARCHAR(20)', field: 'class_id', key: 'FK', desc: 'Khóa ngoại tham chiếu classes(class_id)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">classes (1)<small>class_id · PK | class_name | max_students</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node">students (N)<small>student_id · PK | full_name | email | class_id · FK</small></div>
+          </div>
+          <p class="relation-note">Quan hệ 1-N: Một lớp học có nhiều sinh viên, mỗi sinh viên thuộc về duy nhất một lớp.</p>
+        `,
+        defaultSql: `CREATE TABLE classes (
+    class_id VARCHAR(20) PRIMARY KEY,
+    class_name VARCHAR(100) NOT NULL,
+    room_number VARCHAR(20),
+    max_students INT DEFAULT 45 CHECK (max_students > 0)
+);
+
+CREATE TABLE students (
+    student_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    gender VARCHAR(10) CHECK (gender IN ('Nam', 'Nu')),
+    email VARCHAR(100) UNIQUE,
+    class_id VARCHAR(20) NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+);
+
+INSERT INTO classes (class_id, class_name, room_number, max_students) VALUES
+('C01', 'Cong nghe Thong tin K24', 'A101', 40),
+('C02', 'Khoa hoc Du lieu K24', 'B203', 35);
+
+INSERT INTO students (student_id, full_name, date_of_birth, gender, email, class_id) VALUES
+('SV01', 'Nguyen Van An', '2004-03-15', 'Nam', 'an.nv@rikkei.edu.vn', 'C01'),
+('SV02', 'Tran Thi Bich', '2005-08-20', 'Nu', 'bich.tt@rikkei.edu.vn', 'C01'),
+('SV03', 'Le Hoang Cuong', '2004-11-12', 'Nam', 'cuong.lh@rikkei.edu.vn', 'C02');
+
+SELECT * FROM classes;
+SELECT * FROM students;`
+      },
+
+      s3_btvn2: {
+        key: 's3_btvn2',
+        title: 'BTVN 2 · Quản lý thư viện (Sách, Độc giả & Phiếu mượn N-N)',
+        readmeFolder: 'BTVN_S3_2_QuanLyThuVien',
+        sqlFileName: 'BTVN_S3_2_QuanLyThuVien.sql',
+        theory: [
+          'Mô hình hóa quan hệ N-N bằng bảng trung gian: Bảng borrow_records lưu lịch sử mượn trả.',
+          'Khóa ngoại kép (Double Foreign Key) kết nối đồng thời tới bảng books và bảng members.',
+          'Kiểm tra tính toàn vẹn: available_qty >= 0 bảo đảm số lượng sách trong kho không bị âm.'
+        ],
+        readme: {
+          entity: 'books (N) ||--o{ borrow_records }o--|| members (N)',
+          attributes: 'books(book_id, title, author, publish_year, available_qty) | members(member_id, member_name, phone_number, join_date) | borrow_records(record_id, book_id, member_id, borrow_date, return_date)',
+          pk: 'books: book_id | members: member_id | borrow_records: record_id',
+          note: 'Hệ thống quản lý thư viện với quan hệ mượn sách nhiều - nhiều qua bảng trung gian.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'book_id', key: 'PK', desc: 'Mã sách thư viện' },
+          { type: 'VARCHAR(150)', field: 'title', key: '-', desc: 'Tiêu đề đầu sách' },
+          { type: 'INT', field: 'available_qty', key: 'CHECK', desc: 'Số lượng tồn kho (>= 0)' },
+          { type: 'VARCHAR(20)', field: 'member_id', key: 'PK', desc: 'Mã thẻ độc giả' },
+          { type: 'VARCHAR(15)', field: 'phone_number', key: 'UNIQUE', desc: 'Số điện thoại độc nhất' },
+          { type: 'INT', field: 'record_id', key: 'PK', desc: 'Mã phiếu mượn' },
+          { type: 'VARCHAR(20)', field: 'book_id', key: 'FK', desc: 'Khóa ngoại tham chiếu books' },
+          { type: 'VARCHAR(20)', field: 'member_id', key: 'FK', desc: 'Khóa ngoại tham chiếu members' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: 1fr 60px 1fr 60px 1fr;">
+            <div class="entity-node">books (1)<small>book_id · PK | title | qty</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node" style="background:#f7f7f7;">borrow_records (N-N)<small>record_id · PK | book_id · FK | member_id · FK</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node">members (1)<small>member_id · PK | member_name | phone</small></div>
+          </div>
+          <p class="relation-note">Quan hệ N-N: Một độc giả mượn nhiều cuốn sách, một cuốn sách có thể được nhiều độc giả mượn theo thời gian.</p>
+        `,
+        defaultSql: `CREATE TABLE books (
+    book_id VARCHAR(20) PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    publish_year INT CHECK (publish_year >= 1900),
+    available_qty INT DEFAULT 1 CHECK (available_qty >= 0)
+);
+
+CREATE TABLE members (
+    member_id VARCHAR(20) PRIMARY KEY,
+    member_name VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15) UNIQUE,
+    join_date DATE DEFAULT (CURRENT_DATE)
+);
+
+CREATE TABLE borrow_records (
+    record_id INT PRIMARY KEY,
+    book_id VARCHAR(20) NOT NULL,
+    member_id VARCHAR(20) NOT NULL,
+    borrow_date DATE NOT NULL,
+    return_date DATE,
+    FOREIGN KEY (book_id) REFERENCES books(book_id),
+    FOREIGN KEY (member_id) REFERENCES members(member_id)
+);
+
+INSERT INTO books (book_id, title, author, publish_year, available_qty) VALUES
+('B01', 'Co so du lieu nang cao', 'Nguyen Van A', 2023, 10),
+('B02', 'Lap trinh Java Core', 'Tran Thi B', 2024, 15);
+
+INSERT INTO members (member_id, member_name, phone_number, join_date) VALUES
+('M01', 'Pham Hoang Nam', '0901234567', '2025-01-10'),
+('M02', 'Do Thi Mai', '0912345678', '2025-02-15');
+
+INSERT INTO borrow_records (record_id, book_id, member_id, borrow_date, return_date) VALUES
+(1, 'B01', 'M01', '2025-03-01', '2025-03-10'),
+(2, 'B02', 'M02', '2025-03-05', NULL);
+
+SELECT * FROM books;
+SELECT * FROM members;
+SELECT * FROM borrow_records;`
+      },
+
+      s3_btvn3: {
+        key: 's3_btvn3',
+        title: 'BTVN 3 · Quản lý đơn hàng - Sản phẩm (Customers, Orders & Order Items)',
+        readmeFolder: 'BTVN_S3_3_QuanLyOnHangSanPham',
+        sqlFileName: 'BTVN_S3_3_QuanLyOnHangSanPham.sql',
+        theory: [
+          'Khóa chính tổ hợp (Composite Primary Key): Kết hợp (order_id, product_id) để bảo đảm mỗi mặt hàng chỉ xuất hiện 1 lần trong đơn hàng.',
+          'Ràng buộc DECIMAL & CHECK: Giá tiền và số lượng mua luôn phải lớn hơn 0.',
+          'CHECK ràng buộc trạng thái: Chỉ chấp nhận các trạng thái hợp lệ như Pending, Processing, Completed, Cancelled.'
+        ],
+        readme: {
+          entity: 'customers (1) ||--o{ orders (1) ||--o{ order_items (N) }o--|| products (1)',
+          attributes: 'customers(customer_id, customer_name, phone, address) | products(product_id, product_name, unit_price, stock_quantity) | orders(order_id, order_date, customer_id, order_status) | order_items(order_id, product_id, quantity, item_price)',
+          pk: 'customers: customer_id | products: product_id | orders: order_id | order_items: (order_id, product_id)',
+          note: 'Thiết kế cơ sở dữ liệu thương mại điện tử với bảng chi tiết đơn hàng dùng khóa chính tổ hợp.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'customer_id', key: 'PK', desc: 'Mã khách hàng' },
+          { type: 'VARCHAR(20)', field: 'order_id', key: 'PK', desc: 'Mã đơn hàng' },
+          { type: 'VARCHAR(20)', field: 'product_id', key: 'PK', desc: 'Mã sản phẩm' },
+          { type: 'DECIMAL(12,2)', field: 'unit_price', key: 'CHECK', desc: 'Đơn giá (> 0)' },
+          { type: 'INT', field: 'quantity', key: 'CHECK', desc: 'Số lượng đặt (> 0)' },
+          { type: 'VARCHAR(20)', field: 'order_status', key: 'CHECK', desc: 'Trạng thái xử lý' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: 1fr 50px 1fr 50px 1fr;">
+            <div class="entity-node">customers (1)<small>customer_id · PK</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node">orders (1)<small>order_id · PK | customer_id · FK</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node" style="background:#f7f7f7;">order_items (N)<small>(order_id, product_id) · Composite PK</small></div>
+          </div>
+          <p class="relation-note">Đơn hàng liên kết khách hàng (1-N) và liên kết sản phẩm qua bảng chi tiết order_items.</p>
+        `,
+        defaultSql: `CREATE TABLE customers (
+    customer_id VARCHAR(20) PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) UNIQUE NOT NULL,
+    address VARCHAR(200)
+);
+
+CREATE TABLE products (
+    product_id VARCHAR(20) PRIMARY KEY,
+    product_name VARCHAR(120) NOT NULL,
+    unit_price DECIMAL(12,2) CHECK (unit_price > 0),
+    stock_quantity INT DEFAULT 0 CHECK (stock_quantity >= 0)
+);
+
+CREATE TABLE orders (
+    order_id VARCHAR(20) PRIMARY KEY,
+    order_date DATE NOT NULL,
+    customer_id VARCHAR(20) NOT NULL,
+    order_status VARCHAR(20) DEFAULT 'Pending' CHECK (order_status IN ('Pending', 'Processing', 'Completed', 'Cancelled')),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE order_items (
+    order_id VARCHAR(20) NOT NULL,
+    product_id VARCHAR(20) NOT NULL,
+    quantity INT CHECK (quantity > 0),
+    item_price DECIMAL(12,2) CHECK (item_price > 0),
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO customers VALUES 
+('KH01', 'Nguyen Van Thanh', '0988112233', 'Ha Noi'),
+('KH02', 'Le Thi Ngoc', '0977445566', 'Da Nang');
+
+INSERT INTO products VALUES
+('SP01', 'Ban phim co RK Royal Kludge', 850000, 25),
+('SP02', 'Chuot Gaming Logitech G102', 450000, 40);
+
+INSERT INTO orders VALUES
+('ORD01', '2025-03-01', 'KH01', 'Processing'),
+('ORD02', '2025-03-02', 'KH02', 'Pending');
+
+INSERT INTO order_items VALUES
+('ORD01', 'SP01', 1, 850000),
+('ORD01', 'SP02', 2, 450000),
+('ORD02', 'SP02', 1, 450000);
+
+SELECT * FROM orders;
+SELECT * FROM order_items;`
+      },
+
+      s3_btvn4: {
+        key: 's3_btvn4',
+        title: 'BTVN 4 · Quản lý tài khoản người dùng (Users, Profiles 1-1 & Roles 1-N)',
+        readmeFolder: 'BTVN_S3_4_QuanLyTaiKhoanNguoiDung',
+        sqlFileName: 'BTVN_S3_4_QuanLyTaiKhoanNguoiDung.sql',
+        theory: [
+          'Thiết kế quan hệ 1-1 chuẩn mực: Bảng user_profiles dùng user_id vừa làm PRIMARY KEY vừa làm FOREIGN KEY.',
+          'Mục đích quan hệ 1-1: Phân tách thông tin xác thực cốt lõi với thông tin hồ sơ bổ sung để tối ưu bảo mật.',
+          'Ràng buộc UNIQUE trên username và email ngăn chặn hành vi đăng ký trùng lặp tài khoản.'
+        ],
+        readme: {
+          entity: 'roles (1) ||--o{ users (1) ||--|| user_profiles (1)',
+          attributes: 'roles(role_id, role_name) | users(user_id, username, password_hash, email, role_id, is_active, created_at) | user_profiles(user_id, full_name, avatar_url, bio, birth_date)',
+          pk: 'roles: role_id | users: user_id | user_profiles: user_id',
+          note: 'Kiến trúc bảo mật phân quyền tài khoản kết hợp mở rộng hồ sơ cá nhân quan hệ 1-1.'
+        },
+        schema: [
+          { type: 'INT', field: 'role_id', key: 'PK', desc: 'Mã vai trò quyền hạn' },
+          { type: 'VARCHAR(20)', field: 'user_id', key: 'PK', desc: 'Mã người dùng' },
+          { type: 'VARCHAR(50)', field: 'username', key: 'UNIQUE', desc: 'Tên đăng nhập (NOT NULL)' },
+          { type: 'VARCHAR(100)', field: 'email', key: 'UNIQUE', desc: 'Địa chỉ email liên hệ' },
+          { type: 'VARCHAR(20)', field: 'user_id', key: 'PK, FK', desc: 'Khóa chính và ngoại (Quan hệ 1-1)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">roles (1)<small>role_id · PK | role_name</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node">users (1-N)<small>user_id · PK | username | role_id · FK</small></div>
+          </div>
+          <p class="relation-note">roles (1-N) tới users; users (1-1) với user_profiles để tối ưu bảo mật và hiệu năng.</p>
+        `,
+        defaultSql: `CREATE TABLE roles (
+    role_id INT PRIMARY KEY,
+    role_name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+    user_id VARCHAR(20) PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    role_id INT NOT NULL,
+    is_active INT DEFAULT 1 CHECK (is_active IN (0, 1)),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES roles(role_id)
+);
+
+CREATE TABLE user_profiles (
+    user_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    avatar_url VARCHAR(255),
+    bio VARCHAR(255),
+    birth_date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO roles (role_id, role_name) VALUES 
+(1, 'Administrator'), 
+(2, 'Instructor'), 
+(3, 'Student');
+
+INSERT INTO users (user_id, username, password_hash, email, role_id) VALUES
+('U01', 'admin_rikkei', 'hash_secret_123', 'admin@rikkei.edu.vn', 1),
+('U02', 'an_nguyen', 'hash_pass_456', 'an.nv@rikkei.edu.vn', 3);
+
+INSERT INTO user_profiles (user_id, full_name, bio, birth_date) VALUES
+('U01', 'Quan Tri Vien He Thong', 'Admin he thong dao tao RK', '1992-05-10'),
+('U02', 'Nguyen Van An', 'Hoc vien lop Bootcamp Java Backend', '2004-03-15');
+
+SELECT * FROM users;
+SELECT * FROM user_profiles;`
+      },
+
+      s3_btvn5: {
+        key: 's3_btvn5',
+        title: 'BTVN 5 · Quản lý khóa học trực tuyến (Giảng viên, Khóa học & Đăng ký)',
+        readmeFolder: 'BTVN_S3_5_QuanLyKhoaHocTrucTuyen',
+        sqlFileName: 'BTVN_S3_5_QuanLyKhoaHocTrucTuyen.sql',
+        theory: [
+          'Mô hình đào tạo trực tuyến (E-Learning DDL): Bảng enrollments ghi nhận hành động đăng ký của học viên.',
+          'Ràng buộc toàn vẹn CHECK điểm đánh giá: rating_score BETWEEN 1 AND 5 bảo đảm tính hợp lệ của thang điểm review.',
+          'Giá trị DEFAULT thanh toán: payment_status mặc định là "Paid" hoặc "Pending".'
+        ],
+        readme: {
+          entity: 'instructors (1) ||--o{ courses (1) ||--o{ enrollments (N) }o--|| students (1)',
+          attributes: 'instructors(instructor_id, instructor_name, specialty, email) | courses(course_id, course_title, price, duration_hours, instructor_id) | students(student_id, student_name, email) | enrollments(enrollment_id, student_id, course_id, enroll_date, rating_score, payment_status)',
+          pk: 'instructors: instructor_id | courses: course_id | students: student_id | enrollments: enrollment_id',
+          note: 'Cơ sở dữ liệu khóa học trực tuyến hoàn chỉnh với giảng viên, môn học và phiếu đăng ký.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'instructor_id', key: 'PK', desc: 'Mã giảng viên phụ trách' },
+          { type: 'VARCHAR(20)', field: 'course_id', key: 'PK', desc: 'Mã khóa học trực tuyến' },
+          { type: 'DECIMAL(10,2)', field: 'price', key: 'CHECK', desc: 'Học phí (>= 0)' },
+          { type: 'INT', field: 'duration_hours', key: 'CHECK', desc: 'Thời lượng đào tạo (> 0 giờ)' },
+          { type: 'INT', field: 'enrollment_id', key: 'PK', desc: 'Mã lượt đăng ký học' },
+          { type: 'INT', field: 'rating_score', key: 'CHECK', desc: 'Đánh giá chất lượng (1 đến 5 sao)' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: 1fr 50px 1fr 50px 1fr;">
+            <div class="entity-node">instructors (1)<small>instructor_id · PK</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node">courses (1)<small>course_id · PK | instructor_id · FK</small></div>
+            <div class="relation-line"></div>
+            <div class="entity-node" style="background:#f7f7f7;">enrollments (N)<small>enrollment_id · PK | student_id · FK | course_id · FK</small></div>
+          </div>
+          <p class="relation-note">Giảng viên giảng dạy nhiều khóa học; học viên đăng ký nhiều khóa học qua bảng enrollments.</p>
+        `,
+        defaultSql: `CREATE TABLE instructors (
+    instructor_id VARCHAR(20) PRIMARY KEY,
+    instructor_name VARCHAR(100) NOT NULL,
+    specialty VARCHAR(100),
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE courses (
+    course_id VARCHAR(20) PRIMARY KEY,
+    course_title VARCHAR(150) NOT NULL,
+    price DECIMAL(10,2) CHECK (price >= 0),
+    duration_hours INT CHECK (duration_hours > 0),
+    instructor_id VARCHAR(20) NOT NULL,
+    FOREIGN KEY (instructor_id) REFERENCES instructors(instructor_id)
+);
+
+CREATE TABLE students (
+    student_id VARCHAR(20) PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id VARCHAR(20) NOT NULL,
+    course_id VARCHAR(20) NOT NULL,
+    enroll_date DATE NOT NULL,
+    rating_score INT CHECK (rating_score BETWEEN 1 AND 5),
+    payment_status VARCHAR(20) DEFAULT 'Paid' CHECK (payment_status IN ('Pending', 'Paid', 'Refunded')),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+INSERT INTO instructors VALUES
+('INS01', 'Ths. Nguyen Van Quang', 'Backend Architecture & Database', 'quang.nv@rikkei.edu.vn'),
+('INS02', 'Ks. Tran Bao Chau', 'Fullstack JavaScript & React', 'chau.tb@rikkei.edu.vn');
+
+INSERT INTO courses VALUES
+('CRS01', 'MySQL Database Masterclass 2025', 1800000, 48, 'INS01'),
+('CRS02', 'Java Core & Spring Boot Pro', 2500000, 72, 'INS01');
+
+INSERT INTO students VALUES
+('STD01', 'Do Tien Dat', 'dat.dt@gmail.com'),
+('STD02', 'Vu Hong Nhung', 'nhung.vh@gmail.com');
+
+INSERT INTO enrollments VALUES
+(1, 'STD01', 'CRS01', '2025-03-01', 5, 'Paid'),
+(2, 'STD02', 'CRS01', '2025-03-02', 4, 'Paid'),
+(3, 'STD01', 'CRS02', '2025-03-05', NULL, 'Pending');
+
+SELECT * FROM courses;
+SELECT * FROM enrollments;`
       },
 
       s4_btvn1: {
@@ -2453,6 +3104,215 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
         if (btn) btn.textContent = originalText;
       }
     }
+
+    // =========================================================================
+    // SQL WORKBENCH STUDIO MODAL (Fullscreen popup /rk-ui)
+    // =========================================================================
+    let studioSidecarOpen = true;
+
+    function openSqlStudioModal() {
+      const modal = document.getElementById('sqlStudioModal');
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const btvnEditor = document.getElementById('btvn-sql-editor');
+      const studioTitle = document.getElementById('studioTargetTitle');
+      const currentBtvn = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
+
+      if (!modal || !studioEditor) return;
+
+      studioEditor.value = btvnEditor ? btvnEditor.value : (currentBtvn.defaultSql || '');
+      studioTitle.textContent = currentBtvn.title ? ('Đang liên kết: ' + currentBtvn.title) : 'Không gian thực hành SQL & Quan sát bảng trực quan';
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      runStudioSql();
+      checkStudioAiStatus();
+    }
+
+    function closeSqlStudioModal() {
+      const modal = document.getElementById('sqlStudioModal');
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const btvnEditor = document.getElementById('btvn-sql-editor');
+
+      if (!modal) return;
+
+      if (studioEditor && btvnEditor) {
+        btvnEditor.value = studioEditor.value;
+        if (currentBtvnKey) {
+          localStorage.setItem('dashboard-v1-' + currentBtvnKey + '-sql', studioEditor.value);
+        }
+        previewBtvnSql();
+      }
+
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function toggleStudioSidecar() {
+      const grid = document.getElementById('studioWorkspaceGrid');
+      const previewPane = document.getElementById('studioPreviewPane');
+      const icon = document.getElementById('studioSidecarIcon');
+      const text = document.getElementById('studioSidecarText');
+
+      if (!grid || !previewPane) return;
+
+      studioSidecarOpen = !studioSidecarOpen;
+      if (studioSidecarOpen) {
+        previewPane.style.display = 'flex';
+        grid.style.gridTemplateColumns = '1fr 1fr';
+        if (icon) icon.textContent = '◧';
+        if (text) text.textContent = 'Thu gọn Preview';
+      } else {
+        previewPane.style.display = 'none';
+        grid.style.gridTemplateColumns = '1fr';
+        if (icon) icon.textContent = '◨';
+        if (text) text.textContent = 'Mở rộng Preview bảng';
+      }
+    }
+
+    async function runStudioSql() {
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const studioResult = document.getElementById('studio-sql-result');
+      const studioStatus = document.getElementById('studioEngineStatus');
+      const studioRowCount = document.getElementById('studioRowCount');
+
+      if (!studioEditor || !studioResult) return;
+      const sql = studioEditor.value.trim();
+
+      if (!sql) {
+        studioResult.innerHTML = '<p style="color:#777;">Chưa có mã SQL. Hãy nhập câu lệnh CREATE TABLE, INSERT INTO, SELECT...</p>';
+        return;
+      }
+
+      studioStatus.textContent = 'SQLite WebAssembly: đang thực thi...';
+      const res = await runSqliteInBrowser(sql);
+
+      if (!res.ok) {
+        studioStatus.textContent = 'Lỗi thực thi SQL';
+        studioResult.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:10px; border-radius:5px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px;"><strong>✕ Lỗi cú pháp SQL:</strong><br>' + escapeMarkup(res.error) + '</div>';
+        if (studioRowCount) studioRowCount.textContent = 'Lỗi';
+        return;
+      }
+
+      studioStatus.textContent = 'SQLite: Thực thi thành công!';
+      if (res.tables && res.tables.length > 0) {
+        studioResult.innerHTML = res.tables.map(table => renderSqlTable(table)).join('<hr style="margin:14px 0; border:0; border-top:1px solid #e5e5e5;">');
+        if (studioRowCount) studioRowCount.textContent = res.tables.length + ' bảng dữ liệu';
+      } else {
+        studioResult.innerHTML = '<div style="color:#1f6b43; background:#f0fdf4; padding:10px; border-radius:5px; border:1px solid #bbf7d0;">✓ Các lệnh DDL / DML đã chạy thành công trong bộ nhớ SQLite! (Thêm câu lệnh SELECT để quan sát bảng dữ liệu bên dưới)</div>';
+        if (studioRowCount) studioRowCount.textContent = '0 dòng hiển thị';
+      }
+    }
+
+    function saveStudioSql() {
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || { sqlFileName: 'custom_query.sql' };
+      if (!studioEditor) return;
+
+      const blob = new Blob([studioEditor.value], { type: 'text/sql;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = data.sqlFileName || 'query.sql';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast('Đã lưu file SQL: ' + (data.sqlFileName || 'query.sql'));
+    }
+
+    async function checkStudioAiStatus() {
+      const status = document.getElementById('studio-ai-status');
+      if (!status) return;
+      const provider = await checkAiStatus();
+      if (provider === 'gemini') {
+        status.textContent = 'Gemini Cloud: online (Vercel API)';
+        status.style.color = '#0070f3';
+      } else if (provider === 'ollama') {
+        status.textContent = 'Ollama Local: online';
+        status.style.color = '#10b981';
+      } else {
+        status.textContent = 'AI: offline (Gemini Cloud hoặc Ollama)';
+        status.style.color = '#777';
+      }
+    }
+
+    async function askStudioAi(task) {
+      const studioEditor = document.getElementById('studio-sql-editor');
+      const result = document.getElementById('studio-ai-result');
+      const sql = studioEditor ? studioEditor.value.trim() : '';
+      const currentBtvn = btvnDatabase[currentBtvnKey] || btvnDatabase.s0_btol3 || {};
+
+      if (!result) return;
+      result.style.display = 'block';
+
+      if (!sql) {
+        result.textContent = '⚠️ Ô soạn thảo SQL trong Studio đang trống.';
+        return;
+      }
+
+      result.textContent = '⏳ Trợ giảng AI đang phân tích câu lệnh SQL...';
+      const customKey = localStorage.getItem('gemini_custom_api_key') || '';
+
+      // Ưu tiên Vercel Serverless API (/api/ai)
+      try {
+        const response = await fetch('/api/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: task,
+            sql: sql,
+            btvnTitle: currentBtvn.title || 'SQL Workbench Studio',
+            schema: currentBtvn.readme?.entity || '',
+            customKey: customKey
+          })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.result) {
+            result.textContent = data.result;
+            return;
+          }
+        }
+      } catch (e) {
+        // Fallback
+      }
+
+      // Fallback local Ollama
+      try {
+        result.textContent = '⏳ Đang kết nối Local Ollama...';
+        const ollamaRes = await fetch(ollamaUrl + '/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: ollamaModel,
+            prompt: buildOllamaPrompt(task, sql),
+            stream: false
+          })
+        });
+        if (ollamaRes.ok) {
+          const data = await ollamaRes.json();
+          result.textContent = data.response || 'Ollama không trả về nội dung.';
+          return;
+        }
+      } catch (e) {
+        // Fail
+      }
+
+      result.textContent = '❌ Không thể kết nối AI (Kiểm tra Vercel Cloud API hoặc bật Ollama local).';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('sqlStudioModal');
+      if (modal && modal.style.display !== 'none') {
+        if (e.key === 'Escape') {
+          closeSqlStudioModal();
+        } else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          runStudioSql();
+        }
+      }
+    });
 
     // Mặc định chọn Cẩm nang thi MySQL Workbench, đồng thời nạp BTOL 3 vào historyStack để nút Quay lại hoạt động ngay
     const btol3Item = document.querySelector('.item[data-btvn="s0_btol3"]');
