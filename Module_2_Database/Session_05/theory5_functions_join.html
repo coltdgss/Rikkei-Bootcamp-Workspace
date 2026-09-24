@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lý thuyết Session 05 · Hàm SQL, Gom nhóm GROUP BY &amp; Nối bảng JOIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* RK WORKSPACE DESIGN SYSTEM (/rk-ui) - Nền sáng, viền xám, CHỈ SQL NỀN ĐEN */
+    :root {
+      --bg-main: #f4f4f4;
+      --bg-card: #ffffff;
+      --bg-soft: #f7f7f7;
+      --line: #e5e5e5;
+      --line-strong: #d9d9d9;
+      --black: #111111;
+      --ink: #202020;
+      --text-muted: #666666;
+      --code-bg: #111111;
+      --code-text: #f5f5f5;
+      --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-main);
+      color: var(--ink);
+      font-family: var(--font-system);
+      line-height: 1.6;
+      padding: 16px 20px 48px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--bg-soft);
+      color: var(--black);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+      border: 1px solid var(--line);
+    }
+    h1 { font-size: 20px; font-weight: 800; color: var(--black); margin-bottom: 6px; letter-spacing: -.03em; }
+    p.lead { font-size: 12.5px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .card h2 { font-size: 15px; font-weight: 800; color: var(--black); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .card h3 { font-size: 13px; font-weight: 700; color: var(--black); margin: 14px 0 6px; }
+    .card p, .card li { font-size: 12px; color: #444; line-height: 1.6; }
+    .card ul, .card ol { padding-left: 18px; margin-bottom: 10px; }
+    .code-box {
+      background: var(--code-bg);
+      border-radius: 6px;
+      margin: 10px 0 14px;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+    .code-head {
+      background: #181818;
+      padding: 6px 12px;
+      color: #888;
+      font-size: 10.5px;
+      font-family: var(--font-code);
+      border-bottom: 1px solid #282828;
+    }
+    pre code {
+      display: block;
+      padding: 12px;
+      color: var(--code-text);
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .callout {
+      border-left: 3px solid var(--black);
+      background: var(--bg-soft);
+      padding: 12px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+      font-size: 11.5px;
+    }
+    .callout.warning { border-left-color: #d97706; background: #fffbeb; color: #92400e; }
+    .callout.success { border-left-color: #16a34a; background: #f0fdf4; color: #166534; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Session 05 · Aggregate Functions &amp; Multi-Table Queries</span>
+      <h1>Lý thuyết cốt lõi: Hàm SQL, Gom nhóm &amp; Nối bảng</h1>
+      <p class="lead">Nội dung học tập được đồng bộ từ giáo trình RK-MODULE2-DATABASE trên Google Drive. Nắm vững kỹ thuật tính toán dữ liệu bằng Aggregate Functions, gom nhóm với GROUP BY - HAVING, truy vấn lồng SubQuery và nối bảng JOIN.</p>
+    </header>
+
+    <section class="card">
+      <h2>1. Các hàm SQL thông dụng (SQL Built-in Functions)</h2>
+      <p>SQL cung cấp nhiều hàm tích hợp sẵn để xử lý chuỗi, thời gian và số học trong quá trình truy vấn:</p>
+      <div class="code-box">
+        <div class="code-head">SQL Functions · Chuỗi, Ngày tháng, Toán học</div>
+        <pre><code>-- 1. Hàm chuỗi: UPPER, LOWER, CONCAT, LENGTH
+SELECT 
+    student_id,
+    UPPER(full_name) AS HoTenInHoa,
+    CONCAT(full_name, ' (', gender, ')') AS ThongTin
+FROM students;
+
+-- 2. Hàm ngày tháng & tính tuổi: YEAR, CURDATE(), TIMESTAMPDIFF
+SELECT 
+    full_name,
+    YEAR(CURDATE()) - birth_year AS TuoiHienTai
+FROM students;
+
+-- 3. Hàm toán học: ROUND (làm tròn), ABS (trị tuyệt đối)
+SELECT 
+    full_name,
+    ROUND(score, 1) AS DiemLamTron
+FROM students;</code></pre>
+      </div>
+
+      <h3>Hàm tổng hợp dữ liệu (Aggregate Functions)</h3>
+      <p>Bao gồm: <code>COUNT(*)</code> (đếm số dòng), <code>SUM(col)</code> (tổng), <code>AVG(col)</code> (trung bình), <code>MAX(col)</code> (lớn nhất), <code>MIN(col)</code> (nhỏ nhất).</p>
+      <div class="code-box">
+        <div class="code-head">SQL Functions · Hàm tổng hợp thống kê</div>
+        <pre><code>SELECT 
+    COUNT(*) AS TongSinhVien,
+    ROUND(AVG(score), 2) AS DiemTrungBinhChung,
+    MAX(score) AS DiemCaoNhat,
+    MIN(score) AS DiemThapNhat
+FROM students;</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Gom nhóm dữ liệu: GROUP BY và HAVING</h2>
+      <p>Mệnh đề <code>GROUP BY</code> gom các dòng có cùng giá trị trong cột chỉ định thành một nhóm để thực hiện tính toán tổng hợp (COUNT, SUM, AVG...).</p>
+      
+      <div class="callout warning">
+        <strong>⚠️ PHÂN BIỆT WHERE VÀ HAVING:</strong><br>
+        • <strong>WHERE:</strong> Lọc các dòng <em>trước khi gom nhóm</em>. Không được dùng hàm tổng hợp trong WHERE.<br>
+        • <strong>HAVING:</strong> Lọc các nhóm <em>sau khi đã gom nhóm</em> và tính toán hàm tổng hợp (VD: <code>HAVING COUNT(*) &gt; 3</code>).
+      </div>
+
+      <div class="code-box">
+        <div class="code-head">SQL Query · GROUP BY và HAVING</div>
+        <pre><code>-- Đếm số nhân viên và tính lương trung bình từng phòng ban
+-- Chỉ lấy những phòng ban có trên 3 nhân viên và lương TB > 15 triệu
+SELECT 
+    department,
+    COUNT(*) AS SoLuongNhanVien,
+    ROUND(AVG(salary), 0) AS LuongTrungBinh
+FROM employees
+GROUP BY department
+HAVING COUNT(*) > 3 AND AVG(salary) > 15000000;</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Truy vấn lồng (SubQuery) &amp; Nối bảng (JOIN)</h2>
+      
+      <h3>3.1. Truy vấn lồng (SubQuery)</h3>
+      <p>Là câu lệnh SELECT nằm bên trong một câu lệnh khác, dùng kết quả của truy vấn con để làm điều kiện cho truy vấn cha.</p>
+      <div class="code-box">
+        <div class="code-head">SQL SubQuery · Lọc sản phẩm có giá cao hơn giá trung bình</div>
+        <pre><code>SELECT product_name, price, category
+FROM products
+WHERE price > (SELECT AVG(price) FROM products);</code></pre>
+      </div>
+
+      <h3>3.2. Nối bảng (JOIN)</h3>
+      <p>Dùng để kết hợp dữ liệu từ 2 hoặc nhiều bảng dựa trên cột chung (Khóa chính - Khóa ngoại).</p>
+      <div class="code-box">
+        <div class="code-head">SQL JOIN · Nối bảng Khách hàng, Đơn hàng và Chi tiết đơn hàng</div>
+        <pre><code>SELECT 
+    c.customer_name,
+    o.order_id,
+    o.order_date,
+    oi.product_name,
+    oi.quantity,
+    oi.price,
+    (oi.quantity * oi.price) AS ThanhTien
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+INNER JOIN order_items oi ON o.order_id = oi.order_id
+ORDER BY o.order_date DESC;</code></pre>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

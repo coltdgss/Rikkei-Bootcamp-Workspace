@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lý thuyết Session 04 · Nhóm lệnh thao tác dữ liệu (DML)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* RK WORKSPACE DESIGN SYSTEM (/rk-ui) - Nền sáng, viền xám, CHỈ SQL NỀN ĐEN */
+    :root {
+      --bg-main: #f4f4f4;
+      --bg-card: #ffffff;
+      --bg-soft: #f7f7f7;
+      --line: #e5e5e5;
+      --line-strong: #d9d9d9;
+      --black: #111111;
+      --ink: #202020;
+      --text-muted: #666666;
+      --code-bg: #111111;
+      --code-text: #f5f5f5;
+      --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-main);
+      color: var(--ink);
+      font-family: var(--font-system);
+      line-height: 1.6;
+      padding: 16px 20px 48px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--bg-soft);
+      color: var(--black);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+      border: 1px solid var(--line);
+    }
+    h1 { font-size: 20px; font-weight: 800; color: var(--black); margin-bottom: 6px; letter-spacing: -.03em; }
+    p.lead { font-size: 12.5px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .card h2 { font-size: 15px; font-weight: 800; color: var(--black); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .card h3 { font-size: 13px; font-weight: 700; color: var(--black); margin: 14px 0 6px; }
+    .card p, .card li { font-size: 12px; color: #444; line-height: 1.6; }
+    .card ul, .card ol { padding-left: 18px; margin-bottom: 10px; }
+    .code-box {
+      background: var(--code-bg);
+      border-radius: 6px;
+      margin: 10px 0 14px;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+    .code-head {
+      background: #181818;
+      padding: 6px 12px;
+      color: #888;
+      font-size: 10.5px;
+      font-family: var(--font-code);
+      border-bottom: 1px solid #282828;
+    }
+    pre code {
+      display: block;
+      padding: 12px;
+      color: var(--code-text);
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .callout {
+      border-left: 3px solid var(--black);
+      background: var(--bg-soft);
+      padding: 12px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+      font-size: 11.5px;
+    }
+    .callout.warning { border-left-color: #d97706; background: #fffbeb; color: #92400e; }
+    .callout.danger { border-left-color: #dc2626; background: #fef2f2; color: #7f1d1d; }
+    .tag { background: #eee; padding: 2px 5px; border-radius: 3px; font-family: var(--font-code); font-size: 11px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Session 04 · Data Manipulation Language</span>
+      <h1>Lý thuyết cốt lõi: Nhóm lệnh DML &amp; Truy vấn cơ bản</h1>
+      <p class="lead">Nội dung học tập được đồng bộ trực tiếp từ giáo trình RK-MODULE2-DATABASE trên Google Drive. Làm chủ thao tác dữ liệu: INSERT, UPDATE, DELETE và cấu trúc SELECT đa điều kiện.</p>
+    </header>
+
+    <section class="card">
+      <h2>1. Tổng quan về DML (Data Manipulation Language)</h2>
+      <p>DML là tập hợp các lệnh SQL dùng để thao tác trực tiếp trên dữ liệu bên trong các bảng của cơ sở dữ liệu. Khác với DDL (tạo và sửa cấu trúc bảng), DML <strong>chỉ thay đổi nội dung dữ liệu</strong> mà không làm biến đổi cấu trúc cột hay kiểu dữ liệu.</p>
+      <div class="callout">
+        <strong>4 câu lệnh DML trụ cột:</strong><br>
+        • <span class="tag">INSERT</span>: Thêm bản ghi mới vào bảng.<br>
+        • <span class="tag">UPDATE</span>: Cập nhật, sửa đổi giá trị các dòng dữ liệu có sẵn.<br>
+        • <span class="tag">DELETE</span>: Xóa một hoặc nhiều bản ghi ra khỏi bảng.<br>
+        • <span class="tag">SELECT</span>: Truy vấn, đọc và hiển thị dữ liệu từ một hoặc nhiều bảng.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Thao tác Thêm, Sửa, Xóa dữ liệu (INSERT, UPDATE, DELETE)</h2>
+      
+      <h3>2.1. Lệnh INSERT INTO</h3>
+      <p>Dùng để chèn một hoặc nhiều dòng mới vào bảng. Thứ tự giá trị trong mệnh đề <code>VALUES</code> phải tương ứng chính xác với thứ tự các cột được liệt kê.</p>
+      <div class="code-box">
+        <div class="code-head">SQL DML · INSERT INTO</div>
+        <pre><code>-- Chèn 1 dòng chỉ định rõ cột
+INSERT INTO students (student_id, full_name, birth_date, gender, email)
+VALUES ('SV001', 'Nguyen Van A', '2004-05-12', 'Nam', 'vana@gmail.com');
+
+-- Chèn nhiều dòng cùng một câu lệnh
+INSERT INTO students (student_id, full_name, birth_date, gender, email) VALUES
+('SV002', 'Tran Thi B', '2005-11-20', 'Nu', 'thib@gmail.com'),
+('SV003', 'Le Hoang C', '2003-08-15', 'Nam', NULL); -- Email có thể để trống (NULL)</code></pre>
+      </div>
+
+      <h3>2.2. Lệnh UPDATE</h3>
+      <p>Dùng để chỉnh sửa dữ liệu đã có. Mệnh đề <code>WHERE</code> xác định dòng nào cần được sửa.</p>
+      <div class="callout warning">
+        <strong>⚠️ CẢNH BÁO TỬ HUYỆT:</strong> Nếu quên mệnh đề <code>WHERE</code>, MySQL sẽ cập nhật <strong>TOÀN BỘ CÁC DÒNG</strong> trong bảng mà không thể hoàn tác!
+      </div>
+      <div class="code-box">
+        <div class="code-head">SQL DML · UPDATE</div>
+        <pre><code>-- Cập nhật email cho sinh viên có mã SV003
+UPDATE students
+SET email = 'hoangc_updated@gmail.com'
+WHERE student_id = 'SV003';
+
+-- Cập nhật đồng thời nhiều cột
+UPDATE students
+SET full_name = 'Le Hoang C VIP', gender = 'Nam'
+WHERE student_id = 'SV003';</code></pre>
+      </div>
+
+      <h3>2.3. Lệnh DELETE</h3>
+      <p>Dùng để xóa một hoặc nhiều bản ghi dựa vào điều kiện lọc.</p>
+      <div class="callout danger">
+        <strong>⛔ NGUY HIỂM:</strong> Câu lệnh <code>DELETE FROM students;</code> (không có WHERE) sẽ xóa sạch toàn bộ dữ liệu trong bảng!
+      </div>
+      <div class="code-box">
+        <div class="code-head">SQL DML · DELETE</div>
+        <pre><code>-- Xóa một bản ghi cụ thể theo khóa chính
+DELETE FROM students
+WHERE student_id = 'SV002';</code></pre>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Truy vấn dữ liệu cơ bản (SELECT, WHERE, ORDER BY, LIMIT)</h2>
+      
+      <h3>3.1. Cú pháp SELECT cơ bản</h3>
+      <p>Hai từ khóa tối thiểu là <code>SELECT</code> (lấy cột nào) và <code>FROM</code> (từ bảng nào).</p>
+      <div class="code-box">
+        <div class="code-head">SQL Query · SELECT &amp; Alias</div>
+        <pre><code>-- Xem tất cả cột (*)
+SELECT * FROM students;
+
+-- Chỉ lấy các cột cần thiết và đặt bí danh (Alias AS)
+SELECT student_id AS MaSV, full_name AS HoVaTen, email
+FROM students;</code></pre>
+      </div>
+
+      <h3>3.2. Lọc dữ liệu với WHERE, AND, OR, BETWEEN, IN, LIKE, IS NULL</h3>
+      <div class="code-box">
+        <div class="code-head">SQL Query · Các toán tử điều kiện lọc</div>
+        <pre><code>-- 1. Lọc khoảng với BETWEEN
+SELECT * FROM students
+WHERE birth_date BETWEEN '2003-01-01' AND '2005-12-31';
+
+-- 2. Lọc trong danh sách với IN
+SELECT * FROM students
+WHERE student_id IN ('SV001', 'SV003', 'SV005');
+
+-- 3. Tìm kiếm chuỗi tương đối với LIKE (Họ bắt đầu bằng 'Ng')
+SELECT * FROM students
+WHERE full_name LIKE 'Ng%';
+
+-- 4. Kiểm tra rỗng với IS NULL / IS NOT NULL
+SELECT * FROM students
+WHERE email IS NULL;
+
+-- 5. Kết hợp nhiều điều kiện AND / OR / NOT
+SELECT * FROM students
+WHERE (gender = 'Nam' OR gender = 'Nu') AND email IS NOT NULL;</code></pre>
+      </div>
+
+      <h3>3.3. Sắp xếp ORDER BY và Phân trang LIMIT - OFFSET</h3>
+      <div class="code-box">
+        <div class="code-head">SQL Query · ORDER BY &amp; LIMIT</div>
+        <pre><code>-- Sắp xếp giảm dần theo ngày sinh (trẻ nhất lên đầu)
+SELECT * FROM students
+ORDER BY birth_date DESC;
+
+-- Lấy 3 bản ghi đầu tiên
+SELECT * FROM students
+ORDER BY birth_date DESC
+LIMIT 3;
+
+-- Phân trang: Bỏ qua 2 bản ghi đầu (OFFSET 2), lấy 5 bản ghi tiếp theo
+SELECT * FROM students
+LIMIT 5 OFFSET 2;</code></pre>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
