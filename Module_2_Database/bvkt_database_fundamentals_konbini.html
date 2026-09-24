@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tài liệu học tập · Database Fundamentals (Dự án Chuỗi Konbini)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================================
+       RK WORKSPACE DESIGN SYSTEM (/rk-ui STANDARD)
+       Triết lý: Scandinavian / Swiss Minimalist — Nền sáng, viền xám, chữ đen.
+       QUY TẮC ĐỘC TÔN: CHỈ DUY NHẤT KHỐI SOẠN THẢO/HIỂN THỊ CODE SQL MỚI CÓ NỀN ĐEN.
+       ========================================================================= */
+    :root {
+      --bg-main: #f4f4f4;
+      --bg-card: #ffffff;
+      --bg-subtle: #fafafa;
+      --bg-soft: #f7f7f7;
+      
+      --line: #e5e5e5;
+      --line-strong: #d9d9d9;
+      --line-table: #dedede;
+      
+      --black: #111111;
+      --ink: #202020;
+      --text-muted: #666666;
+      --white: #ffffff;
+
+      --code-bg: #111111;
+      --code-text: #f5f5f5;
+      --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, "Courier New", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      background: var(--bg-main);
+      color: var(--ink);
+      font-family: var(--font-system);
+      line-height: 1.6;
+      min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      padding: 16px 18px 48px;
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner */
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--bg-soft);
+      color: var(--black);
+      padding: 4px 9px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+      border: 1px solid var(--line);
+    }
+    h1 {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 8px;
+      letter-spacing: -.03em;
+    }
+    .subtitle {
+      color: #444444;
+      font-size: 12.5px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      max-width: 980px;
+    }
+
+    /* Metadata Bar */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 12px 14px;
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .meta-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      font-family: var(--font-code);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+    }
+    .btn-primary:hover {
+      background: #333333;
+      border-color: #333333;
+    }
+    .btn-secondary {
+      background: var(--white);
+      color: #24292f;
+      border: 1px solid #d0d7de;
+    }
+    .btn-secondary:hover {
+      background: #f3f4f6;
+      border-color: var(--black);
+      color: var(--black);
+    }
+
+    /* Sheet Selector Tabs */
+    .sheet-nav-wrapper {
+      background: var(--white);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+    }
+    .sheet-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .sheet-nav-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sheet-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .sheet-chip {
+      background: #f5f5f5;
+      border: 1px solid var(--line);
+      color: #444444;
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sheet-chip:hover {
+      border-color: var(--black);
+      color: var(--black);
+      background: #ffffff;
+    }
+    .sheet-chip.active {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+    .sheet-chip .num {
+      opacity: 0.7;
+      font-size: 9.5px;
+      font-family: var(--font-code);
+    }
+
+    /* Cards & Content */
+    .sheet-card {
+      background: var(--white);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .sheet-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #111111;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-family: var(--font-code);
+      margin-bottom: 10px;
+    }
+    .sheet-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 10px;
+      letter-spacing: -.03em;
+    }
+    .sheet-desc {
+      font-size: 12.5px;
+      color: #444444;
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    /* Sub-section within Sheet */
+    .sec-block {
+      background: #fafafa;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .sec-block-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Steps List */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .step-item {
+      display: flex;
+      gap: 12px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px 14px;
+      align-items: flex-start;
+    }
+    .step-circle {
+      width: 24px;
+      height: 24px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 2px;
+    }
+    .step-text {
+      font-size: 11.5px;
+      color: #555555;
+      line-height: 1.55;
+    }
+
+    /* THE SACRED EXCEPTION: CHỈ DUY NHẤT CODE SQL MỚI NỀN ĐEN */
+    .code-box {
+      background: var(--code-bg);
+      border: 1px solid #222222;
+      border-radius: 6px;
+      margin: 10px 0 14px;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #181818;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #282828;
+      font-size: 10.5px;
+      color: #888888;
+      font-family: var(--font-code);
+    }
+    .code-copy-btn {
+      background: #282828;
+      border: 1px solid #383838;
+      color: #e0e0e0;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .code-copy-btn:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+    pre code {
+      display: block;
+      padding: 12px 14px;
+      font-family: var(--font-code);
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: var(--code-text);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Visual Entity Diagram (ERD Mini) */
+    .erd-visual {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) 90px minmax(180px, 1fr);
+      gap: 12px;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+    .erd-table-box {
+      background: #fafafa;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .erd-table-header {
+      background: #eef2f6;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--black);
+      border-bottom: 1px solid var(--line);
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+    .erd-col-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 10px;
+      font-size: 11px;
+      border-bottom: 1px solid #f0f0f0;
+      font-family: var(--font-code);
+    }
+    .erd-col-row:last-child { border-bottom: none; }
+    .erd-col-type { color: #64748b; font-size: 10px; }
+    .erd-relation-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--black);
+    }
+    .erd-arrow {
+      font-size: 16px;
+      color: #475569;
+    }
+
+    /* Tables (Standard rk-ui Table) */
+    .rk-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      font-size: 11.5px;
+    }
+    .rk-table th, .rk-table td {
+      border: 1px solid var(--line-table);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .rk-table th {
+      background: #f1f1f1;
+      color: var(--black);
+      font-weight: 800;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .rk-table td strong {
+      color: var(--black);
+    }
+
+    /* Pipeline 7 bước của SELECT */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .pipe-step {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px 6px;
+      text-align: center;
+      position: relative;
+    }
+    .pipe-step.active {
+      border-color: var(--black);
+      background: #f8fafc;
+    }
+    .pipe-num {
+      width: 20px;
+      height: 20px;
+      background: var(--black);
+      color: var(--white);
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .pipe-name {
+      font-family: var(--font-code);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--black);
+    }
+
+    /* Callouts */
+    .callout {
+      border-left: 3px solid var(--black);
+      background: #f7f7f7;
+      padding: 12px 16px;
+      border-radius: 0 7px 7px 0;
+      margin: 12px 0;
+      font-size: 12px;
+      color: #333333;
+      line-height: 1.55;
+    }
+    .callout.warning {
+      border-left-color: #d97706;
+      background: #fffbeb;
+      color: #92400e;
+    }
+    .callout.danger {
+      border-left-color: #dc2626;
+      background: #fef2f2;
+      color: #7f1d1d;
+    }
+    .callout.success {
+      border-left-color: #16a34a;
+      background: #f0fdf4;
+      color: #166534;
+    }
+    .callout strong { color: var(--black); }
+
+    .tag {
+      display: inline-block;
+      background: #f0f0f0;
+      border: 1px solid #dcdcdc;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--black);
+      font-family: var(--font-code);
+      font-weight: 600;
+    }
+
+    /* Bottom Navigator buttons */
+    .sheet-footer-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 860px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .erd-visual {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- HEADER BANNER -->
+    <header>
+      <span class="badge">TÀI LIỆU HỌC TẬP · DATABASE FUNDAMENTALS</span>
+      <h1>Từ ý tưởng đến database thật: hành trình xây MySQL cùng dự án Konbini</h1>
+      <p class="subtitle">Trang này dùng chính project <strong>Chuoi_Konbini</strong> các em đã được thầy dạy — từ thiết kế bảng, chèn dữ liệu, truy vấn, đến View / Index / Stored Procedure — để sinh viên nhìn thấy lý thuyết trở thành code thật như thế nào.</p>
+      
+      <!-- Dải thông số Metadata chuẩn -->
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Hệ QT CSDL</span>
+          <span class="meta-val">MySQL 8.0</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Database</span>
+          <span class="meta-val">Chuoi_Konbini</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bảng chính</span>
+          <span class="meta-val">Kho · San_Pham</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Chủ đề bài học</span>
+          <span class="meta-val">DDL · DML · View · Index · Procedure</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <a class="btn btn-primary" href="../Module_2_Database/huong_dan_thi_mysql_workbench.html">📖 Sang Cẩm nang thi MySQL Workbench</a>
+        <button class="btn btn-secondary" id="toggleViewModeBtn" onclick="toggleViewMode()">📑 Xem toàn bộ 10 Sheet (Cuộn dài)</button>
+        <button class="btn btn-secondary" onclick="copyFullProjectSql()">📋 Sao chép toàn bộ SQL Konbini</button>
+      </div>
+    </header>
+
+    <!-- SHEET NAVIGATION TABS (10 SHEETS) -->
+    <div class="sheet-nav-wrapper">
+      <div class="sheet-nav-header">
+        <div class="sheet-nav-title">
+          <span>📚 DANH MỤC 10 CHỦ ĐỀ CỐT TỬ (SHEET 01 – 10):</span>
+        </div>
+        <span style="font-size:11px;color:var(--text-muted);">Bấm để chuyển nhanh tới bài học tương ứng</span>
+      </div>
+
+      <div class="sheet-chips">
+        <button class="sheet-chip active" onclick="showSheet(1, this)"><span class="num">01</span> ERD &amp; Chuẩn hoá</button>
+        <button class="sheet-chip" onclick="showSheet(2, this)"><span class="num">02</span> Xây bảng DDL</button>
+        <button class="sheet-chip" onclick="showSheet(3, this)"><span class="num">03</span> Thao tác DML</button>
+        <button class="sheet-chip" onclick="showSheet(4, this)"><span class="num">04</span> Thứ tự SELECT</button>
+        <button class="sheet-chip" onclick="showSheet(5, this)"><span class="num">05</span> Nối bảng JOIN</button>
+        <button class="sheet-chip" onclick="showSheet(6, this)"><span class="num">06</span> Subquery lồng</button>
+        <button class="sheet-chip" onclick="showSheet(7, this)"><span class="num">07</span> View khung nhìn</button>
+        <button class="sheet-chip" onclick="showSheet(8, this)"><span class="num">08</span> Index chỉ mục</button>
+        <button class="sheet-chip" onclick="showSheet(9, this)"><span class="num">09</span> Stored Procedure</button>
+        <button class="sheet-chip" onclick="showSheet(10, this)"><span class="num">10</span> Checklist thiết kế</button>
+      </div>
+    </div>
+
+    <!-- KHỐI NỘI DUNG 10 SHEET -->
+    <main id="sheetContainer">
+
+      <!-- SHEET 01 / 10 -->
+      <section class="sheet-card" id="sheet-1">
+        <span class="sheet-badge">Sheet 01 / 10</span>
+        <h2 class="sheet-title">Cơ sở dữ liệu, mô hình quan hệ &amp; ERD</h2>
+        <p class="sheet-desc">Trước khi gõ một dòng SQL nào, mọi database đều bắt đầu từ một câu hỏi: <em>"Dữ liệu của tôi gồm những thực thể gì, và chúng liên hệ với nhau ra sao?"</em></p>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🗄️ Cơ sở dữ liệu là gì?</div>
+          <p style="font-size:12px;color:#444;">Là tập hợp dữ liệu có cấu trúc, liên quan đến nhau, được tổ chức để có thể lưu trữ, truy xuất và cập nhật một cách có hệ thống — thay vì rải rác trong nhiều file rời rạc.</p>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🏛️ Mô hình dữ liệu quan hệ</div>
+          <p style="font-size:12px;color:#444;">Mô hình phổ biến nhất hiện nay: mọi dữ liệu được lưu dưới dạng bảng (hàng &amp; cột). Hai bảng liên hệ với nhau qua cột chung (khoá ngoại) chứ không qua liên kết vật lý — đây chính là nền tảng của <strong>Kho</strong> và <strong>San_Pham</strong> trong dự án của bạn.</p>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">📐 Từ ERD đến bảng — 5 bước &amp; 4 mức chuẩn hoá</div>
+          <p style="font-size:12px;color:#444;margin-bottom:10px;">ERD (Entity Relationship Diagram) là bản vẽ thiết kế trước khi tạo bảng thật. Quy trình chuẩn gồm:</p>
+          
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle">1</div>
+              <div>
+                <div class="step-title">Xác định mục tiêu &amp; phạm vi</div>
+                <div class="step-text">Dự án Konbini cần quản lý gì? ➔ Kho hàng và sản phẩm trong từng kho.</div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-circle">2</div>
+              <div>
+                <div class="step-title">Thu thập dữ liệu &amp; xác định thực thể</div>
+                <div class="step-text">Thực thể: Kho (địa chỉ, số điện thoại), Sản phẩm (tên sản phẩm, giá bán).</div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-circle">3</div>
+              <div>
+                <div class="step-title">Xác định quan hệ giữa các thực thể</div>
+                <div class="step-text">Một kho chứa nhiều sản phẩm, một sản phẩm chỉ thuộc một kho ➔ Quan hệ <strong>1 – N</strong>.</div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-circle">4</div>
+              <div>
+                <div class="step-title">Chuẩn hoá dữ liệu (1NF ➔ BCNF)</div>
+                <div class="step-text">
+                  • <strong>1NF:</strong> Mỗi dòng xác định duy nhất bởi khoá chính, giá trị nguyên tố.<br>
+                  • <strong>2NF:</strong> Thuộc tính phụ thuộc toàn phần vào khoá chính (loại bỏ phụ thuộc một phần).<br>
+                  • <strong>3NF:</strong> Loại bỏ phụ thuộc bắc cầu (A ➔ B, B ➔ C).<br>
+                  • <strong>BCNF:</strong> Loại bỏ dư thừa còn sót lại đối với mọi phụ thuộc hàm X ➔ Y thì X phải là siêu khóa.
+                </div>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-circle">5</div>
+              <div>
+                <div class="step-title">Áp dụng ràng buộc (Constraints)</div>
+                <div class="step-text">Chuyển thành PRIMARY KEY, FOREIGN KEY, NOT NULL, CHECK ngay trong câu lệnh CREATE TABLE — xem Sheet 02.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <span style="font-size:11px;color:#888;">Chủ đề tiếp theo: Sheet 02</span>
+          <button class="btn btn-primary" onclick="goToSheet(2)">Sang Sheet 02: Xây bảng DDL ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 02 / 10 -->
+      <section class="sheet-card" id="sheet-2" style="display:none;">
+        <span class="sheet-badge">Sheet 02 / 10</span>
+        <h2 class="sheet-title">Xây bảng thật bằng DDL</h2>
+        <p class="sheet-desc">DDL (Data Definition Language) là nhóm lệnh định nghĩa cấu trúc database: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>. Đây chính xác là 4 bước đầu trong file SQL của bạn.</p>
+
+        <!-- KHỐI CODE SQL: NỀN ĐEN DUY NHẤT THEO RK-UI -->
+        <div class="code-box">
+          <div class="code-header">
+            <span>MySQL 8.0 DDL · Tạo database &amp; bảng Kho</span>
+            <button class="code-copy-btn" onclick="copySnippet('code-ddl')">📋 Copy</button>
+          </div>
+          <pre><code id="code-ddl">-- Bước 1: tạo kho chứa database
+CREATE DATABASE Chuoi_Konbini;
+
+-- Bước 2: chọn database để thao tác
+USE Chuoi_Konbini;
+
+-- Bước 3: tạo bảng bên trong database
+CREATE TABLE Kho (
+    ma_kho INT PRIMARY KEY,
+    dia_chi_kho VARCHAR(255) NOT NULL
+);
+
+-- Bước 4: sửa cấu trúc bảng đã tồn tại
+ALTER TABLE Kho ADD so_dien_thoai_kho VARCHAR(11);</code></pre>
+        </div>
+
+        <!-- SƠ ĐỒ QUAN HỆ TRỰC QUAN -->
+        <div class="sec-block">
+          <div class="sec-block-title">📊 Sơ đồ thực thể 1 – N (Bảng Kho và San_Pham)</div>
+          
+          <div class="erd-visual">
+            <div class="erd-table-box">
+              <div class="erd-table-header">
+                <span>Kho</span>
+                <span>(1)</span>
+              </div>
+              <div class="erd-col-row">
+                <span><strong>ma_kho</strong> (PK)</span>
+                <span class="erd-col-type">INT</span>
+              </div>
+              <div class="erd-col-row">
+                <span>dia_chi_kho</span>
+                <span class="erd-col-type">VARCHAR(255)</span>
+              </div>
+              <div class="erd-col-row">
+                <span>so_dien_thoai_kho</span>
+                <span class="erd-col-type">VARCHAR(11)</span>
+              </div>
+            </div>
+
+            <div class="erd-relation-line">
+              <span>⟵ 1 – N</span>
+              <div class="erd-arrow">⇄</div>
+              <span style="font-size:9.5px;color:#64748b;">Khóa ngoại FK</span>
+            </div>
+
+            <div class="erd-table-box">
+              <div class="erd-table-header">
+                <span>San_Pham</span>
+                <span>(N)</span>
+              </div>
+              <div class="erd-col-row">
+                <span><strong>ma_san_pham</strong> (PK)</span>
+                <span class="erd-col-type">VARCHAR(5)</span>
+              </div>
+              <div class="erd-col-row">
+                <span>ten_san_pham</span>
+                <span class="erd-col-type">VARCHAR(200)</span>
+              </div>
+              <div class="erd-col-row">
+                <span>gia_san_pham</span>
+                <span class="erd-col-type">INT</span>
+              </div>
+              <div class="erd-col-row">
+                <span>ma_kho_san_pham (FK)</span>
+                <span class="erd-col-type">INT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🔒 Các ràng buộc (Constraints) đã dùng trong hai bảng trên:</div>
+          <table class="rk-table">
+            <thead>
+              <tr>
+                <th style="width:160px;">Ràng buộc</th>
+                <th>Định nghĩa &amp; Vai trò kỹ thuật</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PRIMARY KEY</strong></td>
+                <td>Khoá chính, vừa <code>UNIQUE</code> vừa <code>NOT NULL</code>, xác định duy nhất 1 dòng trong bảng.</td>
+              </tr>
+              <tr>
+                <td><strong>NOT NULL</strong></td>
+                <td>Cột bắt buộc phải có giá trị, không được phép để rỗng khi chèn dòng.</td>
+              </tr>
+              <tr>
+                <td><strong>CHECK</strong></td>
+                <td>Ràng buộc điều kiện hợp lệ dữ liệu, ví dụ: <code>CHECK (gia_san_pham > 0)</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>FOREIGN KEY</strong></td>
+                <td>Khoá ngoại, liên kết đến khoá chính của bảng khác để đảm bảo tính toàn vẹn tham chiếu.</td>
+              </tr>
+              <tr>
+                <td><strong>UNIQUE</strong></td>
+                <td>Giá trị trong cột không được phép trùng lặp giữa các dòng.</td>
+              </tr>
+              <tr>
+                <td><strong>DEFAULT</strong></td>
+                <td>Gán giá trị mặc định nếu người dùng không truyền giá trị vào khi INSERT.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(1)">⬅ Về Sheet 01</button>
+          <button class="btn btn-primary" onclick="goToSheet(3)">Sang Sheet 03: Thao tác DML ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 03 / 10 -->
+      <section class="sheet-card" id="sheet-3" style="display:none;">
+        <span class="sheet-badge">Sheet 03 / 10</span>
+        <h2 class="sheet-title">DML — Thao tác với dữ liệu</h2>
+        <p class="sheet-desc">Nếu DDL xây "cái khung", DML (Data Manipulation Language) là nơi dữ liệu thật sự sống: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>SELECT</code>.</p>
+
+        <div class="sec-block">
+          <div class="sec-block-title">➕ INSERT — Thêm dữ liệu mới</div>
+          <p style="font-size:12px;color:#444;">Thêm một dòng dữ liệu mới. Thứ tự giá trị trong <code>VALUES</code> phải khớp thứ tự cột đã liệt kê.</p>
+          <div class="code-box">
+            <div class="code-header">
+              <span>SQL DML · INSERT</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-insert')">📋 Copy</button>
+            </div>
+            <pre><code id="code-insert">INSERT INTO kho
+(ma_kho, dia_chi_kho, so_dien_thoai_kho)
+VALUES
+(1, "Tokoy", "099999999");</code></pre>
+          </div>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">✏️ UPDATE — Cập nhật dữ liệu</div>
+          <div class="callout warning" style="margin-top:0;">
+            <strong>⚠️ LUÔN CÓ WHERE:</strong> Quên mệnh đề <code>WHERE</code> sẽ cập nhật toàn bộ các dòng trong bảng!
+          </div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>SQL DML · UPDATE có điều kiện WHERE</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-update')">📋 Copy</button>
+            </div>
+            <pre><code id="code-update">UPDATE san_pham
+SET gia_san_pham = gia_san_pham + 10000
+WHERE ten_san_pham = "Mỳ Tôm";</code></pre>
+          </div>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🗑️ DELETE — Xoá dòng dữ liệu</div>
+          <div class="callout danger" style="margin-top:0;">
+            <strong>⚠️ BẮT BUỘC CÓ WHERE:</strong> Xoá nhầm toàn bảng là lỗi kinh điển của người mới học SQL. Không thể Undo nếu chưa bật Transaction!
+          </div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>SQL DML · DELETE có điều kiện WHERE</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-delete')">📋 Copy</button>
+            </div>
+            <pre><code id="code-delete">DELETE FROM san_pham
+WHERE ma_san_pham = "SP004";</code></pre>
+          </div>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(2)">⬅ Về Sheet 02</button>
+          <button class="btn btn-primary" onclick="goToSheet(4)">Sang Sheet 04: Thứ tự SELECT ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 04 / 10 -->
+      <section class="sheet-card" id="sheet-4" style="display:none;">
+        <span class="sheet-badge">Sheet 04 / 10</span>
+        <h2 class="sheet-title">SELECT: viết một đằng, MySQL chạy một nẻo</h2>
+        <p class="sheet-desc">Đây là điều hay bị hiểu nhầm nhất: <strong>MySQL không thực thi câu lệnh theo đúng thứ tự bạn gõ</strong>. Thứ tự thực thi thật sự là:</p>
+
+        <div class="pipeline-grid">
+          <div class="pipe-step active">
+            <div class="pipe-num">1</div>
+            <div class="pipe-name">FROM</div>
+            <span style="font-size:9.5px;color:#666;">Nguồn bảng</span>
+          </div>
+          <div class="pipe-step active">
+            <div class="pipe-num">2</div>
+            <div class="pipe-name">WHERE</div>
+            <span style="font-size:9.5px;color:#666;">Lọc dòng gốc</span>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-num">3</div>
+            <div class="pipe-name">GROUP BY</div>
+            <span style="font-size:9.5px;color:#666;">Gom nhóm</span>
+          </div>
+          <div class="pipe-step">
+            <div class="pipe-num">4</div>
+            <div class="pipe-name">HAVING</div>
+            <span style="font-size:9.5px;color:#666;">Lọc sau nhóm</span>
+          </div>
+          <div class="pipe-step active">
+            <div class="pipe-num">5</div>
+            <div class="pipe-name">SELECT</div>
+            <span style="font-size:9.5px;color:#666;">Chọn cột hiển thị</span>
+          </div>
+          <div class="pipe-step active">
+            <div class="pipe-num">6</div>
+            <div class="pipe-name">ORDER BY</div>
+            <span style="font-size:9.5px;color:#666;">Sắp xếp dòng</span>
+          </div>
+          <div class="pipe-step active">
+            <div class="pipe-num">7</div>
+            <div class="pipe-name">LIMIT</div>
+            <span style="font-size:9.5px;color:#666;">Giới hạn lấy</span>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>🤔 Vì sao phải biết điều này?</strong> Vì nó giải thích tại sao <code>WHERE</code> không được dùng alias đặt trong <code>SELECT</code> (vì WHERE chạy trước khi alias tồn tại), còn <code>ORDER BY</code> thì được (vì nó chạy sau).
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">📄 Ví dụ thật từ project Konbini</div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>SQL SELECT · Sắp xếp và Giới hạn kết quả</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-select')">📋 Copy</button>
+            </div>
+            <pre><code id="code-select">SELECT * FROM san_pham
+ORDER BY gia_san_pham DESC LIMIT 3;</code></pre>
+          </div>
+          <p style="font-size:12px;color:#444;">
+            <strong>MySQL thực thi tuần tự:</strong> Lấy dữ liệu từ bảng nguồn <code>FROM</code> ➔ Sắp xếp giảm dần theo giá <code>ORDER BY</code> ➔ Chỉ giữ lại đúng 3 dòng đầu <code>LIMIT</code>.
+          </p>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(3)">⬅ Về Sheet 03</button>
+          <button class="btn btn-primary" onclick="goToSheet(5)">Sang Sheet 05: Nối bảng JOIN ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 05 / 10 -->
+      <section class="sheet-card" id="sheet-5" style="display:none;">
+        <span class="sheet-badge">Sheet 05 / 10</span>
+        <h2 class="sheet-title">JOIN — nối hai bảng lại với nhau</h2>
+        <p class="sheet-desc">Bảng <code>San_Pham</code> chỉ lưu <code>ma_kho_san_pham</code> (một con số) — muốn biết sản phẩm đó nằm ở địa chỉ kho nào, bạn phải <strong>JOIN</strong> sang bảng <code>Kho</code>.</p>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🔗 Các loại JOIN cốt tử:</div>
+          <ul style="font-size:12px;color:#444;padding-left:18px;line-height:1.7;">
+            <li><strong>INNER JOIN:</strong> Chỉ lấy những dòng có khớp ở cả hai bảng (vùng giao nhau).</li>
+            <li><strong>LEFT JOIN:</strong> Giữ toàn bộ dữ liệu bảng bên trái dù bên phải không có dữ liệu khớp (điền NULL).</li>
+            <li><strong>RIGHT JOIN:</strong> Giữ toàn bộ dữ liệu bảng bên phải dù bên trái không có dòng khớp.</li>
+          </ul>
+        </div>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>SQL JOIN · Nối bảng Sản Phẩm với Kho bằng Alias</span>
+            <button class="code-copy-btn" onclick="copySnippet('code-join')">📋 Copy</button>
+          </div>
+          <pre><code id="code-join">SELECT *
+FROM san_pham AS sp
+INNER JOIN kho AS k
+ON sp.ma_kho_san_pham = k.ma_kho;</code></pre>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🏷️ Alias là gì?</div>
+          <p style="font-size:12px;color:#444;">
+            <code>AS sp</code> và <code>AS k</code> là biệt danh tạm thời cho tên bảng — giúp câu lệnh ngắn gọn và bắt buộc phải có khi hai bảng có cột trùng tên (VD: cả hai đều không có cột id chung, nhưng nếu có thì alias giúp phân biệt <code>sp.id</code> với <code>k.id</code>).
+          </p>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(4)">⬅ Về Sheet 04</button>
+          <button class="btn btn-primary" onclick="goToSheet(6)">Sang Sheet 06: Subquery lồng ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 06 / 10 -->
+      <section class="sheet-card" id="sheet-6" style="display:none;">
+        <span class="sheet-badge">Sheet 06 / 10</span>
+        <h2 class="sheet-title">Truy vấn lồng (Subquery)</h2>
+        <p class="sheet-desc">Một câu <code>SELECT</code> nằm bên trong câu <code>SELECT</code> khác. Subquery có thể xuất hiện ở <strong>3 vị trí chiến lược</strong>:</p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-circle">1</div>
+            <div style="flex:1;">
+              <div class="step-title">Trong SELECT — tính giá trị cho từng dòng</div>
+              <div class="code-box" style="margin-top:6px;">
+                <div class="code-header">
+                  <span>Subquery in SELECT</span>
+                  <button class="code-copy-btn" onclick="copySnippet('code-sub-select')">📋 Copy</button>
+                </div>
+                <pre><code id="code-sub-select">SELECT ProductID,
+  (SELECT SUM(Amount) FROM Sales
+   WHERE ProductID = Products.ProductID) AS TotalSales
+FROM Products;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">2</div>
+            <div style="flex:1;">
+              <div class="step-title">Trong WHERE — lọc theo một tập kết quả khác</div>
+              <div class="code-box" style="margin-top:6px;">
+                <div class="code-header">
+                  <span>Subquery in WHERE (IN / EXISTS)</span>
+                  <button class="code-copy-btn" onclick="copySnippet('code-sub-where')">📋 Copy</button>
+                </div>
+                <pre><code id="code-sub-where">SELECT ProductID, Amount
+FROM Sales
+WHERE ProductID IN
+  (SELECT ProductID FROM Products
+   WHERE CategoryID = 1);</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">3</div>
+            <div style="flex:1;">
+              <div class="step-title">Trong FROM — dùng kết quả trung gian như một bảng tạm</div>
+              <div class="code-box" style="margin-top:6px;">
+                <div class="code-header">
+                  <span>Subquery in FROM (Derived Table - bắt buộc có alias T)</span>
+                  <button class="code-copy-btn" onclick="copySnippet('code-sub-from')">📋 Copy</button>
+                </div>
+                <pre><code id="code-sub-from">SELECT T.ProductID, T.TotalSales
+FROM (SELECT ProductID, SUM(Amount) AS TotalSales
+        FROM Sales GROUP BY ProductID) T
+WHERE T.TotalSales > 5000;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(5)">⬅ Về Sheet 05</button>
+          <button class="btn btn-primary" onclick="goToSheet(7)">Sang Sheet 07: View khung nhìn ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 07 / 10 -->
+      <section class="sheet-card" id="sheet-7" style="display:none;">
+        <span class="sheet-badge">Sheet 07 / 10</span>
+        <h2 class="sheet-title">View — Khung nhìn</h2>
+        <p class="sheet-desc">View là một câu <code>SELECT</code> được đặt tên và lưu lại — <strong>không lưu dữ liệu thật, chỉ lưu "công thức" truy vấn</strong>. Mỗi lần gọi View, MySQL chạy lại câu SELECT gốc.</p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>SQL View · Tạo, truy vấn và xóa View</span>
+            <button class="code-copy-btn" onclick="copySnippet('code-view')">📋 Copy</button>
+          </div>
+          <pre><code id="code-view">-- Tạo view chỉ hiển thị tên sản phẩm cho khách hàng
+CREATE VIEW view_demo_du_lieu_san_pham_cho_khach_hang AS
+SELECT ten_san_pham, ma_san_pham
+FROM san_pham;
+
+-- Sử dụng view như một bảng thông thường
+SELECT * FROM view_demo_du_lieu_san_pham_cho_khach_hang;
+
+-- Xoá view khi không cần nữa
+DROP VIEW view_demo_du_lieu_san_pham_cho_khach_hang;</code></pre>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+          <div class="callout success" style="margin:0;">
+            <strong>✅ Ưu điểm:</strong><br>
+            Ẩn bớt dữ liệu nhạy cảm (VD: khách hàng không cần thấy <code>ma_kho_san_pham</code>), nâng cao bảo mật. Gói gọn truy vấn phức tạp thành một cái tên dễ nhớ, dễ tái sử dụng.
+          </div>
+          <div class="callout warning" style="margin:0;">
+            <strong>⚠️ Hạn chế:</strong><br>
+            Là bảng ảo nên phần lớn không cập nhật trực tiếp dữ liệu qua View được. Khi bảng gốc đổi cấu trúc, View phải được cập nhật lại theo. View lồng nhau quá nhiều có thể làm chậm hệ thống.
+          </div>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(6)">⬅ Về Sheet 06</button>
+          <button class="btn btn-primary" onclick="goToSheet(8)">Sang Sheet 08: Index chỉ mục ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 08 / 10 -->
+      <section class="sheet-card" id="sheet-8" style="display:none;">
+        <span class="sheet-badge">Sheet 08 / 10</span>
+        <h2 class="sheet-title">Index — Chỉ mục</h2>
+        <p class="sheet-desc">Không có Index, MySQL phải quét từng dòng để tìm dữ liệu (giống lật từng trang sách). <strong>Index giống mục lục cuối sách</strong> — giúp nhảy thẳng đến đúng chỗ cần tìm.</p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>SQL Index · Tạo chỉ mục tăng tốc tìm kiếm</span>
+            <button class="code-copy-btn" onclick="copySnippet('code-index')">📋 Copy</button>
+          </div>
+          <pre><code id="code-index">CREATE INDEX idx_ten_san_pham
+ON san_pham(ten_san_pham);
+
+-- Giờ tìm nhanh hơn vượt bậc nhờ Index
+SELECT * FROM san_pham
+WHERE ten_san_pham = "Cơm";
+
+-- Xoá chỉ mục khi không cần
+DROP INDEX idx_ten_san_pham ON san_pham;</code></pre>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">⚙️ Hai cấu trúc Index phổ biến nhất:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+            <div style="background:#fff;padding:12px;border:1px solid var(--line);border-radius:6px;">
+              <strong style="color:var(--black);">🌳 B-Tree:</strong>
+              <p style="font-size:11.5px;color:#555;margin-top:4px;">Cấu trúc phổ biến nhất trong MySQL InnoDB. Dữ liệu sắp xếp trong cây cân bằng, tìm kiếm mất <code>O(log n)</code>. Rất tốt cho so sánh <code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code>.</p>
+            </div>
+            <div style="background:#fff;padding:12px;border:1px solid var(--line);border-radius:6px;">
+              <strong style="color:var(--black);">🔢 Hash Table:</strong>
+              <p style="font-size:11.5px;color:#555;margin-top:4px;">Dùng hàm băm ánh xạ giá trị vào ô nhớ. Tìm kiếm siêu tốc <code>O(1)</code> cho so sánh bằng <code>=</code>, nhưng không dùng được cho tìm kiếm theo khoảng (range query).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <strong>⚖️ Đánh đổi cần nhớ:</strong> Index không miễn phí: nó chiếm thêm dung lượng đĩa, và làm <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> chậm hơn vì MySQL phải cập nhật lại cả bảng dữ liệu lẫn cây chỉ mục. Dùng lệnh <span class="tag">EXPLAIN ANALYZE</span> trước câu SELECT để xem MySQL có thật sự dùng Index hay không, và chi phí (Cost) của truy vấn.
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(7)">⬅ Về Sheet 07</button>
+          <button class="btn btn-primary" onclick="goToSheet(9)">Sang Sheet 09: Stored Procedure ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 09 / 10 -->
+      <section class="sheet-card" id="sheet-9" style="display:none;">
+        <span class="sheet-badge">Sheet 09 / 10</span>
+        <h2 class="sheet-title">Stored Procedure — "hàm" trong database</h2>
+        <p class="sheet-desc">Một khối lệnh SQL được đặt tên, lưu sẵn trong database, gọi lại nhiều lần bằng <code>CALL</code> — giống hệt khái niệm hàm (function) trong lập trình.</p>
+
+        <!-- 1. Không tham số -->
+        <div class="sec-block">
+          <div class="sec-block-title">1️⃣ Không tham số — Lấy toàn bộ sản phẩm</div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Procedure không tham số</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-proc-1')">📋 Copy</button>
+            </div>
+            <pre><code id="code-proc-1">DELIMITER $$
+CREATE PROCEDURE laydanhsachsanpham()
+BEGIN
+  SELECT * FROM san_pham;
+END $$
+DELIMITER ;
+
+CALL laydanhsachsanpham();</code></pre>
+          </div>
+          <p style="font-size:11.5px;color:#555;">
+            👉 <strong>Lưu ý:</strong> <code>DELIMITER $$</code> tạm đổi ký tự kết thúc câu lệnh từ <code>;</code> sang <code>$$</code>, vì bên trong <code>BEGIN...END</code> đã có dấu <code>;</code> riêng cho từng dòng SQL con.
+          </p>
+        </div>
+
+        <!-- 2. Tham số IN -->
+        <div class="sec-block">
+          <div class="sec-block-title">2️⃣ Tham số IN — Truyền giá trị vào</div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Procedure có tham số IN</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-proc-2')">📋 Copy</button>
+            </div>
+            <pre><code id="code-proc-2">CREATE PROCEDURE timkiemthongtinsanpham(IN sp_ma_san_pham VARCHAR(10))
+BEGIN
+  SELECT * FROM san_pham
+  WHERE ma_san_pham = sp_ma_san_pham;
+END
+
+CALL timkiemthongtinsanpham("SP002");</code></pre>
+          </div>
+          <p style="font-size:11.5px;color:#555;">👉 Tham số <code>IN</code> chỉ để "đọc" giá trị truyền vào — nếu không khai báo từ khóa gì thì mặc định luôn là <code>IN</code>.</p>
+        </div>
+
+        <!-- 3. Tham số OUT -->
+        <div class="sec-block">
+          <div class="sec-block-title">3️⃣ Tham số OUT — Lấy giá trị trả về</div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Procedure có tham số OUT</span>
+              <button class="code-copy-btn" onclick="copySnippet('code-proc-3')">📋 Copy</button>
+            </div>
+            <pre><code id="code-proc-3">CREATE PROCEDURE soluongsanpham(OUT p_tong INT)
+BEGIN
+  SELECT COUNT(*) INTO p_tong FROM san_pham;
+END
+
+CALL soluongsanpham(@so_luong_san_pham);
+SELECT @so_luong_san_pham AS SoLuongSanPhamCoTrongKho;</code></pre>
+          </div>
+          <p style="font-size:11.5px;color:#555;">
+            👉 Cú pháp <code>SELECT ... INTO p_tong</code> gán kết quả vào biến OUT. Khi gọi, bạn phải truyền vào một biến session dạng <code>@ten_bien</code> để lấy giá trị ra sau khi procedure chạy xong.
+          </p>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">✅ Vì sao nên dùng Procedure?</div>
+          <p style="font-size:12px;color:#444;line-height:1.6;">
+            Tăng bảo mật (ẩn logic SQL khỏi ứng dụng), được MySQL biên dịch sẵn nên chạy nhanh hơn, giảm lưu lượng trao đổi giữa Client – Server (chỉ gửi tên hàm + tham số thay vì cả câu SQL dài), và tái sử dụng ở nhiều nơi.
+          </p>
+        </div>
+
+        <div class="sec-block">
+          <div class="sec-block-title">🧮 Biến nội bộ &amp; Cấu trúc IF...ELSE</div>
+          <p style="font-size:12px;color:#444;line-height:1.6;">
+            • Khai báo biến: <code>DECLARE v datatype DEFAULT value;</code><br>
+            • Gán giá trị: <code>SET v = value;</code><br>
+            Biến khai báo trong <code>BEGIN...END</code> chỉ tồn tại cục bộ trong procedure đó — giống phạm vi biến local trong một hàm lập trình.
+          </p>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(8)">⬅ Về Sheet 08</button>
+          <button class="btn btn-primary" onclick="goToSheet(10)">Sang Sheet 10: Checklist thiết kế ➡</button>
+        </div>
+      </section>
+
+      <!-- SHEET 10 / 10 -->
+      <section class="sheet-card" id="sheet-10" style="display:none;">
+        <span class="sheet-badge">Sheet 10 / 10</span>
+        <h2 class="sheet-title">Checklist: tự thiết kế một database MySQL</h2>
+        <p class="sheet-desc">Dùng khung 9 bước này khi làm bài tập hoặc thiết kế dự án thực tế — đúng thứ tự tư duy chuẩn từ ý tưởng đến tối ưu hoá:</p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-circle">1</div>
+            <div>
+              <div class="step-title">Xác định thực thể &amp; quan hệ (ERD)</div>
+              <div class="step-text">Vẽ trước trên giấy hoặc công cụ: thực thể nào, quan hệ 1-1 / 1-N / N-N với nhau.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">2</div>
+            <div>
+              <div class="step-title">Chuẩn hoá dữ liệu đến 3NF/BCNF</div>
+              <div class="step-text">Loại bỏ dữ liệu lặp, phụ thuộc bắc cầu trước khi bắt tay viết lệnh CREATE TABLE.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">3</div>
+            <div>
+              <div class="step-title">CREATE DATABASE ➔ USE ➔ CREATE TABLE</div>
+              <div class="step-text">Luôn gán đúng ràng buộc: PRIMARY KEY, FOREIGN KEY, NOT NULL, CHECK, DEFAULT.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">4</div>
+            <div>
+              <div class="step-title">INSERT dữ liệu mẫu để test</div>
+              <div class="step-text">Chèn vài dòng thật vào bảng cha trước, bảng con sau để kiểm tra ràng buộc có hoạt động đúng không.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">5</div>
+            <div>
+              <div class="step-title">Viết SELECT theo đúng thứ tự thực thi</div>
+              <div class="step-text">Nhớ pipeline: FROM ➔ WHERE ➔ GROUP BY ➔ HAVING ➔ SELECT ➔ ORDER BY ➔ LIMIT.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">6</div>
+            <div>
+              <div class="step-title">Dùng JOIN thay vì query nhiều lần</div>
+              <div class="step-text">INNER JOIN khi chỉ cần dữ liệu khớp cả hai bảng; LEFT/RIGHT JOIN khi cần giữ toàn bộ một bên.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">7</div>
+            <div>
+              <div class="step-title">Đóng gói bằng View khi truy vấn lặp lại nhiều lần</div>
+              <div class="step-text">Đặc biệt hữu ích khi cần giới hạn cột hiển thị cho một nhóm người dùng (bảo mật dữ liệu nhạy cảm).</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">8</div>
+            <div>
+              <div class="step-title">Đánh Index cho cột hay được WHERE/JOIN/ORDER BY</div>
+              <div class="step-text">Kiểm tra hiệu quả bằng EXPLAIN ANALYZE trước khi thêm quá nhiều index gây chậm ghi dữ liệu.</div>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-circle">9</div>
+            <div>
+              <div class="step-title">Gói logic lặp lại thành Stored Procedure</div>
+              <div class="step-text">Đặc biệt là các thao tác nghiệp vụ cố định như tính tổng doanh thu, tìm kiếm sản phẩm theo điều kiện.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sheet-footer-nav">
+          <button class="btn btn-secondary" onclick="goToSheet(9)">⬅ Về Sheet 09</button>
+          <a class="btn btn-primary" href="../Module_2_Database/huong_dan_thi_mysql_workbench.html">Luyện thi ngay với Cẩm nang MySQL Workbench ➡</a>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    let isAllSheetsMode = false;
+
+    function showSheet(sheetNum, btn) {
+      if (isAllSheetsMode) {
+        toggleViewMode(); // thoát chế độ cuộn toàn bộ
+      }
+      
+      // Ẩn tất cả các sheet
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById('sheet-' + i);
+        if (el) el.style.display = 'none';
+      }
+
+      // Hiện sheet được chọn
+      const target = document.getElementById('sheet-' + sheetNum);
+      if (target) {
+        target.style.display = 'block';
+        window.scrollTo({ top: target.offsetTop - 30, behavior: 'smooth' });
+      }
+
+      // Cập nhật trạng thái nút chip
+      document.querySelectorAll('.sheet-chip').forEach((c, idx) => {
+        c.classList.toggle('active', (idx + 1) === sheetNum);
+      });
+    }
+
+    function goToSheet(sheetNum) {
+      const chip = document.querySelectorAll('.sheet-chip')[sheetNum - 1];
+      showSheet(sheetNum, chip);
+    }
+
+    function toggleViewMode() {
+      isAllSheetsMode = !isAllSheetsMode;
+      const btn = document.getElementById('toggleViewModeBtn');
+      
+      for (let i = 1; i <= 10; i++) {
+        const el = document.getElementById('sheet-' + i);
+        if (el) {
+          el.style.display = isAllSheetsMode ? 'block' : (i === 1 ? 'block' : 'none');
+        }
+      }
+
+      if (btn) {
+        btn.textContent = isAllSheetsMode ? '📑 Xem từng Sheet (Tập trung)' : '📑 Xem toàn bộ 10 Sheet (Cuộn dài)';
+      }
+
+      if (!isAllSheetsMode) {
+        goToSheet(1);
+      }
+    }
+
+    function copySnippet(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.innerText).then(() => {
+        alert('✅ Đã sao chép đoạn mã SQL vào Clipboard!');
+      });
+    }
+
+    function copyFullProjectSql() {
+      const sqlFull = `-- =========================================================================
+-- DỰ ÁN MẪU: CHUỖI CỬA HÀNG TIỆN LỢI KONBINI (DATABASE FUNDAMENTALS)
+-- =========================================================================
+
+-- 1. DDL: TẠO CSDL VÀ BẢNG
+CREATE DATABASE IF NOT EXISTS Chuoi_Konbini;
+USE Chuoi_Konbini;
+
+CREATE TABLE IF NOT EXISTS Kho (
+    ma_kho INT PRIMARY KEY,
+    dia_chi_kho VARCHAR(255) NOT NULL,
+    so_dien_thoai_kho VARCHAR(11)
+);
+
+CREATE TABLE IF NOT EXISTS San_Pham (
+    ma_san_pham VARCHAR(5) PRIMARY KEY,
+    ten_san_pham VARCHAR(200) NOT NULL,
+    gia_san_pham INT CHECK (gia_san_pham > 0),
+    ma_kho_san_pham INT,
+    CONSTRAINT fk_sanpham_kho FOREIGN KEY (ma_kho_san_pham) REFERENCES Kho(ma_kho)
+);
+
+-- 2. DML: CHÈN DỮ LIỆU
+INSERT INTO Kho (ma_kho, dia_chi_kho, so_dien_thoai_kho) VALUES
+(1, "Tokyo Center", "099999999"),
+(2, "Osaka Bay", "088888888");
+
+INSERT INTO San_Pham (ma_san_pham, ten_san_pham, gia_san_pham, ma_kho_san_pham) VALUES
+("SP001", "Cơm nắm Onigiri", 15000, 1),
+("SP002", "Mỳ Tôm Ramen", 25000, 1),
+("SP003", "Trà xanh Matcha", 18000, 2),
+("SP004", "Bánh mì Sandwich", 30000, 2);
+
+-- 3. TRUY VẤN NỐI BẢNG (JOIN)
+SELECT sp.ma_san_pham, sp.ten_san_pham, sp.gia_san_pham, k.dia_chi_kho
+FROM San_Pham AS sp
+INNER JOIN Kho AS k ON sp.ma_kho_san_pham = k.ma_kho
+ORDER BY sp.gia_san_pham DESC;
+
+-- 4. VIEW KHUNG NHÌN
+CREATE OR REPLACE VIEW view_san_pham_khach_hang AS
+SELECT ten_san_pham, gia_san_pham
+FROM San_Pham;
+
+-- 5. INDEX TĂNG TỐC
+CREATE INDEX idx_ten_san_pham ON San_Pham(ten_san_pham);
+
+-- 6. STORED PROCEDURE
+DELIMITER $$
+CREATE PROCEDURE lay_ds_san_pham()
+BEGIN
+    SELECT * FROM San_Pham;
+END $$
+DELIMITER ;`;
+
+      navigator.clipboard.writeText(sqlFull).then(() => {
+        alert('✅ Đã sao chép toàn bộ mã nguồn SQL hoàn chỉnh của dự án Konbini!');
+      });
+    }
+  </script>
+</body>
+</html>
