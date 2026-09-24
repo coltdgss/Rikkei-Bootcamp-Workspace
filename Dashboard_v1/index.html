@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard v1 | RK Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
+  <style>
+    :root {
+      --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, "Courier New", monospace;
+      --black: #111111;
+      --ink: #202020;
+      --muted: #777777;
+      --line: #e5e5e5;
+      --soft: #f7f7f7;
+      --white: #ffffff;
+      --accent: #111111;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #f4f4f4; color: var(--ink); font-family: var(--font-system); -webkit-font-smoothing: antialiased; }
+    body { min-height: 100vh; overflow: auto; }
+    button, input, select, textarea { font-family: inherit; font-size: inherit; }
+    .app { display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 100vh; height: auto; background: var(--white); }
+    .sidebar { min-width: 0; border-right: 1px solid var(--line); background: #fafafa; display: flex; flex-direction: column; }
+    .brand { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 18px 18px 16px; border-bottom: 1px solid var(--line); }
+    .brand strong { font-size: 1.2rem; letter-spacing: -.04em; }
+    .brand span { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+    .side-tools { display: flex; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    .search { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 7px; background: var(--white); color: var(--ink); padding: 8px 10px; font-size: 12px; outline: none; }
+    .search:focus { border-color: var(--black); }
+    .tree { flex: 1; overflow: auto; padding: 12px 10px 24px; }
+    .tree-title { padding: 5px 8px 8px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+    details { margin: 0 0 7px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+    summary { cursor: pointer; list-style: none; padding: 10px 11px; font-size: 12px; font-weight: 700; }
+    summary::-webkit-details-marker { display: none; }
+    summary::before { content: '+'; display: inline-block; width: 15px; color: var(--muted); }
+    details[open] > summary::before { content: '-'; }
+    .module-summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .status { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .08em; }
+    .session-tree { padding: 0 8px 8px; }
+    .session-tree details { margin: 4px 0; border: 0; border-radius: 5px; background: var(--soft); }
+    .session-tree summary { padding: 8px; color: #444; font-size: 11px; }
+    .items { display: grid; gap: 2px; padding: 0 7px 7px 25px; }
+    .item { display: block; border-radius: 5px; padding: 7px 8px; color: #666; text-decoration: none; font-size: 10px; line-height: 1.35; }
+    .item:hover, .item.active { background: var(--black); color: var(--white); }
+    .item.disabled { color: #aaa; cursor: default; }
+    .main { min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 20px; min-height: 62px; border-bottom: 1px solid var(--line); background: var(--white); }
+    .crumb { color: var(--muted); font-size: 11px; }
+    .crumb strong { color: var(--black); font-size: 14px; }
+    .actions { display: flex; gap: 8px; }
+    .button { border: 1px solid var(--line); border-radius: 7px; background: var(--white); color: var(--black); padding: 8px 11px; cursor: pointer; font-size: 11px; font-weight: 700; }
+    .button:hover, .button.primary { background: var(--black); color: var(--white); border-color: var(--black); }
+    .content { min-height: 0; flex: 1; display: flex; flex-direction: column; }
+    .intro { padding: 16px 24px 14px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #fff 0%, #fafafa 100%); flex-shrink: 0; }
+    .intro h1 { margin: 0 0 4px; font-size: clamp(1.3rem, 2.2vw, 1.8rem); letter-spacing: -.05em; }
+    .intro p { max-width: 780px; margin: 0; color: var(--muted); line-height: 1.5; font-size: 12px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .stat { min-width: 85px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; background: var(--white); }
+    .stat strong { display: block; font-size: 15px; }
+    .stat span { color: var(--muted); font-size: 8.5px; text-transform: uppercase; letter-spacing: .08em; }
+    .preview-wrap { min-height: 0; flex: 1; padding: 12px 18px 18px; background: #f4f4f4; display: flex; flex-direction: column; }
+    .preview { min-height: calc(100vh - 275px); height: 100%; display: flex; flex-direction: column; flex: 1; border: 1px solid #d9d9d9; border-radius: 9px; overflow: hidden; background: var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .preview-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 14px; height: 44px; flex-shrink: 0; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; background: #fff; }
+    .preview-head-left { display: flex; align-items: center; gap: 8px; }
+    .preview-head-right { display: flex; align-items: center; gap: 10px; }
+    .preview-head strong { color: var(--black); font-size: 12px; text-transform: none; letter-spacing: 0; }
+    .nav-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff; color: #24292f; font-size: 11px; font-weight: 700; cursor: pointer; text-transform: none; letter-spacing: 0; transition: all 0.15s ease; user-select: none; }
+    .nav-btn:hover { background: #f3f4f6; border-color: #000; color: #000; }
+    .fullscreen-btn { border-color: #111; background: #111; color: #fff; }
+    .fullscreen-btn:hover { background: #333; color: #fff; border-color: #333; }
+    .preview-wrap.fullscreen-mode {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 999999 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: #ffffff !important;
+      border-radius: 0 !important;
+    }
+    .preview-wrap.fullscreen-mode .preview {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      border-radius: 0 !important;
+      border: 0 !important;
+    }
+    .preview-wrap.fullscreen-mode .frame-box,
+    .preview-wrap.fullscreen-mode .frame-box iframe,
+    .preview-wrap.fullscreen-mode iframe {
+      height: calc(100vh - 44px) !important;
+      min-height: calc(100vh - 44px) !important;
+    }
+    .empty { flex: 1; display: grid; place-items: center; min-height: calc(100vh - 330px); padding: 30px; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.6; }
+    .frame-box { flex: 1; width: 100%; height: 100%; min-height: calc(100vh - 330px); display: flex; }
+    .frame-box iframe, iframe { width: 100%; height: 100%; min-height: calc(100vh - 330px); border: 0; background: var(--white); flex: 1; }
+    .toast { position: fixed; right: 20px; bottom: 20px; display: none; max-width: 290px; padding: 12px 14px; border: 1px solid var(--black); border-radius: 7px; background: var(--black); color: var(--white); font-size: 12px; }
+    .btvn-board { min-height: 0; padding: 20px; overflow: visible; background: #f4f4f4; }
+    .btvn-board h2 { margin: 0 0 5px; font-size: 1.25rem; letter-spacing: -.03em; }
+    .btvn-board > p { margin: 0 0 16px; color: var(--muted); font-size: 12px; }
+    .board-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .board-section { border: 1px solid #dcdcdc; border-radius: 8px; background: var(--white); padding: 14px; }
+    .board-section h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 12px; }
+    .board-number { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--black); color: var(--white); font-size: 10px; }
+    .board-section p, .board-section li { color: #555; font-size: 11px; line-height: 1.55; }
+    .board-section ul { margin: 0; padding-left: 18px; }
+    .entity-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 10px; }
+    .entity-table th, .entity-table td { padding: 8px; border: 1px solid #dedede; text-align: left; }
+    .entity-table th { background: #f1f1f1; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+    .key { display: inline-block; padding: 2px 5px; border: 1px solid #999; border-radius: 4px; font-size: 9px; }
+    .sql-note { padding: 10px; border-left: 3px solid #222; background: #f5f5f5; color: #555; font-size: 11px; line-height: 1.55; }
+    .relation-map { display: grid; grid-template-columns: minmax(110px, 1fr) 80px minmax(110px, 1fr); align-items: center; gap: 8px; min-height: 130px; }
+    .entity-node { border: 1px solid #222; border-radius: 6px; padding: 11px 8px; text-align: center; background: #fff; font-size: 11px; font-weight: 700; }
+    .entity-node small { display: block; margin-top: 5px; color: #777; font-size: 9px; font-weight: 400; }
+    .relation-line { position: relative; height: 2px; background: #222; }
+    .relation-line::after { content: attr(data-rel); position: absolute; top: -11px; left: 50%; transform: translateX(-50%); color: #111; font-size: 11px; font-weight: bold; background: #fff; padding: 1px 7px; border: 1px solid #999; border-radius: 10px; line-height: 1.3; white-space: nowrap; }
+    .relation-note { margin: 8px 0 0; color: #777; text-align: center; font-size: 10px; }
+    .sql-section { grid-column: 1 / -1; }
+    .sql-workbench { display: grid; grid-template-columns: minmax(0, 1.15fr) 145px minmax(230px, .85fr); gap: 10px; align-items: center; }
+    .sql-editor { width: 100%; min-height: 170px; resize: vertical; border: 1px solid #d5d5d5; border-radius: 6px; padding: 11px; background: #111; color: #f5f5f5; font: 12px/1.6 var(--font-code); }
+    .sql-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 9px; }
+    .sql-actions button { border: 1px solid #222; border-radius: 5px; padding: 7px 10px; background: #fff; color: #111; cursor: pointer; font-size: 10px; font-weight: 700; }
+    .sql-actions button.primary { background: #111; color: #fff; }
+    .sql-actions button.ollama { border-color: #2d6b4d; color: #1f6b43; }
+    .sql-save-center { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 8px; }
+    .sql-save-center button { width: 100%; border: 1px solid #222; border-radius: 5px; padding: 9px 8px; background: #111; color: #fff; cursor: pointer; font-size: 10px; font-weight: 700; line-height: 1.35; }
+    .sql-save-center button:hover { background: #333; }
+    .sql-save-center button.preview-center { background: #fff; color: #111; }
+    .sql-save-center button.preview-center:hover { background: #111; color: #fff; }
+    .sql-result { min-height: 170px; max-height: 260px; overflow: auto; padding: 10px; border: 1px solid #ddd; border-radius: 6px; color: #666; font-size: 11px; background: #fafafa; }
+    .sql-result table { width: 100%; border-collapse: collapse; font-size: 10px; }
+    .sql-result th, .sql-result td { border: 1px solid #ddd; padding: 7px; text-align: left; }
+    .sql-result th { background: #f1f1f1; text-transform: uppercase; }
+    .engine-status { margin-top: 8px; color: #777; font-size: 10px; }
+    .save-folder-status { margin-top: 5px; color: #777; font-size: 10px; }
+    .ai-section { grid-column: 1 / -1; }
+    .ai-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .ai-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+    .ai-actions button { border: 1px solid #222; border-radius: 5px; padding: 7px 9px; background: #fff; color: #111; cursor: pointer; font-size: 10px; font-weight: 700; }
+    .ai-actions button:hover { background: #111; color: #fff; }
+    .ai-result { margin-top: 12px; min-height: 62px; padding: 10px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; color: #444; font-size: 11px; line-height: 1.6; white-space: pre-wrap; }
+    .ai-result:empty { display: none; }
+    .ai-model { color: #777; font-size: 10px; }
+    @media (max-width: 700px) { .board-grid, .sql-workbench { grid-template-columns: 1fr; } }
+    @media (max-width: 800px) { .app { display: block; height: auto; } .sidebar { max-height: 52vh; border-right: 0; border-bottom: 1px solid var(--line); } .main { min-height: 70vh; } .topbar { align-items: flex-start; flex-direction: column; } .preview-wrap { min-height: 500px; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><strong>RK Workspace</strong><span>Dashboard v1</span></div>
+      <div class="side-tools"><input class="search" id="search" type="search" placeholder="Tìm Module, Session, BTVN..." /></div>
+      <div class="tree">
+        <div class="tree-title">Toàn bộ menu thư mục</div>
+        <details data-module="module 1 frontend">
+          <summary class="module-summary"><span>Module 1 · Frontend</span><span class="status">74 HTML</span></summary>
+          <div class="session-tree">
+            <details><summary>Session 01 · HTML Basic</summary><div class="items">
+              <a class="item" href="../Module_1_Frontend/Session_01_HTML_Basic/bai1_heading.html" data-title="Bài 1 · Heading" data-module="Module 1 · Frontend" data-session="Session 01">Bài 1 · Heading</a>
+              <a class="item" href="../Module_1_Frontend/Session_01_HTML_Basic/bai2_paragraph.html" data-title="Bài 2 · Paragraph" data-module="Module 1 · Frontend" data-session="Session 01">Bài 2 · Paragraph</a>
+              <a class="item" href="../Module_1_Frontend/Session_01_HTML_Basic/bai5_cv_ca_nhan.html" data-title="Bài 5 · CV cá nhân" data-module="Module 1 · Frontend" data-session="Session 01">Bài 5 · CV cá nhân</a>
+              <a class="item" href="../Module_1_Frontend/Session_01_HTML_Basic/btvn_pass/session1.html" data-title="BTVN · Session 1" data-module="Module 1 · Frontend" data-session="Session 01">BTVN · Session 1</a>
+            </div></details>
+            <details><summary>Session 04 · CSS Selector</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_04_CSS_Selector/gioi_thieu.html" data-title="Giới thiệu CSS Selector" data-module="Module 1 · Frontend" data-session="Session 04">Giới thiệu CSS Selector</a><a class="item" href="../Module_1_Frontend/Session_04_CSS_Selector/s4_btvn_1.html" data-title="BTVN 1 · CSS Selector" data-module="Module 1 · Frontend" data-session="Session 04">BTVN 1 · CSS Selector</a></div></details>
+            <details><summary>Session 05 · CSS Properties</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_05_CSS_Basic_Properties/s5_btvn1.html" data-title="BTVN 1 · CSS Properties" data-module="Module 1 · Frontend" data-session="Session 05">BTVN 1 · CSS Properties</a><a class="item" href="../Module_1_Frontend/Session_05_CSS_Basic_Properties/s5_btvn6.html" data-title="BTVN 6 · CSS Properties" data-module="Module 1 · Frontend" data-session="Session 05">BTVN 6 · CSS Properties</a></div></details>
+            <details><summary>Session 06 · CSS</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_06_CSS/s6_btvn_1.html" data-title="BTVN 1 · CSS" data-module="Module 1 · Frontend" data-session="Session 06">BTVN 1 · CSS</a></div></details>
+            <details><summary>Session 07 · Flexbox</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_07_Flexbox/s7_1.html" data-title="Bài 1 · Flexbox" data-module="Module 1 · Frontend" data-session="Session 07">Bài 1 · Flexbox</a></div></details>
+            <details><summary>Session 08–16 · JavaScript</summary><div class="items"><a class="item" href="../Module_1_Frontend/Session_08_JS_Basic/s81/s8_1.html" data-title="Bài 1 · JavaScript Basic" data-module="Module 1 · Frontend" data-session="Session 08">Bài 1 · JavaScript Basic</a><a class="item" href="../Module_1_Frontend/Session_13_Array/s13_1/index.html" data-title="Bài 1 · Array" data-module="Module 1 · Frontend" data-session="Session 13">Bài 1 · Array</a><a class="item" href="../Module_1_Frontend/Session_16_Funtion_Array_Method/s16_1/index.html" data-title="Bài 1 · Array Methods" data-module="Module 1 · Frontend" data-session="Session 16">Bài 1 · Array Methods</a></div></details>
+          </div>
+        </details>
+        <details open data-module="module 2 database">
+          <summary class="module-summary"><span>Module 2 · Database</span><span class="status">3 BTOL · 12 BTVN</span></summary>
+          <div class="session-tree">
+            <details open><summary>Session 00 · Ôn tập Online (BTOL)</summary><div class="items">
+              <span class="item" data-title="BTOL 1 · Chờ nạp dữ liệu" data-module="Module 2 · Database" data-session="Session 00">BTOL 1 · (Chờ nạp dữ liệu)</span>
+              <span class="item" data-title="BTOL 2 · Chờ nạp dữ liệu" data-module="Module 2 · Database" data-session="Session 00">BTOL 2 · (Chờ nạp dữ liệu)</span>
+              <span class="item" data-btvn="s0_btol3" data-title="BTOL 3 · Quản lý chuỗi Konbini" data-module="Module 2 · Database" data-session="Session 00">BTOL 3 · Quản lý chuỗi Konbini</span>
+              <a class="item active" href="../Module_2_Database/huong_dan_thi_mysql_workbench.html" data-title="Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani)" data-module="Module 2 · Database" data-session="Session 00">📖 Cẩm nang thi MySQL Workbench (Đề Kobani)</a>
+            </div></details>
+            <details><summary>Session 01 · ERD & thực thể</summary><div class="items">
+              <span class="item" data-btvn="btvn1" data-title="BTVN 1 · Quản lý sinh viên" data-module="Module 2 · Database" data-session="Session 01">BTVN 1 · Quản lý sinh viên</span>
+              <span class="item" data-btvn="btvn2" data-title="BTVN 2 · Quản lý môn học" data-module="Module 2 · Database" data-session="Session 01">BTVN 2 · Quản lý môn học</span>
+              <span class="item" data-btvn="btvn3" data-title="BTVN 3 · Sinh viên và lớp" data-module="Module 2 · Database" data-session="Session 01">BTVN 3 · Sinh viên và lớp</span>
+              <span class="item" data-btvn="btvn4" data-title="BTVN 4 · Quản lý thư viện" data-module="Module 2 · Database" data-session="Session 01">BTVN 4 · Quản lý thư viện</span>
+              <span class="item" data-btvn="btvn5" data-title="BTVN 5 · Quản lý bán hàng" data-module="Module 2 · Database" data-session="Session 01">BTVN 5 · Quản lý bán hàng</span>
+              <span class="item" data-btvn="btvn6" data-title="BTVN 6 · Sinh viên - môn học" data-module="Module 2 · Database" data-session="Session 01">BTVN 6 · Sinh viên - môn học</span>
+            </div></details>
+            <details><summary>Session 02 · Quan hệ dữ liệu</summary><div class="items">
+              <span class="item" data-btvn="s2_btvn1" data-title="BTVN 1 · Tạo bảng Sinh viên" data-module="Module 2 · Database" data-session="Session 02">BTVN 1 · Tạo bảng Sinh viên</span>
+              <span class="item" data-btvn="s2_btvn2" data-title="BTVN 2 · Tạo bảng Sản phẩm" data-module="Module 2 · Database" data-session="Session 02">BTVN 2 · Tạo bảng Sản phẩm</span>
+              <span class="item" data-btvn="s2_btvn3" data-title="BTVN 3 · Áp dụng ràng buộc trong bảng" data-module="Module 2 · Database" data-session="Session 02">BTVN 3 · Áp dụng ràng buộc trong bảng</span>
+              <span class="item" data-btvn="s2_btvn4" data-title="BTVN 4 · Tạo bảng có DEFAULT và CHECK" data-module="Module 2 · Database" data-session="Session 02">BTVN 4 · Tạo bảng có DEFAULT và CHECK</span>
+              <span class="item" data-btvn="s2_btvn5" data-title="BTVN 5 · Quản lý sinh viên - Lớp học" data-module="Module 2 · Database" data-session="Session 02">BTVN 5 · Quản lý sinh viên - Lớp học</span>
+              <span class="item" data-btvn="s2_btvn6" data-title="BTVN 6 · Quản lý đơn hàng - Sản phẩm" data-module="Module 2 · Database" data-session="Session 02">BTVN 6 · Quản lý đơn hàng - Sản phẩm</span>
+            </div></details>
+            <details><summary>Session 03 · SQL cơ bản</summary><div class="items"><span class="item disabled">BTVN 1–6 · Coming soon</span></div></details>
+            <details><summary>Session 04–12 · Database nâng cao</summary><div class="items"><span class="item disabled">BTVN · Coming soon</span></div></details>
+          </div>
+        </details>
+        <details data-module="module 3 java core"><summary class="module-summary"><span>Module 3 · Java Core</span><span class="status">1 HTML</span></summary><div class="items"><a class="item" href="../Module_3_Java_Core/index.html" data-title="Module 3 · Java Core" data-module="Module 3 · Java Core" data-session="Overview">Mở trang module</a></div></details>
+        <details data-module="module 4 fe it"><summary class="module-summary"><span>Module 4 · FE IT</span><span class="status">1 HTML</span></summary><div class="items"><a class="item" href="../Module_4_FE_IT/index.html" data-title="Module 4 · FE IT" data-module="Module 4 · FE IT" data-session="Overview">Mở trang module</a></div></details>
+        <details data-module="module 5 java web"><summary class="module-summary"><span>Module 5 · Java Web</span><span class="status">1 HTML</span></summary><div class="items"><a class="item" href="../Module_5_Java_Web/index.html" data-title="Module 5 · Java Web" data-module="Module 5 · Java Web" data-session="Overview">Mở trang module</a></div></details>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="crumb"><span id="crumbModule">Dashboard v1</span> &nbsp;›&nbsp; <strong id="crumbTitle">Chọn một bài tập</strong></div><div class="actions"><button class="button" id="syncDriveBtn" type="button" onclick="triggerSyncDrive()" title="Đồng bộ tự động từ giáo trình RK-MODULE2-DATABASE trên Google Drive">⚡ Đồng bộ RK-Drive</button><button class="button" id="newTab" type="button">Mở tab mới</button><button class="button primary" id="openPage" type="button">Mở trang</button></div></header>
+      <div class="content">
+        <section class="intro"><h1 id="pageTitle">Learning Dashboard</h1><p id="pageDescription">Sidebar bên trái là cây thư mục học tập. Chọn một BTVN hoặc trang module để hiển thị HTML trực tiếp trong khung preview bên phải.</p><div class="stats"><div class="stat"><strong>5</strong><span>Modules</span></div><div class="stat"><strong>16</strong><span>Sessions M1</span></div><div class="stat"><strong>12</strong><span>Sessions M2</span></div><div class="stat"><strong>Live</strong><span>HTML Preview</span></div></div></section>
+        <section class="preview-wrap" id="previewWrap">
+          <div class="preview">
+            <div class="preview-head">
+              <div class="preview-head-left">
+                <button class="nav-btn" id="previewBackBtn" type="button" title="Quay lại màn gần nhất trong Khung hiển thị trực quan (Alt + ←)" onclick="navigateHistory(-1)">
+                  ⬅ Quay lại
+                </button>
+                <button class="nav-btn" id="previewForwardBtn" type="button" title="Tiến tới màn sau trong Khung hiển thị trực quan (Alt + →)" onclick="navigateHistory(1)">
+                  Tiến tới ➡
+                </button>
+                <span>Khung hiển thị trực quan</span>
+              </div>
+              <div class="preview-head-right">
+                <strong id="previewTitle">Chọn một bài tập</strong>
+                <button class="nav-btn fullscreen-btn" id="previewFullscreenBtn" type="button" title="Phóng to toàn màn hình (Esc để thoát)" onclick="togglePreviewFullscreen()">
+                  <span id="fullscreenIcon">⛶</span> <span id="fullscreenText">Toàn màn hình</span>
+                </button>
+              </div>
+            </div>
+            <div class="empty" id="previewBox">Chọn một mục trong sidebar để mở nội dung HTML tại đây.</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const module1Files = [
+      'Session_01_HTML_Basic/bai1_heading.html', 'Session_01_HTML_Basic/bai2_paragraph.html', 'Session_01_HTML_Basic/bai5_cv_ca_nhan.html',
+      'Session_01_HTML_Basic/btvn_pass/anchor.html', 'Session_01_HTML_Basic/btvn_pass/login.html', 'Session_01_HTML_Basic/btvn_pass/register.html', 'Session_01_HTML_Basic/btvn_pass/session1.html',
+      'Session_04_CSS_Selector/gioi_thieu.html', 'Session_04_CSS_Selector/s4_btvn_1.html', 'Session_04_CSS_Selector/s4_btvn_5.html', 'Session_04_CSS_Selector/s4_btvn_6.html', 'Session_04_CSS_Selector/s4_form.html',
+      'Session_05_CSS_Basic_Properties/s5_btvn1.html', 'Session_05_CSS_Basic_Properties/s5_btvn2.html', 'Session_05_CSS_Basic_Properties/s5_btvn3.html', 'Session_05_CSS_Basic_Properties/s5_btvn4.html', 'Session_05_CSS_Basic_Properties/s5_btvn5.html', 'Session_05_CSS_Basic_Properties/s5_btvn6.html',
+      'Session_06_CSS/s6_btvn_1.html', 'Session_06_CSS/s6_btvn_2.html', 'Session_06_CSS/s6_btvn_3.html', 'Session_06_CSS/s6_btvn_4.html', 'Session_06_CSS/s6_btvn_5.html',
+      'Session_07_Flexbox/s7_1.html', 'Session_07_Flexbox/s7_2.html', 'Session_07_Flexbox/s7_3.html', 'Session_07_Flexbox/s7_4.html', 'Session_07_Flexbox/s7_5.html',
+      'Session_08_JS_Basic/s81/s8_1.html', 'Session_08_JS_Basic/s82/s8_2.html', 'Session_08_JS_Basic/s83/s8_3.html', 'Session_08_JS_Basic/s84/s8_4.html', 'Session_08_JS_Basic/s85/s8_5.html',
+      'Session_09_CSS_Layout/s9_0/s9_0.html', 'Session_09_CSS_Layout/s9_1/index.html',
+      'Session_10_JavaScript/s10_1/index.html', 'Session_10_JavaScript/s10_2/index.html', 'Session_10_JavaScript/s10_3/index.html', 'Session_10_JavaScript/s10_4/index.html', 'Session_10_JavaScript/s10_5/index.html', 'Session_10_JavaScript/s10_6/index.html',
+      'Session_11_Control_Statement/s11_1/index.html', 'Session_11_Control_Statement/s11_2/index.html', 'Session_11_Control_Statement/s11_3/index.html', 'Session_11_Control_Statement/s11_4/index.html', 'Session_11_Control_Statement/s11_5/index.html', 'Session_11_Control_Statement/s11_6/index.html',
+      'Session_12_JavaCsript_System/s12_1/index.html', 'Session_12_JavaCsript_System/s12_2/index.html', 'Session_12_JavaCsript_System/s12_3/index.html', 'Session_12_JavaCsript_System/s12_4/index.html', 'Session_12_JavaCsript_System/s12_5/index.html', 'Session_12_JavaCsript_System/s12-6/index.html',
+      'Session_13_Array/s13_1/index.html', 'Session_13_Array/s13_2/index.html', 'Session_13_Array/s13_3/index.html', 'Session_13_Array/s13_4/index.html', 'Session_13_Array/s13_5/index.html', 'Session_13_Array/s13_6/index.html',
+      'Session_14_Objectt/s14_1/index.html', 'Session_14_Objectt/s14_2/index.html', 'Session_14_Objectt/s14_3/index.html', 'Session_14_Objectt/s14_4/index.html', 'Session_14_Objectt/s14_5/index.html', 'Session_14_Objectt/s14_6/index.html',
+      'Session_15_Array_Object/s15_1/index.html', 'Session_15_Array_Object/s15_2/index.html',
+      'Session_16_Funtion_Array_Method/s16_1/index.html', 'Session_16_Funtion_Array_Method/s16_2/index.html', 'Session_16_Funtion_Array_Method/s16_3/index.html', 'Session_16_Funtion_Array_Method/s16_4/index.html', 'Session_16_Funtion_Array_Method/s16_5/index.html', 'Session_16_Funtion_Array_Method/s16_6/index.html'
+    ];
+
+    function escapeMarkup(value) {
+      return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function buildModule1Tree() {
+      const groups = new Map();
+      module1Files.forEach((path) => {
+        const session = path.split('/')[0];
+        if (!groups.has(session)) groups.set(session, []);
+        groups.get(session).push(path);
+      });
+      const sessions = [...groups.entries()].map(([session, paths], index) => {
+        const cleanSession = session.replace(/_/g, ' ')
+          .replace('JavaCsript', 'JavaScript')
+          .replace('Objectt', 'Object')
+          .replace('Funtion', 'Function');
+        return `
+        <details ${index === 0 ? 'open' : ''}><summary>${escapeMarkup(cleanSession)}</summary><div class="items">
+          ${paths.map((path) => {
+            const fileName = path.split('/').pop().replace(/\.html$/i, '');
+            const title = fileName === 'index' ? path.split('/').slice(-2, -1)[0] : fileName;
+            return `<a class="item" href="../Module_1_Frontend/${path}" data-title="${escapeMarkup(title)}" data-module="Module 1 · Frontend" data-session="${escapeMarkup(cleanSession)}">${escapeMarkup(title)}</a>`;
+          }).join('')}
+        </div></details>`;
+      }).join('');
+      const module = document.querySelector('.tree > details');
+    }
+
+    buildModule1Tree();
+    const items = document.querySelectorAll('.item[data-title]');
+    const previewBox = document.getElementById('previewBox');
+    const openPage = document.getElementById('openPage');
+    const newTab = document.getElementById('newTab');
+    const search = document.getElementById('search');
+    let selectedHref = '';
+    function toast(message) { const node = document.getElementById('toast'); node.textContent = message; node.style.display = 'block'; window.clearTimeout(window.toastTimer); window.toastTimer = window.setTimeout(() => { node.style.display = 'none'; }, 2600); }
+    function renderBtvnBoard(btvnKey) {
+      currentBtvnKey = btvnKey || 'btvn1';
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.btvn1;
+      previewBox.className = 'btvn-board';
+      
+      const schemaRows = data.schema.map(item => `
+        <tr>
+          <td>${escapeMarkup(item.type)}</td>
+          <td><strong>${escapeMarkup(item.field)}</strong></td>
+          <td>${item.key === 'PK' ? '<span class="key">PK</span>' : (item.key === 'FK' ? '<span class="key" style="background:#eef;border-color:#77a;">FK</span>' : (item.key.includes('PK') ? '<span class="key">PK, FK</span>' : '-'))}</td>
+          <td>${escapeMarkup(item.desc || '')}</td>
+        </tr>
+      `).join('');
+
+      previewBox.innerHTML = `
+        <h2>${escapeMarkup(data.title)}</h2>
+        <p>Nội dung được tổng hợp từ README.md trong thư mục ${escapeMarkup(data.readmeFolder)}.</p>
+        <div class="board-grid">
+          <section class="board-section">
+            <h3><span class="board-number">1</span> Lý thuyết liên quan</h3>
+            <ul>
+              ${data.theory.map(t => `<li>${escapeMarkup(t)}</li>`).join('')}
+            </ul>
+          </section>
+          <section class="board-section">
+            <h3><span class="board-number">2</span> Nội dung đáp án trong README</h3>
+            <p><strong>Thực thể:</strong> ${escapeMarkup(data.readme.entity)}</p>
+            <p><strong>Thuộc tính:</strong> ${escapeMarkup(data.readme.attributes)}</p>
+            <p><strong>Khóa chính:</strong> ${escapeMarkup(data.readme.pk)}</p>
+            <div class="sql-note">${escapeMarkup(data.readme.note)}</div>
+          </section>
+          <section class="board-section">
+            <h3><span class="board-number">3</span> Biểu đồ dữ liệu bài tập</h3>
+            <table class="entity-table">
+              <thead><tr><th>Type</th><th>Field</th><th>Key</th><th>Mô tả</th></tr></thead>
+              <tbody>
+                ${schemaRows}
+              </tbody>
+            </table>
+          </section>
+          <section class="board-section">
+            <h3><span class="board-number">4</span> Sơ đồ mối quan hệ</h3>
+            ${data.relationMap}
+          </section>
+          <section class="board-section sql-section">
+            <h3><span class="board-number">5</span> SQL viết tay như trong MySQL</h3>
+            <p>Nhập lệnh SQL của bạn vào ô dưới đây. Dashboard tự động thực thi <strong>CREATE TABLE</strong> và <strong>INSERT INTO</strong> bằng SQLite WebAssembly.</p>
+            <div class="sql-workbench">
+              <textarea class="sql-editor" id="btvn-sql-editor" spellcheck="false"></textarea>
+              <div class="sql-save-center">
+                <button type="button" onclick="saveBtvnSql()">Chọn folder<br>&amp; Lưu SQL</button>
+                <button class="preview-center" id="btvn-preview-button" type="button" onclick="previewBtvnSql()">Preview bảng</button>
+              </div>
+              <div class="sql-result" id="btvn-sql-result">SQLite Preview sẽ hiển thị ở đây.</div>
+            </div>
+            <div class="save-folder-status" id="sql-save-folder-status">Folder lưu: chưa chọn · file đích: ${escapeMarkup(data.sqlFileName)}</div>
+            <div class="engine-status" id="btvn-engine-status">SQL Engine: đang khởi động...</div>
+          </section>
+          <section class="board-section ai-section">
+            <div class="ai-toolbar">
+              <h3><span class="board-number">6</span> Local Ollama AI Review</h3>
+              <span class="ai-model" id="ollama-status">Ollama: đang kiểm tra...</span>
+            </div>
+            <p>AI chạy trên máy local để đọc SQL bài <strong>${escapeMarkup(data.title)}</strong>, chấm điểm, giải thích lỗi, gợi ý sửa và đánh giá thiết kế database.</p>
+            <div class="ai-actions">
+              <button type="button" onclick="checkOllamaStatus()">Kiểm tra Ollama</button>
+              <button type="button" onclick="askOllama('score')">Chấm điểm SQL</button>
+              <button type="button" onclick="askOllama('explain')">Giải thích lỗi</button>
+              <button type="button" onclick="askOllama('fix')">Gợi ý sửa lệnh</button>
+              <button type="button" onclick="askOllama('design')">Đánh giá Database</button>
+            </div>
+            <div class="ai-result" id="ollama-result"></div>
+          </section>
+        </div>`;
+
+      const editor = document.getElementById('btvn-sql-editor');
+      const savedSql = localStorage.getItem('dashboard-v1-' + currentBtvnKey + '-sql');
+      editor.value = savedSql || data.defaultSql;
+
+      getSavedSqlFolder().then(updateSqlFolderStatus);
+      previewBtvnSql();
+      checkOllamaStatus();
+    }
+
+    const btvnDatabase = {
+      s0_btol3: {
+        key: 's0_btol3',
+        title: 'BTOL 3 · Quản lý chuỗi Konbini (Tổng hợp DDL, DML, View, Procedure)',
+        readmeFolder: 'BTOL_S0_3_ChuoiKonbini',
+        sqlFileName: 'BTOL_S0_3_ChuoiKonbini.sql',
+        theory: [
+          'DDL & Schema: Lệnh CREATE DATABASE, USE, CREATE TABLE tạo bảng Kho và San_Pham; lệnh ALTER TABLE mở rộng cột so_dien_thoai_kho.',
+          'Ràng buộc toàn vẹn: PRIMARY KEY định danh bản ghi, FOREIGN KEY (ma_kho_san_pham) nối bảng San_Pham tới Kho, CHECK (gia_san_pham > 0).',
+          'DML & Thao tác dữ liệu: INSERT INTO thêm hàng loạt, UPDATE sửa giá (WHERE ten_san_pham), DELETE xóa sản phẩm theo khóa chính.',
+          'Truy vấn & Sắp xếp: ORDER BY gia_san_pham ASC/DESC kết hợp LIMIT 3; Đặt bí danh (Alias AS); Phép nối bảng INNER JOIN ON.',
+          'Đối tượng CSDL nâng cao: VIEW (bảng ảo lưu câu SELECT phục vụ báo cáo), INDEX (chỉ mục tăng tốc tìm kiếm), STORED PROCEDURE (hàm thủ tục lưu trữ với tham số IN, OUT).'
+        ],
+        readme: {
+          entity: 'Kho (1) ||--o{ San_Pham (N)',
+          attributes: 'Kho(ma_kho, dia_chi_kho, so_dien_thoai_kho) | San_Pham(ma_san_pham, ten_san_pham, gia_san_pham, ma_kho_san_pham)',
+          pk: 'Kho: ma_kho | San_Pham: ma_san_pham',
+          note: 'Hệ thống quản lý chuỗi cửa hàng tiện lợi Konbini tổng hợp đầy đủ từ thiết kế DDL, thao tác DML, đến View, Index và Stored Procedure.'
+        },
+        schema: [
+          { type: 'INT', field: 'ma_kho', key: 'PK', desc: 'Mã kho hàng (Khóa chính bảng Kho)' },
+          { type: 'VARCHAR(255)', field: 'dia_chi_kho', key: '-', desc: 'Địa chỉ kho hàng (NOT NULL)' },
+          { type: 'VARCHAR(11)', field: 'so_dien_thoai_kho', key: '-', desc: 'Số điện thoại kho (Thêm qua ALTER TABLE)' },
+          { type: 'VARCHAR(5)', field: 'ma_san_pham', key: 'PK', desc: 'Mã sản phẩm (Khóa chính bảng San_Pham)' },
+          { type: 'VARCHAR(200)', field: 'ten_san_pham', key: '-', desc: 'Tên sản phẩm hàng hóa (NOT NULL)' },
+          { type: 'INT', field: 'gia_san_pham', key: '-', desc: 'Giá tiền sản phẩm (Ràng buộc CHECK > 0)' },
+          { type: 'INT', field: 'ma_kho_san_pham', key: 'FK', desc: 'Khóa ngoại tham chiếu Kho(ma_kho)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">Kho<small>ma_kho · PK (1)</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">San_Pham<small>ma_san_pham · PK · ma_kho_san_pham · FK (N)</small></div>
+          </div>
+          <p class="relation-note">Một kho chứa nhiều sản phẩm (1-N). Cột ma_kho_san_pham liên kết trực tiếp tới mã kho.</p>
+        `,
+        defaultSql: `-- Gõ các câu lệnh DDL để tạo database 
+-- Bước 1 : Tạo Database 
+-- Câu lệnh để tạo tên database : (CREATE DATABASE ten_database)
+CREATE DATABASE Chuoi_Konbini;  
+
+-- Bước 2 : Nhảy vào kho để thao tác với kho (USE ten_database)
+USE Chuoi_Konbini;
+
+-- Bước 3 : Đi tạo các bảng có trong DATABASE (Bảng sản phẩm , bảng kho)
+--  CREATE TABLE ten_bang có trong database 
+
+-- Kiểu dữ liệu trong MySQL :
+-- Chữ : VARCHAR(255) => chuỗi này max là 255 ký tự 
+-- Số : INT => Lưu trữ số 
+-- Ngày tháng DATE 
+
+CREATE TABLE Kho (
+	ma_kho INT PRIMARY KEY,
+    dia_chi_kho VARCHAR(255) NOT NULL 
+);
+
+-- PRIMARY KEY , NOT NULL , CHECK , UNIQUE (Độc nhất) ,
+-- DEFAULT (Gán mặc định) giá trị 
+-- => Được gọi chung là Contranstaint (Ràng buộc)
+
+CREATE TABLE San_Pham (
+	ma_san_pham VARCHAR(5) PRIMARY KEY,
+    ten_san_pham VARCHAR(200) NOT NULL,
+    gia_san_pham INT CHECK (gia_san_pham > 0),
+    ma_kho_san_pham INT,
+    FOREIGN KEY (ma_kho_san_pham) REFERENCES Kho(ma_kho)
+);
+
+--  Sửa thuộc tính của bảng (Dùng từ khóa ALTER)
+ALTER TABLE Kho ADD so_dien_thoai_kho VARCHAR(11);
+
+-- Xóa dữ liệu bảng , hoặc database (DROP)
+-- DROP DATABASE Chuoi_Konbini;
+
+
+
+-- Buổi hôm trước : DML (Thêm , sửa , xóa , cập nhật dữ liệu vào trong bảng) , DDL (Các bước thao tác thêm, sửa , xóa bảng)
+-- Thêm một hàng dữ liệu vào bảng sản phẩm (Thêm một sản phẩm vào bảng sản phẩm)
+
+SELECT * FROM kho;
+
+--  INSERT : Thêm dữ liệu vào bảng 
+INSERT INTO kho (ma_kho, dia_chi_kho , so_dien_thoai_kho) VALUES
+	(1,"Tokoy","099999999"),
+	(2,"Osaka","098888888");
+
+-- INSERT : THÊM DỮ LIỆU VÀO BẢNG sản phẩm 
+INSERT INTO san_pham (ma_san_pham, ten_san_pham, gia_san_pham , ma_kho_san_pham) VALUES
+	("SP001","Cà Phê", 19999 , 1),
+	("SP002","Mỳ Tôm", 39999 , 2),
+    ("SP003","Cơm", 9999 , 1),
+    ("SP004","Bánh Mỳ", 199999 , 1);
+
+SELECT * FROM san_pham;
+
+-- Sửa giá sản phẩm "Mỳ Tôm" thêm 10000 
+UPDATE san_pham
+SET gia_san_pham = gia_san_pham + 10000
+WHERE ten_san_pham = "Mỳ Tôm";
+
+-- Xóa một bản ghi ra khỏi bảng 
+-- Xóa sản phẩm có ma_san_pham là "SP004" 
+
+DELETE FROM san_pham
+WHERE ma_san_pham = "SP004";
+
+-- Sắp xếp dữ liệu 
+-- In ra các sẩn phẩm theo thứ tự tăng dần của giá tiền 
+
+SELECT * FROM san_pham ORDER BY gia_san_pham;
+
+-- In ra sản phẩm có giá tiền cao nhất 
+SELECT * FROM san_pham ORDER BY gia_san_pham DESC LIMIT 3;
+
+-- alias : ĐẶT biệt danh , MAX, Min , AVG , SUM 
+
+SELECT ma_san_pham AS MaSanPham FROM san_pham;
+
+-- GROUP BY , HAVING
+
+-- JOIN (LEFT JOIN , INNER JOIN , RIGHT JOIN): Nối bảng 
+
+SELECT *
+FROM san_pham AS sp
+INNER JOIN kho AS k 
+ON sp.ma_kho_san_pham = k.ma_kho;
+
+-- View là một câu lệnh SELECT được đặt cho một cái tên lưu lại trong Database catalog 
+
+CREATE VIEW view_ten_san_pham AS 
+SELECT ten_san_pham FROM san_pham;
+
+SELECT * FROM view_ten_san_pham;
+
+CREATE VIEW view_toan_bo_thong_tin_join_2_bang AS 
+SELECT *
+FROM san_pham AS sp
+INNER JOIN kho AS k 
+ON sp.ma_kho_san_pham = k.ma_kho;
+
+SELECT * FROM view_toan_bo_thong_tin_join_2_bang;
+
+DROP VIEW view_ten_san_pham;
+
+-- 
+CREATE VIEW view_demo_du_lieu_san_pham_cho_khach_hang  AS
+SELECT ten_san_pham , ma_san_pham 
+FROM san_pham;
+
+SELECT * FROM view_demo_du_lieu_san_pham_cho_khach_hang;
+
+
+-- Tạo một view chứa các sản phẩm có giá tiền lớn hơn 20000
+
+-- Tạo một view có thể xem được ten_san_pham , ma_san_pham , dia_chi_kho , so_dien_thoai_kho
+
+SELECT * FROM san_pham;
+-- Đánh Index (Chỉ mục) : Giúp tăng tốc độ tìm kiếm , truy vấn dữ liệu từ bảng  
+
+CREATE INDEX idx_ten_san_pham  
+ON san_pham(ten_san_pham);
+
+-- Xóa Chỉ Mục 
+DROP INDEX idx_ten_san_pham ON san_pham;
+
+SELECT * FROM san_pham 
+WHERE ten_san_pham = "Cơm";
+
+
+-- STORED PROCEDURE : chính là hàm trong cơ sở dữ liệu 
+-- Tham số , IF ELSE 
+
+DELIMITER $$
+CREATE PROCEDURE laydanhsachsanpham()
+BEGIN
+	SELECT * FROM san_pham;
+END
+$$ DELIMITER ;
+
+-- GỌi procedure 
+CALL laydanhsachsanpham();
+
+
+-- Tạo một Procedure : để tìm kiếm thông tin sản phẩm theo mã sản phẩm 
+-- Tham số : IN , OUT 
+
+DELIMITER $$
+CREATE PROCEDURE timkiemthongtinsanpham(IN sp_ma_san_pham VARCHAR(10))
+BEGIN 
+	SELECT * FROM san_pham 
+    WHERE ma_san_pham = sp_ma_san_pham;
+END
+$$ DELIMITER ;
+
+CALL timkiemthongtinsanpham("SP002") ;
+
+-- Tạo một procedure lấy tất cả thông tin sản phẩm có giá tiền lớn hơn 10000 
+
+
+-- Tạo ra một procedue trả về một giá trị  
+-- Tạo một  procedue trả về số lượng các sản phẩm đang có 
+
+DELIMITER $$
+CREATE PROCEDURE soluongsanpham(OUT p_tong INT)
+BEGIN 
+	SELECT COUNT(*) INTO p_tong
+    FROM san_pham ;
+END
+$$ DELIMITER ;
+
+-- Lưu vào một vào một biến  
+CALL soluongsanpham(@so_luong_san_pham);
+SELECT @so_luong_san_pham AS SoLuongSanPhamCoTrongKho;
+
+--  tạo một procedure trả về giá trị tổng tiền của toàn bộ sản phẩm có trong san_pham 
+`
+      },
+
+      btvn1: {
+        key: 'btvn1',
+        title: 'BTVN 1 · Quản lý sinh viên',
+        readmeFolder: 'BTVN_1_QuanLySinhVien',
+        sqlFileName: 'BTVN_1_QuanLySinhVien.sql',
+        theory: [
+          'Entity (Thực thể) là đối tượng thế giới thực cần lưu trữ thông tin trong hệ thống.',
+          'Thuộc tính (Attribute) mô tả đặc điểm hoặc tính chất của thực thể.',
+          'Khóa chính (Primary Key - PK) giúp phân biệt duy nhất từng bản ghi sinh viên.'
+        ],
+        readme: {
+          entity: 'SinhVien',
+          attributes: 'ma_sinh_vien, ten_sinh_vien, ngay_sinh',
+          pk: 'ma_sinh_vien',
+          note: 'Dữ liệu chuẩn hóa theo cấu trúc thực thể SinhVien trong README.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_sinh_vien', key: 'PK', desc: 'Mã sinh viên (chuỗi ký tự phân biệt)' },
+          { type: 'VARCHAR(100)', field: 'ten_sinh_vien', key: '-', desc: 'Họ và tên đầy đủ' },
+          { type: 'DATE', field: 'ngay_sinh', key: '-', desc: 'Ngày tháng năm sinh' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">SinhVien<small>ma_sinh_vien · PK</small></div>
+            <div class="relation-line" data-rel="1 : 1"></div>
+            <div class="entity-node">Thông tin cá nhân<small>ten_sinh_vien · ngay_sinh</small></div>
+          </div>
+          <p class="relation-note">Một thực thể SinhVien được xác định bằng một mã duy nhất và chứa các thuộc tính mô tả.</p>
+        `,
+        defaultSql: `CREATE TABLE sinh_vien (
+    ma_sinh_vien VARCHAR(20) PRIMARY KEY,
+    ten_sinh_vien VARCHAR(100) NOT NULL,
+    ngay_sinh DATE
+);
+
+INSERT INTO sinh_vien (ma_sinh_vien, ten_sinh_vien, ngay_sinh)
+VALUES ('SV001', 'Nguyen Van A', '2005-02-15');`
+      },
+
+      btvn2: {
+        key: 'btvn2',
+        title: 'BTVN 2 · Quản lý môn học',
+        readmeFolder: 'BTVN_2_QuanLyMonHoc',
+        sqlFileName: 'BTVN_2_QuanLyMonHoc.sql',
+        theory: [
+          'Xác định đúng các thuộc tính cốt lõi của một môn học (mã môn, tên môn, số tín chỉ).',
+          'Phân biệt kiểu dữ liệu chuỗi ký tự (VARCHAR) và số nguyên (INT).',
+          'Khóa chính (ma_mon_hoc) đảm bảo tính toàn vẹn và duy nhất của môn học.'
+        ],
+        readme: {
+          entity: 'MonHoc',
+          attributes: 'ma_mon_hoc, ten_mon_hoc, so_tin_chi',
+          pk: 'ma_mon_hoc',
+          note: 'Thực thể độc lập quản lý danh mục môn giảng dạy.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_mon_hoc', key: 'PK', desc: 'Mã môn học (duy nhất)' },
+          { type: 'VARCHAR(100)', field: 'ten_mon_hoc', key: '-', desc: 'Tên môn học giảng dạy' },
+          { type: 'INT', field: 'so_tin_chi', key: '-', desc: 'Số lượng tín chỉ môn học' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">MonHoc<small>ma_mon_hoc · PK</small></div>
+            <div class="relation-line" data-rel="1 : 1"></div>
+            <div class="entity-node">Chương trình học<small>ten_mon_hoc · so_tin_chi</small></div>
+          </div>
+          <p class="relation-note">Thực thể đại diện cho môn học trong chương trình đào tạo.</p>
+        `,
+        defaultSql: `CREATE TABLE mon_hoc (
+    ma_mon_hoc VARCHAR(20) PRIMARY KEY,
+    ten_mon_hoc VARCHAR(100) NOT NULL,
+    so_tin_chi INT NOT NULL
+);
+
+INSERT INTO mon_hoc (ma_mon_hoc, ten_mon_hoc, so_tin_chi)
+VALUES 
+('CS101', 'Co so du lieu MySQL', 3),
+('JV201', 'Lap trinh Java Core', 4),
+('FE102', 'Lap trinh Web HTML/CSS', 2);`
+      },
+
+      btvn3: {
+        key: 'btvn3',
+        title: 'BTVN 3 · Sinh viên và lớp',
+        readmeFolder: 'BTVN_3_QuanLySinhVienLop',
+        sqlFileName: 'BTVN_3_QuanLySinhVienLop.sql',
+        theory: [
+          'Quan hệ 1-N (Một - Nhiều): Một lớp có nhiều sinh viên, mỗi sinh viên thuộc 1 lớp duy nhất.',
+          'Khóa ngoại (Foreign Key - FK): Cột ma_lop trong bảng sinh_vien liên kết tới ma_lop của lop_hoc.',
+          'Nguyên tắc thiết kế: Đặt khóa chính của bảng 1 sang bảng N làm khóa ngoại.'
+        ],
+        readme: {
+          entity: 'LopHoc (1) & SinhVien (N)',
+          attributes: 'LopHoc(ma_lop, ten_lop), SinhVien(ma_sinh_vien, ten_sinh_vien, ma_lop)',
+          pk: 'LopHoc: ma_lop | SinhVien: ma_sinh_vien',
+          note: 'Thiết kế chuẩn hóa thể hiện mối quan hệ phân lớp của sinh viên.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_lop', key: 'PK', desc: 'Mã lớp học (bảng lop_hoc)' },
+          { type: 'VARCHAR(100)', field: 'ten_lop', key: '-', desc: 'Tên lớp học' },
+          { type: 'VARCHAR(20)', field: 'ma_sinh_vien', key: 'PK', desc: 'Mã sinh viên (bảng sinh_vien)' },
+          { type: 'VARCHAR(100)', field: 'ten_sinh_vien', key: '-', desc: 'Họ và tên sinh viên' },
+          { type: 'VARCHAR(20)', field: 'ma_lop', key: 'FK', desc: 'Khóa ngoại liên kết lop_hoc(ma_lop)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">LopHoc<small>ma_lop · PK (1)</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">SinhVien<small>ma_sinh_vien · PK (N)</small></div>
+          </div>
+          <p class="relation-note">Một lớp có nhiều sinh viên; bảng sinh_vien chứa khóa ngoại ma_lop.</p>
+        `,
+        defaultSql: `CREATE TABLE lop_hoc (
+    ma_lop VARCHAR(20) PRIMARY KEY,
+    ten_lop VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE sinh_vien (
+    ma_sinh_vien VARCHAR(20) PRIMARY KEY,
+    ten_sinh_vien VARCHAR(100) NOT NULL,
+    ma_lop VARCHAR(20),
+    FOREIGN KEY (ma_lop) REFERENCES lop_hoc(ma_lop)
+);
+
+INSERT INTO lop_hoc (ma_lop, ten_lop) VALUES 
+('L01', 'Lop CNTT K01'),
+('L02', 'Lop Web Frontend K02');
+
+INSERT INTO sinh_vien (ma_sinh_vien, ten_sinh_vien, ma_lop) VALUES 
+('SV001', 'Nguyen Van A', 'L01'),
+('SV002', 'Tran Thi B', 'L01'),
+('SV003', 'Le Van C', 'L02');`
+      },
+
+      btvn4: {
+        key: 'btvn4',
+        title: 'BTVN 4 · Quản lý thư viện',
+        readmeFolder: 'BTVN_4_QuanLyThuVien',
+        sqlFileName: 'BTVN_4_QuanLyThuVien.sql',
+        theory: [
+          'Quan hệ N-N (Nhiều - Nhiều): 1 độc giả mượn nhiều sách, 1 sách có thể được nhiều độc giả mượn.',
+          'Trong sơ đồ ERD khái niệm, hai thực thể kết nối trực tiếp với bội số N-N.',
+          'Trong CSDL quan hệ thực tế, quan hệ N-N được hiện thực bằng bảng liên kết mượn sách.'
+        ],
+        readme: {
+          entity: 'DocGia }o--o{ Sach',
+          attributes: 'DocGia(ma_doc_gia, ten_doc_gia), Sach(ma_sach, ten_sach)',
+          pk: 'DocGia: ma_doc_gia | Sach: ma_sach',
+          note: 'Mô hình liên kết mượn - trả sách nhiều - nhiều.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_doc_gia', key: 'PK', desc: 'Mã độc giả thư viện' },
+          { type: 'VARCHAR(100)', field: 'ten_doc_gia', key: '-', desc: 'Họ tên độc giả' },
+          { type: 'VARCHAR(20)', field: 'ma_sach', key: 'PK', desc: 'Mã sách' },
+          { type: 'VARCHAR(150)', field: 'ten_sach', key: '-', desc: 'Tiêu đề đầu sách' },
+          { type: 'DATE', field: 'ngay_muon', key: '-', desc: 'Ngày mượn sách (bảng muon_sach)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">DocGia<small>ma_doc_gia · PK</small></div>
+            <div class="relation-line" data-rel="N : N"></div>
+            <div class="entity-node">Sach<small>ma_sach · PK</small></div>
+          </div>
+          <p class="relation-note">Quan hệ Nhiều - Nhiều giữa Độc giả và Sách được nối qua bảng mượn sách.</p>
+        `,
+        defaultSql: `CREATE TABLE doc_gia (
+    ma_doc_gia VARCHAR(20) PRIMARY KEY,
+    ten_doc_gia VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE sach (
+    ma_sach VARCHAR(20) PRIMARY KEY,
+    ten_sach VARCHAR(150) NOT NULL
+);
+
+CREATE TABLE muon_sach (
+    ma_doc_gia VARCHAR(20),
+    ma_sach VARCHAR(20),
+    ngay_muon DATE,
+    PRIMARY KEY (ma_doc_gia, ma_sach),
+    FOREIGN KEY (ma_doc_gia) REFERENCES doc_gia(ma_doc_gia),
+    FOREIGN KEY (ma_sach) REFERENCES sach(ma_sach)
+);
+
+INSERT INTO doc_gia (ma_doc_gia, ten_doc_gia) VALUES 
+('DG01', 'Nguyen Van A'),
+('DG02', 'Tran Thi B');
+
+INSERT INTO sach (ma_sach, ten_sach) VALUES 
+('S001', 'Nhap mon Co so du lieu'),
+('S002', 'Thiet ke Web chuyen sau');
+
+INSERT INTO muon_sach (ma_doc_gia, ma_sach, ngay_muon) VALUES 
+('DG01', 'S001', '2026-09-10'),
+('DG01', 'S002', '2026-09-12'),
+('DG02', 'S001', '2026-09-14');`
+      },
+
+      btvn5: {
+        key: 'btvn5',
+        title: 'BTVN 5 · Quản lý bán hàng',
+        readmeFolder: 'BTVN_5_QuanLyBanHang',
+        sqlFileName: 'BTVN_5_QuanLyBanHang.sql',
+        theory: [
+          'Chuẩn hóa CSDL bán hàng: Tách Khách hàng, Sản phẩm, Hóa đơn và Chi tiết mua hàng.',
+          'Khách hàng 1-N Hóa đơn: 1 khách hàng có thể mua nhiều lần tạo ra nhiều hóa đơn.',
+          'Hóa đơn N-N Sản phẩm: Tách thành 2 quan hệ 1-N thông qua bảng trung gian ChiTietMuaHang.'
+        ],
+        readme: {
+          entity: 'KhachHang, SanPham, HoaDon, ChiTietMuaHang',
+          attributes: 'ma_khach, ma_san_pham, ma_hoa_don, so_luong, gia_ban',
+          pk: 'KhachHang: ma_khach | SanPham: ma_san_pham | HoaDon: ma_hoa_don',
+          note: 'Mô hình chuẩn hóa dữ liệu thương mại điện tử / bán lẻ.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_khach', key: 'PK', desc: 'Mã khách hàng' },
+          { type: 'VARCHAR(20)', field: 'ma_san_pham', key: 'PK', desc: 'Mã sản phẩm' },
+          { type: 'VARCHAR(20)', field: 'ma_hoa_don', key: 'PK', desc: 'Mã hóa đơn đặt hàng' },
+          { type: 'FLOAT', field: 'gia_ban / tong_tien', key: '-', desc: 'Giá trị đơn hàng' },
+          { type: 'INT', field: 'so_luong', key: '-', desc: 'Số lượng mua trong chi tiết' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: minmax(90px, 1fr) 60px minmax(110px, 1.2fr) 60px minmax(90px, 1fr);">
+            <div class="entity-node">KhachHang<small>ma_khach</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">HoaDon<small>ma_hoa_don</small></div>
+            <div class="relation-line" data-rel="N : N"></div>
+            <div class="entity-node">SanPham<small>ma_san_pham</small></div>
+          </div>
+          <p class="relation-note">Khách hàng mua Hóa đơn (1-N). Hóa đơn liên kết Sản phẩm qua Chi tiết mua hàng.</p>
+        `,
+        defaultSql: `CREATE TABLE khach_hang (
+    ma_khach VARCHAR(20) PRIMARY KEY,
+    ten_khach VARCHAR(100) NOT NULL,
+    so_dien_thoai VARCHAR(20)
+);
+
+CREATE TABLE san_pham (
+    ma_san_pham VARCHAR(20) PRIMARY KEY,
+    ten_san_pham VARCHAR(150) NOT NULL,
+    gia_ban FLOAT NOT NULL
+);
+
+CREATE TABLE hoa_don (
+    ma_hoa_don VARCHAR(20) PRIMARY KEY,
+    ngay_mua DATE,
+    tong_tien FLOAT,
+    ma_khach VARCHAR(20),
+    FOREIGN KEY (ma_khach) REFERENCES khach_hang(ma_khach)
+);
+
+CREATE TABLE chi_tiet_mua_hang (
+    ma_hoa_don VARCHAR(20),
+    ma_san_pham VARCHAR(20),
+    so_luong INT NOT NULL,
+    PRIMARY KEY (ma_hoa_don, ma_san_pham),
+    FOREIGN KEY (ma_hoa_don) REFERENCES hoa_don(ma_hoa_don),
+    FOREIGN KEY (ma_san_pham) REFERENCES san_pham(ma_san_pham)
+);
+
+INSERT INTO khach_hang VALUES ('KH01', 'Nguyen Van Trung', '0987654321');
+INSERT INTO san_pham VALUES ('SP01', 'Ban phim co Gaming', 1200000);
+INSERT INTO hoa_don VALUES ('HD01', '2026-09-15', 1200000, 'KH01');
+INSERT INTO chi_tiet_mua_hang VALUES ('HD01', 'SP01', 1);`
+      },
+
+      btvn6: {
+        key: 'btvn6',
+        title: 'BTVN 6 · Sinh viên - môn học',
+        readmeFolder: 'BTVN_6_QuanLySinhVienMonHoc',
+        sqlFileName: 'BTVN_6_QuanLySinhVienMonHoc.sql',
+        theory: [
+          'Hệ thống đăng ký tín chỉ: 1 Sinh viên học Nhiều Môn, 1 Môn có Nhiều Sinh viên.',
+          'Bảng trung gian DangKyMonHoc chuyển quan hệ N-N thành hai quan hệ 1-N.',
+          'Khóa chính phức hợp (Composite PK) gồm (ma_sinh_vien, ma_mon_hoc) ngăn chặn đăng ký trùng lặp.'
+        ],
+        readme: {
+          entity: 'SinhVien ||--o{ DangKyMonHoc }o--|| MonHoc',
+          attributes: 'SinhVien(ma_sinh_vien, ho_ten, ngay_sinh), MonHoc(ma_mon_hoc, ten_mon_hoc)',
+          pk: 'DangKyMonHoc: PRIMARY KEY (ma_sinh_vien, ma_mon_hoc)',
+          note: 'Mô hình phân rã quan hệ Nhiều - Nhiều chuẩn hóa bậc cao.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'ma_sinh_vien', key: 'PK', desc: 'Mã sinh viên' },
+          { type: 'VARCHAR(100)', field: 'ho_ten', key: '-', desc: 'Họ tên sinh viên' },
+          { type: 'VARCHAR(20)', field: 'ma_mon_hoc', key: 'PK', desc: 'Mã môn học' },
+          { type: 'INT', field: 'so_tin_chi', key: '-', desc: 'Số tín chỉ môn học' },
+          { type: 'VARCHAR(20)', field: 'hoc_ky', key: '-', desc: 'Học kỳ đăng ký (bảng DangKy)' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: minmax(90px, 1fr) 60px minmax(110px, 1.2fr) 60px minmax(90px, 1fr);">
+            <div class="entity-node">SinhVien<small>ma_sinh_vien</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">DangKyMonHoc<small>Bảng trung gian</small></div>
+            <div class="relation-line" data-rel="N : 1"></div>
+            <div class="entity-node">MonHoc<small>ma_mon_hoc</small></div>
+          </div>
+          <p class="relation-note">Quan hệ N-N giữa Sinh viên và Môn học được phân rã qua bảng DangKyMonHoc.</p>
+        `,
+        defaultSql: `CREATE TABLE sinh_vien (
+    ma_sinh_vien VARCHAR(20) PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    ngay_sinh DATE,
+    gioi_tinh VARCHAR(10)
+);
+
+CREATE TABLE mon_hoc (
+    ma_mon_hoc VARCHAR(20) PRIMARY KEY,
+    ten_mon_hoc VARCHAR(100) NOT NULL,
+    so_tin_chi INT NOT NULL
+);
+
+CREATE TABLE dang_ky_mon_hoc (
+    ma_sinh_vien VARCHAR(20),
+    ma_mon_hoc VARCHAR(20),
+    hoc_ky VARCHAR(20),
+    PRIMARY KEY (ma_sinh_vien, ma_mon_hoc),
+    FOREIGN KEY (ma_sinh_vien) REFERENCES sinh_vien(ma_sinh_vien),
+    FOREIGN KEY (ma_mon_hoc) REFERENCES mon_hoc(ma_mon_hoc)
+);
+
+INSERT INTO sinh_vien VALUES ('SV001', 'Nguyen Van A', '2005-02-15', 'Nam');
+INSERT INTO mon_hoc VALUES ('MH01', 'Co so du lieu MySQL', 3);
+INSERT INTO dang_ky_mon_hoc VALUES ('SV001', 'MH01', 'Ky 1 - 2026');`
+      },
+
+      s2_btvn1: {
+        key: 's2_btvn1',
+        title: 'BTVN 1 · Tạo bảng Sinh viên',
+        readmeFolder: 'BTVN_S2_1_TaoBangSinhVien',
+        sqlFileName: 'BTVN_S2_1_TaoBangSinhVien.sql',
+        theory: [
+          'Lệnh DDL (Data Definition Language) CREATE TABLE dùng để định nghĩa cấu trúc bảng mới trong CSDL.',
+          'Kiểu dữ liệu: VARCHAR(n) cho chuỗi ký tự độ dài thay đổi; DATE cho ngày tháng năm theo định dạng YYYY-MM-DD.',
+          'Ràng buộc PRIMARY KEY (Khóa chính) đảm bảo mỗi dòng trong bảng là duy nhất và không được phép để trống (NOT NULL).'
+        ],
+        readme: {
+          entity: 'students (Sinh viên)',
+          attributes: 'student_id (PK), full_name (NOT NULL), date_of_birth, gender',
+          pk: 'student_id',
+          note: 'Tạo bảng students lưu trữ hồ sơ sinh viên với các kiểu dữ liệu chuỗi, ngày tháng và khóa chính.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'student_id', key: 'PK', desc: 'Mã sinh viên (Khóa chính định danh)' },
+          { type: 'VARCHAR(100)', field: 'full_name', key: '-', desc: 'Họ và tên sinh viên (Bắt buộc)' },
+          { type: 'DATE', field: 'date_of_birth', key: '-', desc: 'Ngày sinh (YYYY-MM-DD)' },
+          { type: 'VARCHAR(10)', field: 'gender', key: '-', desc: 'Giới tính (Nam/Nữ)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">students<small>student_id · PK</small></div>
+            <div class="relation-line" data-rel="1 : 1"></div>
+            <div class="entity-node">Hồ sơ cá nhân<small>full_name · date_of_birth · gender</small></div>
+          </div>
+          <p class="relation-note">Thực thể độc lập students quản lý danh sách sinh viên nhập học.</p>
+        `,
+        defaultSql: `CREATE TABLE students (
+    student_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE,
+    gender VARCHAR(10)
+);
+
+INSERT INTO students (student_id, full_name, date_of_birth, gender) VALUES
+('SV001', 'Nguyen Van An', '2004-05-12', 'Nam'),
+('SV002', 'Tran Thi Bich', '2005-09-20', 'Nu'),
+('SV003', 'Le Hoang Minh', '2004-11-03', 'Nam');`
+      },
+
+      s2_btvn2: {
+        key: 's2_btvn2',
+        title: 'BTVN 2 · Tạo bảng Sản phẩm',
+        readmeFolder: 'BTVN_S2_2_TaoBangSanPham',
+        sqlFileName: 'BTVN_S2_2_TaoBangSanPham.sql',
+        theory: [
+          'Kiểu dữ liệu số trong MySQL: DECIMAL(M, D) tối ưu lưu trữ tiền tệ với độ chính xác cao; INT lưu số nguyên thông thường.',
+          'Quy ước khai báo DECIMAL(10,2): Tổng tối đa 10 chữ số, trong đó có 2 chữ số thập phân sau dấu phẩy.',
+          'Ràng buộc NOT NULL bắt buộc người dùng phải cung cấp giá trị hợp lệ khi chèn bản ghi vào bảng.'
+        ],
+        readme: {
+          entity: 'products (Sản phẩm)',
+          attributes: 'product_id (PK), product_name (NOT NULL), price (NOT NULL), stock_quantity (NOT NULL)',
+          pk: 'product_id',
+          note: 'Bảng danh mục sản phẩm của cửa hàng với giá bán chính xác và số lượng tồn kho.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'product_id', key: 'PK', desc: 'Mã sản phẩm (Khóa chính)' },
+          { type: 'VARCHAR(150)', field: 'product_name', key: '-', desc: 'Tên sản phẩm thương mại' },
+          { type: 'DECIMAL(10,2)', field: 'price', key: '-', desc: 'Giá bán niêm yết (Số thực có 2 số lẻ)' },
+          { type: 'INT', field: 'stock_quantity', key: '-', desc: 'Số lượng hàng tồn kho' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">products<small>product_id · PK</small></div>
+            <div class="relation-line" data-rel="1 : 1"></div>
+            <div class="entity-node">Thông tin kho<small>price · stock_quantity</small></div>
+          </div>
+          <p class="relation-note">Thực thể products quản lý toàn bộ danh mục hàng hóa và tồn kho.</p>
+        `,
+        defaultSql: `CREATE TABLE products (
+    product_id VARCHAR(20) PRIMARY KEY,
+    product_name VARCHAR(150) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock_quantity INT NOT NULL
+);
+
+INSERT INTO products (product_id, product_name, price, stock_quantity) VALUES
+('SP001', 'Chuot khong day Logitech M331', 350000.00, 45),
+('SP002', 'Ban phim co Keychron K2', 1850000.00, 20),
+('SP003', 'Tai nghe Sony WH-1000XM5', 6990000.00, 12);`
+      },
+
+      s2_btvn3: {
+        key: 's2_btvn3',
+        title: 'BTVN 3 · Áp dụng ràng buộc trong bảng',
+        readmeFolder: 'BTVN_S2_3_RangBuocBang',
+        sqlFileName: 'BTVN_S2_3_RangBuocBang.sql',
+        theory: [
+          'Constraints (ràng buộc) là các quy tắc đặt ra trên cột để đảm bảo tính toàn vẹn và tính nhất quán của dữ liệu.',
+          'UNIQUE đảm bảo tất cả giá trị trong cột email không bị trùng lặp giữa các sinh viên.',
+          'CHECK (age >= 18) là bộ lọc logic từ chối mọi thao tác ghi dữ liệu nếu sinh viên chưa đủ 18 tuổi.'
+        ],
+        readme: {
+          entity: 'students_constraint (Sinh viên ràng buộc)',
+          attributes: 'student_id (PK), full_name (NOT NULL), email (UNIQUE NOT NULL), age (CHECK >= 18)',
+          pk: 'student_id',
+          note: 'Bảng sinh viên áp dụng đầy đủ 4 loại ràng buộc: PRIMARY KEY, NOT NULL, UNIQUE và CHECK.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'student_id', key: 'PK', desc: 'Mã sinh viên (Khóa chính)' },
+          { type: 'VARCHAR(100)', field: 'full_name', key: '-', desc: 'Họ tên (NOT NULL)' },
+          { type: 'VARCHAR(100)', field: 'email', key: '-', desc: 'Email (UNIQUE NOT NULL)' },
+          { type: 'INT', field: 'age', key: '-', desc: 'Tuổi (CHECK age >= 18)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">students_constraint<small>student_id · PK</small></div>
+            <div class="relation-line" data-rel="VALID"></div>
+            <div class="entity-node">Bộ quy tắc toàn vẹn<small>UNIQUE(email) · CHECK(age &gt;= 18)</small></div>
+          </div>
+          <p class="relation-note">Dữ liệu được kiểm tra hợp lệ tức thời trước khi lưu vào CSDL.</p>
+        `,
+        defaultSql: `CREATE TABLE students_constraint (
+    student_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    age INT CHECK (age >= 18)
+);
+
+INSERT INTO students_constraint (student_id, full_name, email, age) VALUES
+('SV001', 'Nguyen Van Hung', 'hung.nv@rikkei.edu.vn', 20),
+('SV002', 'Pham Mai Linh', 'linh.pm@rikkei.edu.vn', 19),
+('SV003', 'Dang Tuan Kiet', 'kiet.dt@rikkei.edu.vn', 22);`
+      },
+
+      s2_btvn4: {
+        key: 's2_btvn4',
+        title: 'BTVN 4 · Tạo bảng có DEFAULT và CHECK',
+        readmeFolder: 'BTVN_S2_4_DefaultVaCheck',
+        sqlFileName: 'BTVN_S2_4_DefaultVaCheck.sql',
+        theory: [
+          'Ràng buộc DEFAULT gán giá trị mặc định cho cột khi người dùng không truyền giá trị lúc INSERT.',
+          'CHECK (status IN (\'ACTIVE\', \'INACTIVE\')) giới hạn danh mục trạng thái hợp lệ, ngăn chặn dữ liệu rác.',
+          'Sự kết hợp giữa DEFAULT và CHECK giúp tối ưu hóa logic hệ thống xác thực người dùng.'
+        ],
+        readme: {
+          entity: 'users (Tài khoản người dùng)',
+          attributes: 'user_id (PK), username (UNIQUE NOT NULL), password (NOT NULL), status (DEFAULT \'ACTIVE\' CHECK)',
+          pk: 'user_id',
+          note: 'Bảng quản lý tài khoản xác thực người dùng với trạng thái kiểm soát chặt chẽ.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'user_id', key: 'PK', desc: 'Mã người dùng (Khóa chính)' },
+          { type: 'VARCHAR(50)', field: 'username', key: '-', desc: 'Tên đăng nhập (UNIQUE NOT NULL)' },
+          { type: 'VARCHAR(255)', field: 'password', key: '-', desc: 'Mật khẩu bảo mật (NOT NULL)' },
+          { type: 'VARCHAR(20)', field: 'status', key: '-', desc: 'Trạng thái (DEFAULT ACTIVE, CHECK IN ACTIVE/INACTIVE)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">users<small>user_id · PK</small></div>
+            <div class="relation-line" data-rel="STATE"></div>
+            <div class="entity-node">Trạng thái tài khoản<small>DEFAULT 'ACTIVE' · CHECK IN</small></div>
+          </div>
+          <p class="relation-note">Trạng thái tự động nhận 'ACTIVE' nếu bỏ trống và chỉ chấp nhận 2 trạng thái hợp lệ.</p>
+        `,
+        defaultSql: `CREATE TABLE users (
+    user_id VARCHAR(20) PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE'))
+);
+
+INSERT INTO users (user_id, username, password, status) VALUES
+('U001', 'admin_rikkei', 'SecretPass@2026', 'ACTIVE'),
+('U002', 'moderator_vn', 'ModPass#998', 'ACTIVE'),
+('U003', 'guest_locked', 'Guest@123', 'INACTIVE');`
+      },
+
+      s2_btvn5: {
+        key: 's2_btvn5',
+        title: 'BTVN 5 · Quản lý sinh viên - Lớp học',
+        readmeFolder: 'BTVN_S2_5_QuanLySinhVienLop',
+        sqlFileName: 'BTVN_S2_5_QuanLySinhVienLop.sql',
+        theory: [
+          'Quan hệ 1-N (One-to-Many): Một lớp có nhiều sinh viên; mỗi sinh viên chỉ thuộc duy nhất một lớp.',
+          'Khóa ngoại (FOREIGN KEY): Cột class_id trong bảng students tham chiếu đến class_id trong bảng classes.',
+          'Nguyên tắc tạo bảng: Bảng cha (classes) phải được tạo trước bảng con (students) để thỏa mãn toàn vẹn tham chiếu.'
+        ],
+        readme: {
+          entity: 'classes (1) ||--o{ students (N)',
+          attributes: 'classes(class_id, class_name, school_year), students(student_id, full_name, date_of_birth, gender, class_id)',
+          pk: 'classes: class_id | students: student_id',
+          note: 'Mô hình tổ chức sinh viên theo lớp học với quan hệ 1-N chuẩn hóa.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'class_id', key: 'PK', desc: 'Mã lớp học (Bảng classes)' },
+          { type: 'VARCHAR(100)', field: 'class_name', key: '-', desc: 'Tên lớp học' },
+          { type: 'VARCHAR(20)', field: 'school_year', key: '-', desc: 'Niên khóa đào tạo' },
+          { type: 'VARCHAR(20)', field: 'student_id', key: 'PK', desc: 'Mã sinh viên (Bảng students)' },
+          { type: 'VARCHAR(100)', field: 'full_name', key: '-', desc: 'Họ và tên sinh viên' },
+          { type: 'VARCHAR(20)', field: 'class_id', key: 'FK', desc: 'Khóa ngoại tham chiếu classes(class_id)' }
+        ],
+        relationMap: `
+          <div class="relation-map">
+            <div class="entity-node">classes<small>class_id · PK (1)</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">students<small>student_id · PK · class_id · FK (N)</small></div>
+          </div>
+          <p class="relation-note">Một lớp có nhiều sinh viên (1-N). Cột class_id là khóa ngoại kết nối 2 bảng.</p>
+        `,
+        defaultSql: `CREATE TABLE classes (
+    class_id VARCHAR(20) PRIMARY KEY,
+    class_name VARCHAR(100) NOT NULL,
+    school_year VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE students (
+    student_id VARCHAR(20) PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE,
+    gender VARCHAR(10),
+    class_id VARCHAR(20) NOT NULL,
+    FOREIGN KEY (class_id) REFERENCES classes(class_id)
+);
+
+INSERT INTO classes (class_id, class_name, school_year) VALUES
+('L01', 'Cong nghe thong tin K01', '2025-2026'),
+('L02', 'Ky thuat phan mem K02', '2025-2026');
+
+INSERT INTO students (student_id, full_name, date_of_birth, gender, class_id) VALUES
+('SV001', 'Nguyen Van An', '2004-03-15', 'Nam', 'L01'),
+('SV002', 'Tran Thi Huong', '2005-08-22', 'Nu', 'L01'),
+('SV003', 'Hoang Minh Tri', '2004-12-05', 'Nam', 'L02');`
+      },
+
+      s2_btvn6: {
+        key: 's2_btvn6',
+        title: 'BTVN 6 · Quản lý đơn hàng - Sản phẩm',
+        readmeFolder: 'BTVN_S2_6_QuanLyDonHangSanPham',
+        sqlFileName: 'BTVN_S2_6_QuanLyDonHangSanPham.sql',
+        theory: [
+          'Quan hệ N-N (Many-to-Many): 1 đơn hàng chứa nhiều sản phẩm; 1 sản phẩm có thể thuộc nhiều đơn hàng.',
+          'Bảng trung gian order_items phân rã quan hệ N-N thành hai quan hệ 1-N (orders 1-N order_items và products 1-N order_items).',
+          'Khóa chính phức hợp (Composite PK) PRIMARY KEY (order_id, product_id) đảm bảo không bị trùng sản phẩm trong cùng đơn.'
+        ],
+        readme: {
+          entity: 'orders ||--o{ order_items }o--|| products',
+          attributes: 'orders(order_id, order_date, status), products(product_id, product_name, price), order_items(order_id, product_id, quantity)',
+          pk: 'orders: order_id | products: product_id | order_items: PRIMARY KEY (order_id, product_id)',
+          note: 'Mô hình thương mại điện tử chuẩn hóa N-N giải quyết bài toán giỏ hàng và đặt mua.'
+        },
+        schema: [
+          { type: 'VARCHAR(20)', field: 'order_id', key: 'PK', desc: 'Mã đơn hàng (Bảng orders)' },
+          { type: 'DATE', field: 'order_date', key: '-', desc: 'Ngày đặt hàng (NOT NULL)' },
+          { type: 'VARCHAR(50)', field: 'status', key: '-', desc: 'Trạng thái đơn hàng (NEW/PAID/SHIPPED)' },
+          { type: 'VARCHAR(20)', field: 'product_id', key: 'PK', desc: 'Mã sản phẩm (Bảng products)' },
+          { type: 'DECIMAL(10,2)', field: 'price', key: '-', desc: 'Đơn giá niêm yết' },
+          { type: 'INT', field: 'quantity', key: '-', desc: 'Số lượng mua (CHECK quantity > 0)' }
+        ],
+        relationMap: `
+          <div class="relation-map" style="grid-template-columns: minmax(90px, 1fr) 60px minmax(110px, 1.2fr) 60px minmax(90px, 1fr);">
+            <div class="entity-node">orders<small>order_id · PK (1)</small></div>
+            <div class="relation-line" data-rel="1 : N"></div>
+            <div class="entity-node">order_items<small>PK (order_id, product_id)</small></div>
+            <div class="relation-line" data-rel="N : 1"></div>
+            <div class="entity-node">products<small>product_id · PK (1)</small></div>
+          </div>
+          <p class="relation-note">Quan hệ N-N giữa Đơn hàng và Sản phẩm được phân rã thành hai quan hệ 1-N qua bảng trung gian order_items.</p>
+        `,
+        defaultSql: `CREATE TABLE orders (
+    order_id VARCHAR(20) PRIMARY KEY,
+    order_date DATE NOT NULL,
+    status VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE products (
+    product_id VARCHAR(20) PRIMARY KEY,
+    product_name VARCHAR(150) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE order_items (
+    order_id VARCHAR(20) NOT NULL,
+    product_id VARCHAR(20) NOT NULL,
+    quantity INT NOT NULL CHECK (quantity > 0),
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+INSERT INTO orders (order_id, order_date, status) VALUES
+('ORD001', '2026-09-16', 'PAID'),
+('ORD002', '2026-09-17', 'NEW');
+
+INSERT INTO products (product_id, product_name, price) VALUES
+('P01', 'MacBook Air M3 16GB', 28500000.00),
+('P02', 'Chuot Magic Mouse 2', 2190000.00),
+('P03', 'Cap sac Type-C 100W', 390000.00);
+
+INSERT INTO order_items (order_id, product_id, quantity) VALUES
+('ORD001', 'P01', 1),
+('ORD001', 'P02', 1),
+('ORD002', 'P02', 2),
+('ORD002', 'P03', 3);`
+      }
+    };
+
+    let currentBtvnKey = 'btvn1';
+
+    function escapeSqlHtml(value) {
+      return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    let sqliteEnginePromise;
+    let sqliteEngine;
+
+    function getSqliteEngine() {
+      if (!sqliteEnginePromise) {
+        sqliteEnginePromise = window.initSqlJs({
+          locateFile: (file) => 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/' + file
+        }).then((engine) => {
+          sqliteEngine = engine;
+          return engine;
+        });
+      }
+      return sqliteEnginePromise;
+    }
+
+    function renderSqlTableBlock(tableData, title) {
+      if (!tableData || !tableData.columns || !tableData.columns.length) return '';
+      let html = '<div style="margin-bottom:12px;">';
+      if (title) html += '<div style="font-weight:bold;margin-bottom:4px;color:#222;font-size:11px;">Bảng: ' + escapeSqlHtml(title) + '</div>';
+      html += '<table><thead><tr>' + tableData.columns.map(c => '<th>' + escapeSqlHtml(c) + '</th>').join('') + '</tr></thead><tbody>';
+      if (tableData.values && tableData.values.length > 0) {
+        html += tableData.values.map(row => '<tr>' + row.map(v => '<td>' + escapeSqlHtml(v ?? 'NULL') + '</td>').join('') + '</tr>').join('');
+      } else {
+        html += '<tr><td colspan="' + tableData.columns.length + '" style="text-align:center;color:#999;padding:8px;">(Bảng đã tạo cấu trúc, chưa có dữ liệu INSERT INTO)</td></tr>';
+      }
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    let previewRunId = 0;
+
+    async function previewBtvnSql() {
+      const runId = ++previewRunId;
+      const editor = document.getElementById('btvn-sql-editor');
+      const result = document.getElementById('btvn-sql-result');
+      const status = document.getElementById('btvn-engine-status');
+      if (!editor || !result || !status) return;
+      const sql = editor.value;
+      if (!sql.trim()) {
+        result.textContent = 'Chưa có SQL để thực thi.';
+        return;
+      }
+      status.textContent = 'SQL Engine: đang thực thi SQLite WebAssembly...';
+      try {
+        const engine = await getSqliteEngine();
+        const database = new engine.Database();
+        // Lọc bỏ an toàn các lệnh đặc thù MySQL (DATABASE, USE, DELIMITER, PROCEDURE, DROP VIEW, INDEX, VARIABLE) để SQLite preview mượt mà
+        let cleanSql = sql
+          .replace(/^[ \t]*CREATE\s+DATABASE\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*USE\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*.*(?:DELIMITER|\$\$).*$/gim, '-- $&')
+          .replace(/^[ \t]*CALL\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+VIEW\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*DROP\s+INDEX\b.*$/gim, '-- $&')
+          .replace(/^[ \t]*SELECT\s+@.*$/gim, '-- $&')
+          .replace(/CREATE\s+PROCEDURE[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Stored Procedure: MySQL Only */');
+        database.run(cleanSql);
+        
+        const tableMatches = [...sql.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
+        let tablesRendered = '';
+        
+        if (tableMatches.length > 0) {
+          for (const m of tableMatches) {
+            const tName = m[1];
+            try {
+              const res = database.exec('SELECT * FROM "' + tName.replace(/"/g, '""') + '";');
+              if (res && res.length && res[0].columns.length) {
+                tablesRendered += renderSqlTableBlock(res[0], tName);
+              } else {
+                const pragma = database.exec('PRAGMA table_info("' + tName.replace(/"/g, '""') + '");');
+                if (pragma && pragma.length && pragma[0].values.length) {
+                  const cols = pragma[0].values.map(col => col[1]);
+                  tablesRendered += renderSqlTableBlock({ columns: cols, values: [] }, tName);
+                }
+              }
+            } catch (err) {
+              console.warn("Lỗi đọc bảng " + tName, err);
+            }
+          }
+        }
+        
+        if (!tablesRendered) {
+          const generalRes = database.exec(sql);
+          if (generalRes && generalRes.length) {
+            tablesRendered = renderSqlTableBlock(generalRes[0], 'Kết quả truy vấn');
+          }
+        }
+        
+        if (runId !== previewRunId) {
+          database.close();
+          return;
+        }
+        
+        result.innerHTML = tablesRendered || '<div style="color:#666;padding:8px;">Lệnh SQL đã chạy thành công nhưng không có bảng nào để hiển thị.</div>';
+        status.textContent = 'SQL Engine: SQLite WebAssembly · thực thi thành công';
+        database.close();
+      } catch (error) {
+        status.textContent = 'SQL Engine: lỗi cú pháp';
+        result.innerHTML = '<div style="color:#d63031;padding:6px;font-weight:bold;">❌ ' + escapeSqlHtml(error.message || 'Không thể thực thi SQL.') + '</div>';
+      }
+    }
+
+    const sqlFolderDbPromise = new Promise((resolve, reject) => {
+      if (!window.indexedDB) { resolve(null); return; }
+      const request = indexedDB.open('dashboard-v1-settings', 1);
+      request.onupgradeneeded = () => request.result.createObjectStore('handles');
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+
+    async function getSavedSqlFolder() {
+      const db = await sqlFolderDbPromise;
+      if (!db) return null;
+      return new Promise((resolve, reject) => {
+        const request = db.transaction('handles', 'readonly').objectStore('handles').get('sql-folder');
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function rememberSqlFolder(handle) {
+      const db = await sqlFolderDbPromise;
+      if (!db) return;
+      return new Promise((resolve, reject) => {
+        const request = db.transaction('handles', 'readwrite').objectStore('handles').put(handle, 'sql-folder');
+        request.onsuccess = resolve;
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function updateSqlFolderStatus(handle) {
+      const status = document.getElementById('sql-save-folder-status');
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.btvn1;
+      if (status) {
+        status.textContent = handle ? 'Folder lưu: ' + handle.name + ' · file đích: ' + data.sqlFileName : 'Folder lưu: chưa chọn · file đích: ' + data.sqlFileName;
+      }
+    }
+
+    async function chooseSqlFolder() {
+      if (!window.showDirectoryPicker) {
+        toast('Trình duyệt chưa hỗ trợ chọn folder trực tiếp. File sẽ được tải xuống tự động.');
+        return null;
+      }
+      try {
+        const handle = await window.showDirectoryPicker({ mode: 'readwrite' });
+        await rememberSqlFolder(handle);
+        updateSqlFolderStatus(handle);
+        toast('Đã ghi nhớ folder lưu SQL: ' + handle.name);
+        return handle;
+      } catch (error) {
+        if (error.name !== 'AbortError') toast('Không thể chọn folder lưu SQL.');
+        return null;
+      }
+    }
+
+    async function getWritableSqlFolder() {
+      if (!window.showDirectoryPicker) return null;
+      let handle = await getSavedSqlFolder();
+      if (!handle) handle = await chooseSqlFolder();
+      if (!handle) return null;
+      let permission = await handle.queryPermission({ mode: 'readwrite' });
+      if (permission !== 'granted') permission = await handle.requestPermission({ mode: 'readwrite' });
+      if (permission !== 'granted') return null;
+      updateSqlFolderStatus(handle);
+      return handle;
+    }
+
+    async function saveBtvnSql() {
+      const editor = document.getElementById('btvn-sql-editor');
+      if (!editor) return;
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.btvn1;
+      localStorage.setItem('dashboard-v1-' + currentBtvnKey + '-sql', editor.value);
+      
+      if (window.showSaveFilePicker) {
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: data.sqlFileName,
+            types: [{ description: 'SQL file', accept: { 'text/plain': ['.sql'] } }]
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(editor.value);
+          await writable.close();
+          updateSqlFolderStatus({ name: fileHandle.name + ' · vị trí đã chọn' });
+          toast('Đã lưu ' + data.sqlFileName + ' thành công.');
+          return;
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+          toast('Không thể ghi file tại vị trí đã chọn, chuyển sang tải file.');
+        }
+      }
+      try {
+        const folder = await getWritableSqlFolder();
+        if (folder) {
+          const fileHandle = await folder.getFileHandle(data.sqlFileName, { create: true });
+          const writable = await fileHandle.createWritable();
+          await writable.write(editor.value);
+          await writable.close();
+          toast('Đã ghi ' + data.sqlFileName + ' vào folder ' + folder.name + '.');
+          return;
+        }
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+      }
+      const blob = new Blob([editor.value], { type: 'text/sql;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = data.sqlFileName;
+      link.click();
+      URL.revokeObjectURL(url);
+      toast('Đã tải xuống ' + data.sqlFileName + '.');
+    }
+
+    const ollamaUrl = 'http://127.0.0.1:11434';
+    let ollamaModel = 'qwen2.5-coder:7b';
+
+    function getCurrentSql() {
+      const editor = document.getElementById('btvn-sql-editor');
+      return editor ? editor.value.trim() : '';
+    }
+
+    async function checkOllamaStatus() {
+      const status = document.getElementById('ollama-status');
+      if (!status) return false;
+      status.textContent = 'Ollama: đang kiểm tra...';
+      try {
+        const response = await fetch(ollamaUrl + '/api/tags');
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        const models = (data.models || []).map((model) => model.name);
+        ollamaModel = models.find((model) => model === 'qwen2.5-coder:7b') || models.find((model) => model === 'qwen2.5-coder:1.5b-base') || models[0] || '';
+        status.textContent = 'Ollama: online · ' + (ollamaModel || 'chưa có model');
+        return true;
+      } catch (error) {
+        status.textContent = 'Ollama: offline';
+        return false;
+      }
+    }
+
+    function buildOllamaPrompt(task, sql) {
+      const data = btvnDatabase[currentBtvnKey] || btvnDatabase.btvn1;
+      const taskText = {
+        score: 'Chấm điểm SQL từ 0 đến 10 dựa trên yêu cầu đề bài. Nêu rõ điểm số, tiêu chí đạt, lỗi còn thiếu và mức độ hoàn thiện.',
+        explain: 'Tìm và giải thích các lỗi cú pháp hoặc lỗi thiết kế thực thể/khóa chính/khóa ngoại. Giải thích bằng tiếng Việt thật dễ hiểu cho người mới học.',
+        fix: 'Đưa ra toàn bộ khối lệnh SQL đã sửa chuẩn hóa hoàn chỉnh, sau đó giải thích ngắn gọn từng thay đổi.',
+        design: 'Đánh giá chất lượng thiết kế CSDL: tính đúng đắn của thực thể, khóa chính, kiểu dữ liệu, các mối quan hệ (1-N, N-N), tính toàn vẹn tham chiếu và khả năng mở rộng.'
+      }[task];
+      return `Bạn là chuyên gia CSDL MySQL & SQLite hỗ trợ học viên bootcamp.\nĐề bài: ${data.title} (${data.readme.entity})\nYêu cầu lý thuyết: ${data.theory.join('; ')}\n\nNhiệm vụ: ${taskText}\n\nSQL hiện tại của học viên:\n${sql}\n\nHãy trả lời bằng tiếng Việt chuyên nghiệp, ngắn gọn, có cấu trúc rõ ràng và bám sát kiến trúc CSDL.`;
+    }
+
+    async function askOllama(task) {
+      const result = document.getElementById('ollama-result');
+      const sql = getCurrentSql();
+      if (!result || !sql) return;
+      result.textContent = 'Ollama đang phân tích SQL của ' + (btvnDatabase[currentBtvnKey]?.title || '') + '...';
+      try {
+        const online = await checkOllamaStatus();
+        if (!online) {
+          result.textContent = 'Chưa kết nối được Ollama (offline). Vui lòng đảm bảo ứng dụng Ollama đang chạy.';
+          return;
+        }
+        const response = await fetch(ollamaUrl + '/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: ollamaModel, prompt: buildOllamaPrompt(task, sql), stream: false })
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        result.textContent = data.response || 'Ollama không trả về nội dung.';
+      } catch (error) {
+        result.textContent = 'Không thể gọi Ollama: ' + error.message + '. Kiểm tra server và model local.';
+      }
+    }
+
+    let previewTimer;
+    document.addEventListener('input', (event) => {
+      if (event.target.id !== 'btvn-sql-editor') return;
+      window.clearTimeout(previewTimer);
+      previewTimer = window.setTimeout(() => previewBtvnSql(), 500);
+    });
+
+    let historyStack = [];
+    let forwardStack = [];
+    let currentNavTarget = null;
+
+    function updateNavButtons() {
+      const backBtn = document.getElementById('previewBackBtn');
+      const fwdBtn = document.getElementById('previewForwardBtn');
+      const canBack = historyStack.length > 0;
+      const canFwd = forwardStack.length > 0;
+      if (backBtn) {
+        backBtn.style.opacity = canBack ? '1' : '0.5';
+        backBtn.title = canBack ? 'Quay lại màn trước đó (Alt + ←)' : 'Quay lại bài tập trước đó trong danh mục';
+      }
+      if (fwdBtn) {
+        fwdBtn.style.opacity = canFwd ? '1' : '0.5';
+        fwdBtn.title = canFwd ? 'Tiến tới màn sau (Alt + →)' : 'Chưa có màn hình kế tiếp';
+      }
+    }
+
+    function navigateHistory(direction) {
+      if (direction === -1) {
+        if (historyStack.length > 0) {
+          if (currentNavTarget) forwardStack.push(currentNavTarget);
+          const prevTarget = historyStack.pop();
+          selectItem(prevTarget, true);
+          toast('⬅ Đã quay lại: ' + (prevTarget.dataset.title || prevTarget.textContent.trim()));
+        } else {
+          const btol3 = document.querySelector('.item[data-btvn="s0_btol3"]');
+          if (btol3 && currentNavTarget !== btol3) {
+            forwardStack.push(currentNavTarget);
+            selectItem(btol3, true);
+            toast('⬅ Đã quay lại: BTOL 3 · Quản lý chuỗi Konbini');
+          } else {
+            toast('Bạn đang ở màn hình đầu tiên trong phiên làm việc.');
+          }
+        }
+      } else if (direction === 1) {
+        if (forwardStack.length > 0) {
+          if (currentNavTarget) historyStack.push(currentNavTarget);
+          const nextTarget = forwardStack.pop();
+          selectItem(nextTarget, true);
+          toast('➡ Đã tiến tới: ' + (nextTarget.dataset.title || nextTarget.textContent.trim()));
+        } else {
+          toast('Đã ở màn hình mới nhất, không có mục sau để tiến tới.');
+        }
+      }
+      updateNavButtons();
+    }
+
+    function togglePreviewFullscreen() {
+      const wrap = document.getElementById('previewWrap');
+      const text = document.getElementById('fullscreenText');
+      const icon = document.getElementById('fullscreenIcon');
+      if (!wrap) return;
+      const isFull = wrap.classList.toggle('fullscreen-mode');
+      if (text) text.textContent = isFull ? 'Thu nhỏ' : 'Toàn màn hình';
+      if (icon) icon.textContent = isFull ? '⤓' : '⛶';
+      toast(isFull ? 'Đã phóng to toàn màn hình (Bấm Esc hoặc nút Thu nhỏ để thoát)' : 'Đã trở về chế độ bình thường');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateHistory(-1);
+      } else if (e.altKey && e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateHistory(1);
+      } else if (e.key === 'Escape') {
+        const wrap = document.getElementById('previewWrap');
+        if (wrap && wrap.classList.contains('fullscreen-mode')) {
+          togglePreviewFullscreen();
+        }
+      }
+    });
+
+    function selectItem(item, fromHistory = false) {
+      if (!item) return;
+      if (!fromHistory) {
+        if (currentNavTarget && currentNavTarget !== item) {
+          historyStack.push(currentNavTarget);
+          forwardStack = [];
+        }
+      }
+      currentNavTarget = item;
+      updateNavButtons();
+
+      const href = item.getAttribute('href');
+      selectedHref = href && !href.startsWith('javascript') ? href : '';
+      const title = item.dataset.title || item.textContent.trim();
+      const moduleName = item.dataset.module || 'Workspace';
+      const session = item.dataset.session || 'Session';
+      const btvnKey = item.dataset.btvn;
+
+      document.getElementById('crumbModule').textContent = moduleName + ' · ' + session;
+      document.getElementById('crumbTitle').textContent = title;
+      document.getElementById('pageTitle').textContent = title;
+      document.getElementById('previewTitle').textContent = title;
+      
+      document.querySelectorAll('.item').forEach((node) => node.classList.toggle('active', node === item));
+      syncActiveMenu(item);
+
+      if (btvnKey && btvnDatabase[btvnKey]) {
+        document.getElementById('pageDescription').textContent = 'Bảng trực quan gồm lý thuyết, nội dung README, biểu đồ dữ liệu và sơ đồ quan hệ của ' + title + '.';
+        renderBtvnBoard(btvnKey);
+        openPage.disabled = true;
+        newTab.disabled = true;
+        return;
+      }
+
+      if (!selectedHref) {
+        document.getElementById('pageDescription').textContent = 'Mục này hiện đang để trống, chờ bạn gửi dữ liệu bài tập.';
+        previewBox.className = 'empty';
+        previewBox.innerHTML = '<div style="font-size:14px;font-weight:bold;margin-bottom:8px;">⏳ Đang chờ nạp dữ liệu bài tập</div>Mục này đang để trống. Bạn chỉ cần gửi nội dung đề bài, hệ thống sẽ tự động cập nhật và sinh file SQL tương ứng.';
+        openPage.disabled = true;
+        newTab.disabled = true;
+        return;
+      }
+
+      document.getElementById('pageDescription').textContent = 'Nội dung HTML đang được hiển thị trực tiếp từ thư mục dự án. Bạn có thể mở trang riêng để thao tác đầy đủ.';
+      previewBox.className = 'frame-box';
+      previewBox.innerHTML = '<iframe title="HTML preview" src="' + selectedHref + '"></iframe>';
+      openPage.disabled = false;
+      newTab.disabled = false;
+    }
+
+    function syncActiveMenu(activeItem) {
+      if (!activeItem) return;
+      let parent = activeItem.closest('details');
+      const activeDetails = [];
+      while (parent && parent.closest('.tree')) {
+        activeDetails.push(parent);
+        parent = parent.parentElement ? parent.parentElement.closest('details') : null;
+      }
+      document.querySelectorAll('.tree details').forEach((d) => {
+        if (activeDetails.includes(d)) {
+          d.open = true;
+        } else {
+          d.open = false;
+        }
+      });
+    }
+
+    // Tự động đóng các menu không thuộc nhánh đang chọn khi click ra ngoài sidebar
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.sidebar')) {
+        const activeItem = document.querySelector('.tree .item.active');
+        if (activeItem) syncActiveMenu(activeItem);
+      }
+    });
+
+    // Khi người dùng bấm mở một Session/Module khác, tự động thu gọn các mục đồng cấp
+    document.querySelectorAll('.tree details > summary').forEach((summary) => {
+      summary.addEventListener('click', () => {
+        const details = summary.parentElement;
+        if (!details.open) {
+          const container = details.parentElement;
+          if (container) {
+            container.querySelectorAll(':scope > details').forEach((sib) => {
+              if (sib !== details) sib.open = false;
+            });
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll('.tree .item').forEach((item) => {
+      item.addEventListener('click', (event) => {
+        event.preventDefault();
+        selectItem(item);
+      });
+    });
+
+    openPage.addEventListener('click', () => { if (selectedHref) window.location.href = selectedHref; else toast('Mục này chưa có file HTML.'); });
+    newTab.addEventListener('click', () => { if (selectedHref) window.open(selectedHref, '_blank', 'noopener'); else toast('Mục này chưa có file HTML.'); });
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      document.querySelectorAll('.tree details, .tree .item').forEach((node) => {
+        node.hidden = Boolean(query) && !node.textContent.toLowerCase().includes(query);
+      });
+    });
+
+    async function triggerSyncDrive() {
+      const btn = document.getElementById('syncDriveBtn');
+      const originalText = btn ? btn.textContent : '⚡ Đồng bộ RK-Drive';
+      if (btn) btn.textContent = '⏳ Đang đồng bộ...';
+      toast('Đang kết nối Google Drive và đồng bộ dữ liệu...');
+      try {
+        const response = await fetch('/api/sync', { method: 'POST' });
+        if (response.ok) {
+          const data = await response.json();
+          toast('✅ ' + (data.message || 'Đồng bộ thành công!'));
+          setTimeout(() => window.location.reload(), 1500);
+        } else {
+          throw new Error('HTTP ' + response.status);
+        }
+      } catch (error) {
+        toast('ℹ️ Để dùng nút này, hãy chạy Dashboard bằng file BANG_DIEU_KHIEN.bat (chọn [1]). Hoặc chọn mục [2] trên bảng điều khiển để đồng bộ ngay.');
+      } finally {
+        if (btn) btn.textContent = originalText;
+      }
+    }
+
+    // Mặc định chọn Cẩm nang thi MySQL Workbench, đồng thời nạp BTOL 3 vào historyStack để nút Quay lại hoạt động ngay
+    const btol3Item = document.querySelector('.item[data-btvn="s0_btol3"]');
+    if (btol3Item) {
+      historyStack.push(btol3Item);
+    }
+    const defaultItem = document.querySelector('.item[href*="huong_dan_thi_mysql_workbench"]') || btol3Item;
+    selectItem(defaultItem, true);
+    updateNavButtons();
+  </script>
+</body>
+</html>

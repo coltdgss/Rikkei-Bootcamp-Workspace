@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cẩm nang thi & Hướng dẫn thao tác MySQL Workbench (Đề Kobani)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================================
+       RK WORKSPACE DESIGN SYSTEM (/rk-ui STANDARD)
+       Triết lý: Scandinavian / Swiss Minimalist — Nền sáng, viền xám, chữ đen.
+       QUY TẮC ĐỘC TÔN: CHỈ DUY NHẤT KHỐI SOẠN THẢO CODE SQL MỚI CÓ NỀN ĐEN.
+       ========================================================================= */
+    :root {
+      --bg-main: #f4f4f4;
+      --bg-card: #ffffff;
+      --bg-subtle: #fafafa;
+      --bg-soft: #f7f7f7;
+      
+      --line: #e5e5e5;
+      --line-strong: #d9d9d9;
+      --line-table: #dedede;
+      
+      --black: #111111;
+      --ink: #202020;
+      --text-muted: #777777;
+      --white: #ffffff;
+
+      --code-bg: #111111;
+      --code-text: #f5f5f5;
+      --font-system: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, "Courier New", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html, body {
+      background: var(--bg-main);
+      color: var(--ink);
+      font-family: var(--font-system);
+      line-height: 1.6;
+      min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    body {
+      padding: 16px 18px 40px;
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    /* Header Banner */
+    header {
+      background: var(--bg-card);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--bg-soft);
+      color: var(--black);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+      border: 1px solid var(--line);
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 4px;
+      letter-spacing: -.04em;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+    }
+    .btn-primary:hover {
+      background: #333333;
+      border-color: #333333;
+    }
+    .btn-secondary {
+      background: var(--white);
+      color: #24292f;
+      border: 1px solid #d0d7de;
+    }
+    .btn-secondary:hover {
+      background: #f3f4f6;
+      border-color: var(--black);
+      color: var(--black);
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--text-muted);
+      padding: 7px 13px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      border-color: var(--black);
+      color: var(--black);
+    }
+    .tab-btn.active {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    /* =========================================================================
+       SPLIT WORKSPACE: BÀI LÀM (TRÁI - CODE NỀN ĐEN) vs ĐỀ THI (PHẢI - NỀN TRẮNG)
+       ========================================================================= */
+    .split-workspace-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--line-strong);
+      border-radius: 8px 8px 0 0;
+      padding: 9px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .workspace-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .workspace-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    /* Nút đóng/mở Sidecar kiểu Antigravity */
+    .antigravity-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--black);
+      border: 1px solid var(--black);
+      color: var(--white);
+      padding: 5px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .antigravity-toggle-btn:hover {
+      background: #333333;
+    }
+    .antigravity-toggle-btn.collapsed {
+      background: var(--white);
+      border-color: #d0d7de;
+      color: #24292f;
+    }
+    .antigravity-toggle-btn.collapsed:hover {
+      background: #f3f4f6;
+      border-color: var(--black);
+      color: var(--black);
+    }
+
+    /* CẤU TRÚC GRID HOÀN CHỈNH - SỬA LỖI KHÔNG CUỘN ĐƯỢC */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      grid-template-rows: minmax(0, 1fr); /* BẮT BUỘC: Ép hàng khớp chiều cao container */
+      border: 1px solid var(--line-strong);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      height: calc(100vh - 190px);
+      min-height: 520px;
+      background: var(--white);
+      transition: grid-template-columns 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .split-grid.sidecar-closed {
+      grid-template-columns: 1fr 0px;
+    }
+
+    /* CHẾ ĐỘ MỞ RỘNG CUỘN TRÀO (EXPANDED VIEW MODE) */
+    .split-grid.expanded-view {
+      height: auto !important;
+      max-height: none !important;
+      grid-template-rows: auto !important;
+    }
+    .split-grid.expanded-view .pane-code,
+    .split-grid.expanded-view .pane-exam,
+    .split-grid.expanded-view .code-scroll,
+    .split-grid.expanded-view .exam-scroll {
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+
+    /* Cột Trái: Bài làm SQL (THE SACRED EXCEPTION: DUY NHẤT KHỐI NÀY NỀN ĐEN) */
+    .pane-code {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0; /* BẮT BUỘC: Cho phép flex/grid co lại để kích hoạt overflow scroll */
+      height: 100%;
+      overflow: hidden;
+      border-right: 1px solid var(--line-strong);
+      position: relative;
+      background: var(--code-bg);
+    }
+    .split-grid.sidecar-closed .pane-code {
+      border-right: none;
+    }
+
+    /* Thanh nhảy nhanh đầu khung SQL */
+    .code-sub-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #181818;
+      border-bottom: 1px solid #282828;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .sub-label {
+      font-size: 9.5px;
+      color: #888888;
+      font-weight: 700;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+    .nav-chip {
+      background: #252525;
+      color: #e0e0e0;
+      border: 1px solid #383838;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+    .nav-chip:hover {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+    .nav-chip.light {
+      background: #f0f0f0;
+      color: #222222;
+      border-color: #dcdcdc;
+    }
+    .nav-chip.light:hover {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+    }
+
+    .code-scroll {
+      flex: 1 1 0;
+      min-height: 0; /* BẮT BUỘC: Kích hoạt thanh cuộn dọc bên trong */
+      overflow-y: scroll; /* Luôn hiển thị thanh cuộn để người dùng kéo */
+      overflow-x: auto;
+      padding: 16px;
+      background: var(--code-bg);
+      scroll-behavior: smooth;
+    }
+    pre code {
+      font-family: var(--font-code);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--code-text);
+      white-space: pre;
+    }
+
+    /* Thanh cuộn bản to, rõ nét, dễ kéo cho khối code */
+    .code-scroll::-webkit-scrollbar { width: 12px; height: 10px; }
+    .code-scroll::-webkit-scrollbar-track { background: #161616; border-left: 1px solid #222222; }
+    .code-scroll::-webkit-scrollbar-thumb { background: #444444; border-radius: 6px; border: 2px solid #161616; }
+    .code-scroll::-webkit-scrollbar-thumb:hover { background: #777777; }
+
+    /* Cột Phải: Sidecar Đề thi (BẮT BUỘC NỀN TRẮNG SÁNG THEO /rk-ui) */
+    .pane-exam {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0; /* BẮT BUỘC */
+      height: 100%;
+      background: var(--white);
+      overflow: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .split-grid.sidecar-closed .pane-exam {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .exam-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #f1f1f1;
+      border-bottom: 1px solid var(--line-strong);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--black);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      flex-shrink: 0;
+    }
+    .exam-sub-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #fafafa;
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .exam-scroll {
+      flex: 1 1 0;
+      min-height: 0; /* BẮT BUỘC: Cho phép cuộn trơn tru tới cuối đề thi */
+      overflow-y: scroll;
+      padding: 16px;
+      font-size: 12px;
+      color: var(--ink);
+      background: var(--white);
+      scroll-behavior: smooth;
+    }
+    /* Thanh cuộn bản to, rõ nét cho cột đề thi */
+    .exam-scroll::-webkit-scrollbar { width: 12px; height: 10px; }
+    .exam-scroll::-webkit-scrollbar-track { background: #f5f5f5; border-left: 1px solid var(--line); }
+    .exam-scroll::-webkit-scrollbar-thumb { background: #c5c5c5; border-radius: 6px; border: 2px solid #f5f5f5; }
+    .exam-scroll::-webkit-scrollbar-thumb:hover { background: #888888; }
+
+    .exam-section-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--black);
+      margin: 18px 0 8px 0;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--black);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .exam-section-title:first-child { margin-top: 0; }
+    
+    /* Bảng trong Cột Đề thi (Theo chuẩn bảng rk-ui) */
+    .exam-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 14px 0;
+      font-size: 10.5px;
+    }
+    .exam-table th, .exam-table td {
+      border: 1px solid var(--line-table);
+      padding: 6px 8px;
+      text-align: left;
+    }
+    .exam-table th {
+      background: #f1f1f1;
+      color: var(--black);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 9.5px;
+      letter-spacing: .06em;
+    }
+    .exam-table td {
+      color: #333333;
+    }
+    .exam-table td strong {
+      color: var(--black);
+    }
+
+    /* Floating toggle ở góc dưới bên phải khi Sidecar bị đóng */
+    .floating-expand-bar {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      display: none;
+      z-index: 10;
+    }
+    .split-grid.sidecar-closed .floating-expand-bar {
+      display: block;
+    }
+    .floating-btn {
+      background: var(--white);
+      border: 1px solid #d0d7de;
+      color: #24292f;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.15s ease;
+    }
+    .floating-btn:hover {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    /* =========================================================================
+       CARDS & CONTENT TABS (NỀN TRẮNG SÁNG CHUẨN RK-UI)
+       ========================================================================= */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .card h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--black);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -.03em;
+    }
+    .card p {
+      font-size: 12px;
+      color: #444444;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .card ul, .card ol {
+      padding-left: 18px;
+      font-size: 12px;
+      color: #444444;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .card li { margin-bottom: 5px; }
+
+    /* Bản đồ UI Workbench (Tab 2) */
+    .workbench-map {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 14px 0;
+      font-size: 12px;
+    }
+    .ui-toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--white);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--white);
+      border: 1px solid #d0d7de;
+      padding: 5px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #24292f;
+    }
+    .tool-btn.highlight {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+    .ui-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .ui-panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+    }
+    .ui-panel-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--black);
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Sơ đồ 5 bước (Tab 3) */
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .step-box {
+      display: flex;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--black);
+      color: var(--white);
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 11px;
+    }
+    .step-content { flex: 1; }
+    .step-title {
+      font-weight: 800;
+      color: var(--black);
+      font-size: 12.5px;
+      margin-bottom: 3px;
+    }
+    .step-desc {
+      font-size: 11.5px;
+      color: #555555;
+      line-height: 1.55;
+    }
+
+    /* Callouts & Ghi chú (Tab 4) */
+    .callout {
+      border-left: 3px solid var(--black);
+      background: #f7f7f7;
+      padding: 12px 16px;
+      border-radius: 0 7px 7px 0;
+      margin: 12px 0;
+      font-size: 12px;
+      color: #333333;
+      line-height: 1.55;
+    }
+    .callout.danger {
+      border-left-color: #dc2626;
+      background: #fef2f2;
+      color: #7f1d1d;
+    }
+    .callout.warning {
+      border-left-color: #d97706;
+      background: #fffbeb;
+      color: #92400e;
+    }
+    .callout.success {
+      border-left-color: #16a34a;
+      background: #f0fdf4;
+      color: #166534;
+    }
+    .callout strong {
+      color: var(--black);
+    }
+    .callout.danger strong {
+      color: #991b1b;
+    }
+    .callout.warning strong {
+      color: #b45309;
+    }
+    .callout.success strong {
+      color: #15803d;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #f0f0f0;
+      border: 1px solid #dcdcdc;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--black);
+      font-family: var(--font-code);
+      font-weight: 600;
+    }
+
+    @media (max-width: 860px) {
+      .split-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .ui-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <header>
+      <span class="badge">Cẩm Nang Phòng Thi · MySQL Workbench 8.0</span>
+      <h1>Hướng Dẫn Phân Tích Đề & Thao Tác Chi Tiết (Đề Cửa Hàng Kobani)</h1>
+      <p class="subtitle">Môi trường thi thử tích hợp: Vừa xem Đề thi bên phải (nền sáng), vừa đối chiếu Lời giải SQL bên trái (nền đen tập trung) kèm nút đóng/mở Antigravity.</p>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="SQL_DATA/DeThiThu_Kobani_Full_Solution.sql" download="DeThiThu_Kobani_Full_Solution.sql">⬇️ Tải file SQL bài thi (.sql)</a>
+        <button class="btn btn-secondary" onclick="switchTab('tab-solution', document.querySelectorAll('.tab-btn')[0])">⚡ Mở Màn hình Bài làm & Đề thi</button>
+        <button class="btn btn-secondary" onclick="switchTab('tab-workbench', document.querySelectorAll('.tab-btn')[1])">🖥️ Xem bản đồ nút Workbench</button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-solution', this)">📝 1. Bài làm & Đề thi Kobani (Split View)</button>
+      <button class="tab-btn" onclick="switchTab('tab-workbench', this)">🖥️ 2. Bản đồ thao tác Workbench</button>
+      <button class="tab-btn" onclick="switchTab('tab-strategy', this)">🧠 3. Chiến thuật phân tích đề 5 bước</button>
+      <button class="tab-btn" onclick="switchTab('tab-traps', this)">⚠️ 4. Bẫy điểm liệt & Xử lý lỗi</button>
+    </div>
+
+    <!-- TAB 1: BÀI LÀM VÀ ĐỀ THI KOBANI (SPLIT-VIEW) -->
+    <div id="tab-solution" class="tab-content">
+      <div class="split-workspace-bar">
+        <div class="workspace-title">
+          <span>💻 Bài làm SQL (Trái - Nền đen)</span>
+          <span style="color:#d9d9d9;">⏐</span>
+          <span>📄 Đề thi tương ứng (Phải - Nền sáng)</span>
+        </div>
+        <div class="workspace-actions">
+          <button class="btn btn-secondary" style="padding:5px 10px;font-size:11px;" onclick="copyAllSql()">📋 Sao chép 100% Code</button>
+          <a class="btn btn-secondary" style="padding:5px 10px;font-size:11px;" href="SQL_DATA/DeThiThu_Kobani_Full_Solution.sql" download="DeThiThu_Kobani_Full_Solution.sql">⬇️ Tải .sql</a>
+          
+          <!-- NÚT CHUYỂN ĐỔI CHẾ ĐỘ CUỘN DÀI TOÀN TRANG -->
+          <button id="toggleExpandBtn" class="btn btn-secondary" style="padding:5px 10px;font-size:11px;" onclick="toggleExpandMode()" title="Chuyển đổi giữa Khung cuộn độc lập và Cuộn dài toàn trang">
+            ↕️ <span id="expandModeText">Mở rộng cuộn dài</span>
+          </button>
+
+          <!-- NÚT ĐÓNG MỞ KIỂU ANTIGRAVITY (ĐẶT Ở BÊN TRÊN BÊN PHẢI MÀN HÌNH ĐEN) -->
+          <button id="toggleSidecarBtn" class="antigravity-toggle-btn" type="button" title="Đóng / Mở Đề thi bên phải (Kiểu Antigravity Sidecar)" onclick="toggleSidecar()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <path d="M15 3v18"></path>
+            </svg>
+            <span id="sidecarText">Đóng Đề thi</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="split-grid" id="splitGrid">
+        <!-- CỘT TRÁI: BÀI LÀM SQL (THE SACRED EXCEPTION: CHỈ NƠI NÀY NỀN ĐEN) -->
+        <div class="pane-code">
+          <!-- THANH NHẢY NHANH CÁC PHẦN SQL -->
+          <div class="code-sub-bar">
+            <span class="sub-label">NHẢY NHANH:</span>
+            <button class="nav-chip" onclick="jumpSql('top')">⚡ Đầu</button>
+            <button class="nav-chip" onclick="jumpSql('sql-p1')">P1. Tạo bảng & Dữ liệu</button>
+            <button class="nav-chip" onclick="jumpSql('sql-p2')">P2. 10 Query</button>
+            <button class="nav-chip" onclick="jumpSql('sql-p3')">P3. View</button>
+            <button class="nav-chip" onclick="jumpSql('sql-p4')">P4. Trigger</button>
+            <button class="nav-chip" onclick="jumpSql('sql-p5')">P5. Procedure</button>
+            <button class="nav-chip" onclick="jumpSql('bottom')">⬇ Đáy trang</button>
+          </div>
+
+          <div class="code-scroll" id="codeScrollBox">
+            <pre><code id="sqlSolutionCode">-- =============================================================================
+-- ĐỀ ÔN TẬP THI CUỐI MÔN - CƠ SỞ DỮ LIỆU MYSQL (RIKKEI ACADEMY)
+-- HỆ THỐNG QUẢN LÝ CỬA HÀNG KOBANI
+-- Giảng viên: Lương Quốc Tuấn | Học viên: Nguyễn Văn Trung
+-- Đáp án & Giải pháp hoàn chỉnh 100% (Phần 1 -> Phần 5)
+-- =============================================================================
+
+-- BƯỚC 0: KHỞI TẠO VÀ CHỌN CƠ SỞ DỮ LIỆU
+CREATE DATABASE IF NOT EXISTS CuaHangKobani;
+USE CuaHangKobani;
+
+-- Tắt safe updates để thực thi UPDATE/DELETE mượt mà
+SET SQL_SAFE_UPDATES = 0;
+
+<span id="sql-p1"></span>-- =============================================================================
+-- PHẦN 1: THAO TÁC VỚI DỮ LIỆU CÁC BẢNG (DDL & DML)
+-- QUY TẮC: Bảng Cha (KhachHang, SanPham) -> Bảng Con (DonHang -> ThanhToan)
+-- =============================================================================
+
+-- 1.1. Bảng KhachHang (Khách hàng)
+CREATE TABLE IF NOT EXISTS KhachHang (
+    khachhang_id VARCHAR(10) PRIMARY KEY,
+    ho_ten VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    so_dien_thoai VARCHAR(15) NOT NULL,
+    dia_chi VARCHAR(200)
+);
+
+-- 1.2. Bảng SanPham (Sản phẩm kinh doanh)
+CREATE TABLE IF NOT EXISTS SanPham (
+    sanpham_id VARCHAR(10) PRIMARY KEY,
+    ten_san_pham VARCHAR(150) NOT NULL UNIQUE,
+    gia_ban DECIMAL(12,2) NOT NULL CHECK (gia_ban > 0),
+    trang_thai VARCHAR(50) NOT NULL DEFAULT 'Đang bán',
+    so_luong_ton INT NOT NULL
+);
+
+-- 1.3. Bảng DonHang (Đơn đặt hàng - tham chiếu KhachHang và SanPham)
+CREATE TABLE IF NOT EXISTS DonHang (
+    donhang_id INT PRIMARY KEY AUTO_INCREMENT,
+    khachhang_id VARCHAR(10) NOT NULL,
+    sanpham_id VARCHAR(10) NOT NULL,
+    so_luong INT NOT NULL CHECK (so_luong > 0),
+    ngay_dat DATE NOT NULL,
+    ngay_giao DATE,
+    tong_tien DECIMAL(12,2) DEFAULT 0,
+    CONSTRAINT fk_donhang_khachhang FOREIGN KEY (khachhang_id) REFERENCES KhachHang(khachhang_id),
+    CONSTRAINT fk_donhang_sanpham FOREIGN KEY (sanpham_id) REFERENCES SanPham(sanpham_id)
+);
+
+-- 1.4. Bảng ThanhToan (Lịch sử thanh toán - tham chiếu DonHang)
+CREATE TABLE IF NOT EXISTS ThanhToan (
+    thanhtoan_id INT PRIMARY KEY AUTO_INCREMENT,
+    donhang_id INT NOT NULL,
+    phuong_thuc_tt VARCHAR(50) NOT NULL,
+    ngay_tt DATE NOT NULL,
+    so_tien_tt DECIMAL(12,2) NOT NULL CHECK (so_tien_tt > 0),
+    CONSTRAINT fk_thanhtoan_donhang FOREIGN KEY (donhang_id) REFERENCES DonHang(donhang_id)
+);
+
+-- =============================================================================
+-- 1.5. CHÈN DỮ LIỆU MẪU (INSERT INTO)
+-- =============================================================================
+
+INSERT INTO KhachHang (khachhang_id, ho_ten, email, so_dien_thoai, dia_chi) VALUES
+('KH001', 'Nguyen Van An', 'an.nguyen@example.com', '0911111111', 'Hanoi'),
+('KH002', 'Tran Thu Ha', 'ha.tran@example.com', '0922222222', 'Danang'),
+('KH003', 'Le Minh Khoa', 'khoa.le@example.com', '0933333333', 'Hanoi'),
+('KH004', 'Pham Quoc Bao', 'bao.pham@example.com', '0944444444', 'HCM'),
+('KH005', 'Hoang Minh Chau', 'chau.hoang@example.com', '0955555555', 'Haiphong'),
+('KH006', 'Do Thi Lan', 'lan.do@example.com', '0966666666', 'Hanoi'),
+('KH007', 'Bui Duc Long', 'long.bui@example.com', '0977777777', 'Hue'),
+('KH008', 'Vo Thanh Dat', 'dat.vo@example.com', '0988888888', 'Cantho');
+
+INSERT INTO SanPham (sanpham_id, ten_san_pham, gia_ban, trang_thai, so_luong_ton) VALUES
+('SP001', 'Cà phê hạt Arabica 250g', 180.00, 'Đang bán', 50),
+('SP002', 'Trà ô long hộp thiếc', 120.00, 'Đang bán', 40),
+('SP003', 'Bánh quy bơ Kobani', 90.00, 'Ngừng bán', 0),
+('SP004', 'Bình giữ nhiệt inox', 350.00, 'Đang bán', 25),
+('SP005', 'Cốc sứ Kobani', 150.00, 'Đang bán', 60),
+('SP006', 'Máy pha cà phê mini', 800.00, 'Đang bán', 15),
+('SP007', 'Túi vải canvas', 120.00, 'Đang bán', 80),
+('SP008', 'Sổ tay bìa da', 200.00, 'Ngừng bán', 0);
+
+INSERT INTO DonHang (donhang_id, khachhang_id, sanpham_id, so_luong, ngay_dat, ngay_giao, tong_tien) VALUES
+(1, 'KH001', 'SP001', 2, '2026-09-01', '2026-09-03', 0.00),
+(2, 'KH002', 'SP002', 1, '2026-09-02', '2026-09-04', 0.00),
+(3, 'KH003', 'SP003', 3, '2026-09-03', '2026-09-05', 0.00),
+(4, 'KH004', 'SP004', 1, '2026-09-04', '2026-09-06', 0.00),
+(5, 'KH005', 'SP005', 2, '2026-09-05', '2026-09-07', 0.00),
+(6, 'KH006', 'SP006', 1, '2026-09-06', '2026-09-08', 0.00),
+(7, 'KH007', 'SP007', 2, '2026-09-07', '2026-09-09', 0.00),
+(8, 'KH008', 'SP008', 1, '2026-09-08', '2026-09-10', 0.00),
+(9, 'KH001', 'SP004', 2, '2026-09-10', '2026-09-12', 0.00),
+(10, 'KH006', 'SP005', 1, '2026-09-12', '2026-09-14', 0.00);
+
+INSERT INTO ThanhToan (thanhtoan_id, donhang_id, phuong_thuc_tt, ngay_tt, so_tien_tt) VALUES
+(1, 1, 'Credit Card', '2026-09-01', 380.00),
+(2, 2, 'Cash', '2026-09-02', 140.00),
+(3, 3, 'Bank Transfer', '2026-09-03', 290.00),
+(4, 4, 'E-Wallet', '2026-09-04', 370.00),
+(5, 5, 'Credit Card', '2026-09-05', 320.00),
+(6, 6, 'Bank Transfer', '2026-09-06', 820.00),
+(7, 7, 'Cash', '2026-09-07', 260.00),
+(8, 8, 'E-Wallet', '2026-09-08', 220.00),
+(9, 9, 'Bank Transfer', '2026-09-10', 720.00),
+(10, 10, 'Cash', '2026-09-12', 170.00);
+
+-- =============================================================================
+-- 1.6. CẬP NHẬT DỮ LIỆU (UPDATE CÓ JOIN)
+-- =============================================================================
+UPDATE DonHang dh
+JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id
+SET dh.tong_tien = (sp.gia_ban * dh.so_luong) + 20.00
+WHERE sp.trang_thai = 'Đang bán'
+  AND dh.ngay_dat < CURDATE();
+
+-- =============================================================================
+-- 1.7. XÓA DỮ LIỆU (DELETE)
+-- =============================================================================
+DELETE FROM ThanhToan
+WHERE phuong_thuc_tt = 'Cash'
+  AND so_tien_tt < 150.00;
+
+<span id="sql-p2"></span>-- =============================================================================
+-- PHẦN 2: TRUY VẤN DỮ LIỆU (10 CÂU QUERY)
+-- =============================================================================
+
+-- Câu 1: Khách hàng sắp xếp theo họ tên tăng dần
+SELECT khachhang_id, ho_ten, email, so_dien_thoai, dia_chi
+FROM KhachHang ORDER BY ho_ten ASC;
+
+-- Câu 2: Sản phẩm sắp xếp theo giá bán giảm dần
+SELECT sanpham_id, ten_san_pham, gia_ban, so_luong_ton
+FROM SanPham ORDER BY gia_ban DESC;
+
+-- Câu 3: Khách hàng và sản phẩm đã đặt (JOIN 3 bảng)
+SELECT kh.khachhang_id, kh.ho_ten, sp.sanpham_id, dh.ngay_dat, dh.ngay_giao
+FROM DonHang dh
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id;
+
+-- Câu 4: Khách hàng và số tiền đã thanh toán, giảm dần
+SELECT kh.khachhang_id, kh.ho_ten, tt.phuong_thuc_tt, tt.so_tien_tt
+FROM ThanhToan tt
+INNER JOIN DonHang dh ON tt.donhang_id = dh.donhang_id
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+ORDER BY tt.so_tien_tt DESC;
+
+-- Câu 5: Lấy thông tin khách hàng từ vị trí 2 đến 4
+SELECT * FROM KhachHang ORDER BY ho_ten ASC LIMIT 3 OFFSET 1;
+
+-- Câu 6: Khách hàng đặt ít nhất 2 đơn VÀ tổng thanh toán > 500
+SELECT kh.khachhang_id, kh.ho_ten, COUNT(DISTINCT dh.donhang_id) AS so_luong_don_hang
+FROM KhachHang kh
+INNER JOIN DonHang dh ON kh.khachhang_id = dh.khachhang_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY kh.khachhang_id, kh.ho_ten
+HAVING COUNT(DISTINCT dh.donhang_id) >= 2 AND SUM(tt.so_tien_tt) > 500.00;
+
+-- Câu 7: Sản phẩm tổng tiền < 1000 và ít nhất 2 khách hàng khác nhau
+SELECT sp.sanpham_id, sp.ten_san_pham, sp.gia_ban, SUM(tt.so_tien_tt) AS tong_tien_thanh_toan
+FROM SanPham sp
+INNER JOIN DonHang dh ON sp.sanpham_id = dh.sanpham_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY sp.sanpham_id, sp.ten_san_pham, sp.gia_ban
+HAVING SUM(tt.so_tien_tt) < 1000.00 AND COUNT(DISTINCT dh.khachhang_id) >= 2;
+
+-- Câu 8: Khách hàng có tổng số tiền thanh toán > 500
+SELECT kh.khachhang_id, kh.ho_ten, SUM(tt.so_tien_tt) AS tong_tien_thanh_toan
+FROM KhachHang kh
+INNER JOIN DonHang dh ON kh.khachhang_id = dh.khachhang_id
+INNER JOIN ThanhToan tt ON dh.donhang_id = tt.donhang_id
+GROUP BY kh.khachhang_id, kh.ho_ten
+HAVING SUM(tt.so_tien_tt) > 500.00;
+
+-- Câu 9: Khách hàng có họ tên chứa 'Minh' HOẶC địa chỉ ở 'Hanoi'
+SELECT khachhang_id, ho_ten, email, so_dien_thoai, dia_chi
+FROM KhachHang
+WHERE ho_ten LIKE '%Minh%' OR dia_chi LIKE '%Hanoi%'
+ORDER BY ho_ten ASC;
+
+-- Câu 10: Sản phẩm giá bán giảm dần, lấy 3 sản phẩm tiếp theo sau 2 sản phẩm đầu (Trang 2)
+SELECT sanpham_id, ten_san_pham, gia_ban
+FROM SanPham ORDER BY gia_ban DESC LIMIT 3 OFFSET 2;
+
+<span id="sql-p3"></span>-- =============================================================================
+-- PHẦN 3: TẠO VIEW (BẢNG ẢO)
+-- =============================================================================
+
+CREATE OR REPLACE VIEW view_sanpham_khachhang_dat_hang AS
+SELECT sp.sanpham_id, sp.ten_san_pham, kh.khachhang_id, kh.ho_ten
+FROM DonHang dh
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+WHERE dh.ngay_dat < '2026-09-06';
+
+CREATE OR REPLACE VIEW view_khachhang_donhang_gia_cao AS
+SELECT kh.khachhang_id, kh.ho_ten, sp.sanpham_id, sp.gia_ban
+FROM DonHang dh
+INNER JOIN KhachHang kh ON dh.khachhang_id = kh.khachhang_id
+INNER JOIN SanPham sp ON dh.sanpham_id = sp.sanpham_id
+WHERE sp.gia_ban > 200.00;
+
+<span id="sql-p4"></span>-- =============================================================================
+-- PHẦN 4: TẠO TRIGGER (BẪY LỖI & TỰ ĐỘNG HÓA SỰ KIỆN)
+-- =============================================================================
+
+-- Trigger 1: Báo lỗi nếu ngay_giao < ngay_dat
+DROP TRIGGER IF EXISTS check_insert_donhang;
+DELIMITER $$
+CREATE TRIGGER check_insert_donhang
+BEFORE INSERT ON DonHang
+FOR EACH ROW
+BEGIN
+    IF NEW.ngay_giao IS NOT NULL AND NEW.ngay_giao < NEW.ngay_dat THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Ngày giao không thể trước ngày đặt hàng được !';
+    END IF;
+END$$
+DELIMITER ;
+
+-- Trigger 2: Tự động đổi 'Ngừng bán' khi sản phẩm được đặt quá 30 lần trong ngày
+DROP TRIGGER IF EXISTS update_sanpham_status_on_order;
+DELIMITER $$
+CREATE TRIGGER update_sanpham_status_on_order
+AFTER INSERT ON DonHang
+FOR EACH ROW
+BEGIN
+    DECLARE total_orders_today INT;
+    SELECT COUNT(*) INTO total_orders_today
+    FROM DonHang
+    WHERE sanpham_id = NEW.sanpham_id AND ngay_dat = NEW.ngay_dat;
+    
+    IF total_orders_today > 30 THEN
+        UPDATE SanPham SET trang_thai = 'Ngừng bán' WHERE sanpham_id = NEW.sanpham_id;
+    END IF;
+END$$
+DELIMITER ;
+
+<span id="sql-p5"></span>-- =============================================================================
+-- PHẦN 5: STORED PROCEDURE (THỦ TỤC LƯU TRỮ)
+-- =============================================================================
+
+DROP PROCEDURE IF EXISTS add_khachhang;
+DELIMITER $$
+CREATE PROCEDURE add_khachhang (
+    IN p_khachhang_id VARCHAR(10),
+    IN p_ho_ten VARCHAR(100),
+    IN p_email VARCHAR(100),
+    IN p_so_dien_thoai VARCHAR(15),
+    IN p_dia_chi VARCHAR(200)
+)
+BEGIN
+    INSERT INTO KhachHang (khachhang_id, ho_ten, email, so_dien_thoai, dia_chi)
+    VALUES (p_khachhang_id, p_ho_ten, p_email, p_so_dien_thoai, p_dia_chi);
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS add_thanhtoan;
+DELIMITER $$
+CREATE PROCEDURE add_thanhtoan (
+    IN p_donhang_id INT,
+    IN p_phuong_thuc_tt VARCHAR(50),
+    IN p_so_tien_tt DECIMAL(12,2),
+    IN p_ngay_tt DATE
+)
+BEGIN
+    INSERT INTO ThanhToan (donhang_id, phuong_thuc_tt, so_tien_tt, ngay_tt)
+    VALUES (p_donhang_id, p_phuong_thuc_tt, p_so_tien_tt, p_ngay_tt);
+END$$
+DELIMITER ;
+
+-- =============================================================================
+-- HẾT TOÀN BỘ ĐÁP ÁN BÀI THI KOBANI (HOÀN THÀNH 100%)
+-- =============================================================================</code></pre>
+          </div>
+          
+          <!-- Floating button ở góc dưới khi Sidecar đóng -->
+          <div class="floating-expand-bar">
+            <button class="floating-btn" onclick="toggleSidecar()">📖 Mở Đề thi bên phải ➡</button>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI: NỘI DUNG ĐỀ THI TƯƠNG ỨNG (BẮT BUỘC NỀN TRẮNG SÁNG CHUẨN /rk-ui) -->
+        <div class="pane-exam">
+          <div class="exam-header">
+            <span>📄 ĐỀ THI: QUẢN LÝ CỬA HÀNG KOBANI</span>
+            <button style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;font-weight:bold;" title="Thu gọn đề thi" onclick="toggleSidecar()">✖</button>
+          </div>
+
+          <!-- THANH NHẢY NHANH ĐỀ THI -->
+          <div class="exam-sub-bar">
+            <span class="sub-label">MỤC ĐỀ:</span>
+            <button class="nav-chip light" onclick="jumpExam('exam-p1')">P1. 4 Bảng</button>
+            <button class="nav-chip light" onclick="jumpExam('exam-p1-req')">Yêu cầu P1</button>
+            <button class="nav-chip light" onclick="jumpExam('exam-p2')">P2. 10 Query</button>
+            <button class="nav-chip light" onclick="jumpExam('exam-p3')">P3. View</button>
+            <button class="nav-chip light" onclick="jumpExam('exam-p4')">P4. Trigger</button>
+            <button class="nav-chip light" onclick="jumpExam('exam-p5')">P5. Procedure</button>
+          </div>
+
+          <div class="exam-scroll" id="examScrollBox">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Giảng viên: Lương Quốc Tuấn · Cập nhật: Today</div>
+
+            <div id="exam-p1" class="exam-section-title">PHẦN 1: Thao tác với dữ liệu các bảng</div>
+            <p>Mô tả cấu trúc các bảng cho hệ thống Quản lý cửa hàng Kobani:</p>
+
+            <strong style="color:var(--black);">1. Bảng KhachHang</strong>
+            <table class="exam-table">
+              <thead><tr><th>Cột</th><th>Kiểu</th><th>PK</th><th>NN</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td><strong>khachhang_id</strong></td><td>VARCHAR(10)</td><td>✓</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>ho_ten</strong></td><td>VARCHAR(100)</td><td>-</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>email</strong></td><td>VARCHAR(100)</td><td>-</td><td>✓</td><td>UNIQUE</td></tr>
+                <tr><td><strong>so_dien_thoai</strong></td><td>VARCHAR(15)</td><td>-</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>dia_chi</strong></td><td>VARCHAR(200)</td><td>-</td><td>-</td><td>-</td></tr>
+              </tbody>
+            </table>
+
+            <strong style="color:var(--black);">2. Bảng SanPham</strong>
+            <table class="exam-table">
+              <thead><tr><th>Cột</th><th>Kiểu</th><th>PK</th><th>NN</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td><strong>sanpham_id</strong></td><td>VARCHAR(10)</td><td>✓</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>ten_san_pham</strong></td><td>VARCHAR(150)</td><td>-</td><td>✓</td><td>UNIQUE</td></tr>
+                <tr><td><strong>gia_ban</strong></td><td>DECIMAL(12,2)</td><td>-</td><td>✓</td><td>CHECK (gia_ban > 0)</td></tr>
+                <tr><td><strong>trang_thai</strong></td><td>VARCHAR(50)</td><td>-</td><td>✓</td><td>DEFAULT 'Đang bán'</td></tr>
+                <tr><td><strong>so_luong_ton</strong></td><td>INT</td><td>-</td><td>✓</td><td>Số lượng tồn kho</td></tr>
+              </tbody>
+            </table>
+
+            <strong style="color:var(--black);">3. Bảng DonHang</strong>
+            <table class="exam-table">
+              <thead><tr><th>Cột</th><th>Kiểu</th><th>PK</th><th>NN</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td><strong>donhang_id</strong></td><td>INT</td><td>✓</td><td>✓</td><td>AUTO_INCREMENT</td></tr>
+                <tr><td><strong>khachhang_id</strong></td><td>VARCHAR(10)</td><td>-</td><td>✓</td><td>FK (refs KhachHang)</td></tr>
+                <tr><td><strong>sanpham_id</strong></td><td>VARCHAR(10)</td><td>-</td><td>✓</td><td>FK (refs SanPham)</td></tr>
+                <tr><td><strong>so_luong</strong></td><td>INT</td><td>-</td><td>✓</td><td>CHECK (so_luong > 0)</td></tr>
+                <tr><td><strong>ngay_dat</strong></td><td>DATE</td><td>-</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>ngay_giao</strong></td><td>DATE</td><td>-</td><td>-</td><td>-</td></tr>
+                <tr><td><strong>tong_tien</strong></td><td>DECIMAL(12,2)</td><td>-</td><td>-</td><td>DEFAULT 0</td></tr>
+              </tbody>
+            </table>
+
+            <strong style="color:var(--black);">4. Bảng ThanhToan</strong>
+            <table class="exam-table">
+              <thead><tr><th>Cột</th><th>Kiểu</th><th>PK</th><th>NN</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td><strong>thanhtoan_id</strong></td><td>INT</td><td>✓</td><td>✓</td><td>AUTO_INCREMENT</td></tr>
+                <tr><td><strong>donhang_id</strong></td><td>INT</td><td>-</td><td>✓</td><td>FK (refs DonHang)</td></tr>
+                <tr><td><strong>phuong_thuc_tt</strong></td><td>VARCHAR(50)</td><td>-</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>ngay_tt</strong></td><td>DATE</td><td>-</td><td>✓</td><td>-</td></tr>
+                <tr><td><strong>so_tien_tt</strong></td><td>DECIMAL(12,2)</td><td>-</td><td>✓</td><td>CHECK (so_tien_tt > 0)</td></tr>
+              </tbody>
+            </table>
+
+            <div id="exam-p1-req" class="exam-section-title">Yêu cầu Phần 1</div>
+            <ol style="padding-left:16px;">
+              <li><strong>Tạo bảng:</strong> Tạo 4 bảng với cấu trúc, khóa chính, khóa ngoại, ràng buộc như mô tả.</li>
+              <li><strong>Chèn dữ liệu:</strong> Thêm dữ liệu vào 4 bảng (sử dụng 8 KH, 8 SP, 10 Đơn hàng, 10 Thanh toán).</li>
+              <li><strong>Cập nhật dữ liệu:</strong> Viết UPDATE tính <span class="tag">tong_tien = gia_ban * so_luong + 20.0</span> cho các đơn có sản phẩm ở trạng thái 'Đang bán' và <span class="tag">ngay_dat &lt; CURDATE()</span> (dùng JOIN).</li>
+              <li><strong>Xóa dữ liệu:</strong> Viết DELETE xóa thanh toán nếu <span class="tag">phuong_thuc_tt = 'Cash'</span> và <span class="tag">so_tien_tt &lt; 150.0</span>.</li>
+            </ol>
+
+            <div id="exam-p2" class="exam-section-title">PHẦN 2: Truy vấn dữ liệu (10 câu)</div>
+            <ol style="padding-left:16px;">
+              <li>Lấy thông tin khách hàng, sắp xếp họ tên tăng dần.</li>
+              <li>Lấy thông tin sản phẩm, sắp xếp giá bán giảm dần.</li>
+              <li>Lấy thông tin khách hàng và sản phẩm đã đặt (mã KH, họ tên, mã SP, ngày đặt, ngày giao).</li>
+              <li>Lấy danh sách khách hàng và số tiền đã thanh toán, sắp xếp số tiền thanh toán giảm dần.</li>
+              <li>Lấy thông tin khách hàng từ vị trí thứ 2 đến thứ 4 theo họ tên.</li>
+              <li>Lấy khách hàng đã đặt ít nhất 2 đơn và tổng thanh toán trên 500.0.</li>
+              <li>Lấy sản phẩm có tổng tiền thanh toán dưới 1000.0 và có ít nhất 2 khách hàng khác nhau.</li>
+              <li>Lấy khách hàng có tổng tiền thanh toán lớn hơn 500.0.</li>
+              <li>Lấy khách hàng có họ tên chứa "Minh" hoặc địa chỉ ở "Hanoi" (sắp xếp họ tên tăng dần).</li>
+              <li>Lấy danh sách sản phẩm, sắp xếp giá bán giảm dần. Hiển thị 3 sản phẩm tiếp theo sau 2 sản phẩm đầu (trang thứ 2).</li>
+            </ol>
+
+            <div id="exam-p3" class="exam-section-title">PHẦN 3: Tạo View</div>
+            <ol style="padding-left:16px;">
+              <li>Tạo view lấy sản phẩm và khách hàng đã đặt hàng trước ngày 2026-09-06.</li>
+              <li>Tạo view lấy khách hàng và đơn hàng đã đặt với giá bán lớn hơn 200.0.</li>
+            </ol>
+
+            <div id="exam-p4" class="exam-section-title">PHẦN 4: Tạo Trigger</div>
+            <ol style="padding-left:16px;">
+              <li>Tạo trigger <span class="tag">check_insert_donhang</span> kiểm tra nếu ngày giao trước ngày đặt thì báo lỗi: <em>"Ngày giao không thể trước ngày đặt hàng được !"</em> và hủy thao tác.</li>
+              <li>Tạo trigger <span class="tag">update_sanpham_status_on_order</span> tự động cập nhật sản phẩm thành 'Ngừng bán' khi đặt quá 30 lần trong cùng 1 ngày.</li>
+            </ol>
+
+            <div id="exam-p5" class="exam-section-title">PHẦN 5: Tạo Stored Procedure</div>
+            <ol style="padding-left:16px;">
+              <li>Viết stored procedure <span class="tag">add_khachhang</span> thêm mới một khách hàng.</li>
+              <li>Viết stored procedure <span class="tag">add_thanhtoan</span> thêm một thanh toán mới cho một đơn hàng (tham số: p_donhang_id, p_phuong_thuc_tt, p_so_tien_tt, p_ngay_tt).</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: THAO TÁC WORKBENCH -->
+    <div id="tab-workbench" class="tab-content" style="display:none;">
+      <div class="card" id="sec-workbench">
+        <h2>🖥️ 2. Bản đồ giao diện & Nút bấm quan trọng nhất trên MySQL Workbench</h2>
+        <p>Trên màn hình MySQL Workbench của bạn (như trong ảnh thực tế), hãy làm chủ <strong>4 vị trí cốt tử</strong> sau:</p>
+
+        <div class="workbench-map">
+          <div class="ui-toolbar">
+            <span style="font-size:11px;color:var(--text-muted);margin-right:8px;font-weight:700;">Thanh công cụ Editor:</span>
+            <div class="tool-btn highlight" title="Tia sét 1">⚡ <span>Tia sét 1 (Run All)</span> <small style="opacity:0.7">Ctrl+Shift+Enter</small></div>
+            <div class="tool-btn highlight" title="Tia sét 2 (RẤT QUAN TRỌNG)">⚡| <span>Tia sét 2 (Run Dòng Hiện Tại)</span> <small style="color:#f59e0b">Ctrl+Enter</small></div>
+            <div class="tool-btn">💾 <span>Lưu file (Ctrl+S)</span></div>
+            <div class="tool-btn">🧹 <span>Xóa chữ</span></div>
+          </div>
+
+          <div class="ui-grid">
+            <div class="ui-panel">
+              <div class="ui-panel-title">
+                <span>SCHEMAS (Cột trái)</span>
+                <span style="cursor:pointer;color:var(--black);font-weight:bold;" title="Nút Refresh cực kỳ quan trọng">🔄 Refresh</span>
+              </div>
+              <p style="font-size:11.5px;color:#555;margin-bottom:6px;">Chứa danh sách CSDL. <strong>Quy tắc vàng:</strong> Sau khi gõ <span class="tag">CREATE DATABASE</span>, bạn BẮT BUỘC phải bấm nút <strong>🔄 Refresh</strong> ở góc trên thanh SCHEMAS này thì CSDL mới hiển thị ra cây thư mục!</p>
+              <div style="font-size:11px;font-family:var(--font-code);color:#222;background:#f7f7f7;padding:8px;border-radius:4px;border:1px solid #e5e5e5;line-height:1.8;">
+                📁 CuaHangKobani<br>
+                &nbsp;&nbsp;├ 📄 Tables (KhachHang, SanPham...)<br>
+                &nbsp;&nbsp;├ 👁️ Views<br>
+                &nbsp;&nbsp;└ ⚙️ Stored Procedures
+              </div>
+            </div>
+
+            <div class="ui-panel">
+              <div class="ui-panel-title">
+                <span>SQL Query Editor (Ô soạn thảo giữa)</span>
+                <span style="color:#16a34a;font-weight:bold;">Đang hoạt động</span>
+              </div>
+              <p style="font-size:11.5px;color:#555;">Nơi gõ code. Đặt con trỏ chuột vào câu lệnh muốn thực thi rồi bấm phím tắt <span class="tag" style="background:#111;color:#fff;font-weight:bold;">Ctrl + Enter</span>.</p>
+              
+              <div style="margin-top:10px;background:#f7f7f7;padding:10px;border-radius:4px;border:1px solid #e5e5e5;">
+                <div style="color:var(--black);font-size:10.5px;font-weight:700;margin-bottom:4px;text-transform:uppercase;">Action Output (Bảng trạng thái ở đáy màn hình):</div>
+                <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;">
+                  <span style="color:#15803d;font-weight:600;">🟢 Tích xanh: Câu lệnh thành công (Số dòng tác động: 1 row affected)</span>
+                  <span style="color:#dc2626;font-weight:600;">🔴 Dấu X đỏ: Lỗi cú pháp (Xem cột Message để biết lỗi dòng nào)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout warning">
+          <strong>🔥 Bí kíp thi đạt điểm cao:</strong> Đừng bao giờ bôi đen toàn bộ bài rồi bấm nút chạy hết một lần! Hãy viết câu nào, đặt con trỏ chuột vào câu đó và bấm <span class="tag">Ctrl + Enter</span>, nhìn xuống đáy màn hình thấy tích xanh 🟢 rồi mới làm tiếp câu sau.
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CHIẾN THUẬT PHÂN TÍCH ĐỀ -->
+    <div id="tab-strategy" class="tab-content" style="display:none;">
+      <div class="card" id="sec-steps">
+        <h2>🧠 3. Chiến thuật 5 bước phân tích đề thi (Không bao giờ rớt)</h2>
+        <p>Đề thi Kobani có 4 bảng: <span class="tag">KhachHang</span>, <span class="tag">SanPham</span>, <span class="tag">DonHang</span>, <span class="tag">ThanhToan</span>. Muốn không bị lỗi ràng buộc khóa ngoại, hãy làm theo đúng 5 bước sau:</p>
+
+        <div class="flow-steps">
+          <div class="step-box">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Bước 1: Tạo Database và USE ngay dòng đầu tiên</div>
+              <div class="step-desc">Nếu không gõ lệnh <span class="tag">USE CuaHangKobani;</span>, Workbench sẽ báo lỗi đỏ: <em>"Error Code 1046: No database selected"</em>.</div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Bước 2: Phân loại bảng CHA vs bảng CON (Thứ tự tạo bảng sống còn)</div>
+              <div class="step-desc">
+                - <strong>Bảng CHA (Không có khóa ngoại FK):</strong> Tạo trước! Đó là bảng <span class="tag">KhachHang</span> và <span class="tag">SanPham</span>.<br>
+                - <strong>Bảng CON (Có khóa ngoại FK tham chiếu):</strong> Tạo sau! Đó là <span class="tag">DonHang</span> (tham chiếu KhachHang, SanPham) và cuối cùng là <span class="tag">ThanhToan</span> (tham chiếu DonHang).<br>
+                <span style="color:#dc2626;font-weight:600;">⚠️ Nếu bạn tạo bảng DonHang trước bảng KhachHang, MySQL sẽ báo lỗi vì chưa có bảng cha để tham chiếu!</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Bước 3: Nhận diện ràng buộc đề bài (Constraints)</div>
+              <div class="step-desc">
+                - <strong>PK:</strong> Khóa chính (<span class="tag">PRIMARY KEY</span>).<br>
+                - <strong>NN:</strong> Không được rỗng (<span class="tag">NOT NULL</span>).<br>
+                - <strong>UNIQUE:</strong> Không được trùng (<span class="tag">UNIQUE</span> như email, ten_san_pham).<br>
+                - <strong>CHECK:</strong> Kiểm tra điều kiện (<span class="tag">CHECK (gia_ban > 0)</span>, <span class="tag">CHECK (so_luong > 0)</span>).<br>
+                - <strong>DEFAULT:</strong> Giá trị mặc định (<span class="tag">DEFAULT 'Đang bán'</span>, <span class="tag">DEFAULT 0</span>).<br>
+                - <strong>AUTO_INCREMENT:</strong> Tự động tăng ID (donhang_id, thanhtoan_id).
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Bước 4: Thứ tự INSERT chèn dữ liệu mẫu</div>
+              <div class="step-desc">
+                Tương tự quy tắc tạo bảng: Bảng cha có dữ liệu trước thì bảng con mới có cái để liên kết!
+                <br>Thứ tự chèn: <strong>KhachHang -> SanPham -> DonHang -> ThanhToan</strong>.
+              </div>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Bước 5: Xử lý UPDATE có JOIN và DELIMITER cho Trigger/Procedure</div>
+              <div class="step-desc">
+                - Khi câu lệnh <span class="tag">UPDATE</span> cần lấy cột từ bảng khác (ví dụ lấy gia_ban từ SanPham để tính tong_tien cho DonHang), bắt buộc dùng cú pháp <span class="tag">UPDATE DonHang JOIN SanPham ON ...</span>.<br>
+                - Đối với Trigger và Stored Procedure: Luôn kẹp <span class="tag">DELIMITER $$</span> ở đầu và <span class="tag">DELIMITER ;</span> ở cuối.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BẪY THI & XỬ LÝ LỖI -->
+    <div id="tab-traps" class="tab-content" style="display:none;">
+      <div class="card">
+        <h2>⚠️ 4. Bẫy điểm liệt thường gặp & Cách gỡ lỗi tức thì</h2>
+        
+        <div class="callout danger">
+          <strong>1. Lỗi "Safe Update Mode" (Error 1175 khi chạy câu UPDATE / DELETE):</strong><br>
+          MySQL Workbench mặc định chặn các câu lệnh UPDATE/DELETE nếu không có khóa chính WHERE id = ....<br>
+          👉 <strong>Cách xử lý:</strong> Gõ dòng lệnh này ở đầu file và chạy trước:
+          <pre style="margin-top:6px;padding:6px 10px;background:#111;color:#fff;border-radius:4px;font-family:var(--font-code);"><code>SET SQL_SAFE_UPDATES = 0;</code></pre>
+        </div>
+
+        <div class="callout warning">
+          <strong>2. Lỗi dấu gạch chân đỏ khi viết Trigger / Procedure:</strong><br>
+          Do chưa khai báo <span class="tag">DELIMITER $$</span>. Khi gặp dấu <span class="tag">;</span> bên trong thân BEGIN...END, MySQL tưởng đã hết lệnh nên báo lỗi syntax.<br>
+          👉 <strong>Cách xử lý:</strong> Bắt buộc dùng <span class="tag">DELIMITER $$</span> ở đầu và <span class="tag">DELIMITER ;</span> ở cuối khối lệnh.
+        </div>
+
+        <div class="callout warning">
+          <strong>3. Lỗi "Cannot add foreign key constraint" (Error 1215):</strong><br>
+          Do bạn tạo bảng con trước bảng cha, hoặc kiểu dữ liệu ở bảng con không giống y hệt bảng cha.<br>
+          👉 <strong>Cách xử lý:</strong> Kiểm tra lại: <span class="tag">khachhang_id</span> ở cả 2 bảng đều phải là <span class="tag">VARCHAR(10)</span>.
+        </div>
+
+        <div class="callout success">
+          <strong>4. Mẹo kiểm tra bài thi trước khi nộp:</strong><br>
+          - Chạy lệnh <span class="tag">SHOW TABLES;</span> để kiểm tra xem đã đủ 4 bảng chưa.<br>
+          - Chạy <span class="tag">SELECT COUNT(*) FROM KhachHang;</span> để kiểm tra dữ liệu mẫu đã vào đủ 8 dòng chưa.<br>
+          - Nhấn <span class="tag">Ctrl + S</span> để lưu bài và kiểm tra file <span class="tag">.sql</span> đã có trong thư mục chưa.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.style.display = 'block';
+      if (btn) btn.classList.add('active');
+    }
+
+    // Toggle Sidecar Đề thi (Kiểu Antigravity)
+    function toggleSidecar() {
+      const grid = document.getElementById('splitGrid');
+      const btn = document.getElementById('toggleSidecarBtn');
+      const text = document.getElementById('sidecarText');
+      if (!grid) return;
+      const isClosed = grid.classList.toggle('sidecar-closed');
+      if (btn) {
+        btn.classList.toggle('collapsed', isClosed);
+      }
+      if (text) {
+        text.textContent = isClosed ? 'Mở Đề thi ➡' : 'Đóng Đề thi';
+      }
+    }
+
+    // Chuyển đổi giữa Chế độ Khung cuộn độc lập và Mở rộng cuộn dài toàn trang
+    function toggleExpandMode() {
+      const grid = document.getElementById('splitGrid');
+      const text = document.getElementById('expandModeText');
+      if (!grid) return;
+      const isExpanded = grid.classList.toggle('expanded-view');
+      if (text) {
+        text.textContent = isExpanded ? 'Thu gọn khung cuộn' : 'Mở rộng cuộn dài';
+      }
+    }
+
+    // Nhảy nhanh trong khung Code SQL
+    function jumpSql(target) {
+      const scrollBox = document.getElementById('codeScrollBox');
+      if (!scrollBox) return;
+      if (target === 'top') {
+        scrollBox.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (target === 'bottom') {
+        scrollBox.scrollTo({ top: scrollBox.scrollHeight, behavior: 'smooth' });
+      } else {
+        const targetEl = document.getElementById(target);
+        if (targetEl) {
+          const topPos = targetEl.offsetTop - scrollBox.offsetTop - 10;
+          scrollBox.scrollTo({ top: topPos > 0 ? topPos : 0, behavior: 'smooth' });
+        }
+      }
+    }
+
+    // Nhảy nhanh trong khung Đề thi
+    function jumpExam(target) {
+      const scrollBox = document.getElementById('examScrollBox');
+      const targetEl = document.getElementById(target);
+      if (!scrollBox || !targetEl) return;
+      const topPos = targetEl.offsetTop - scrollBox.offsetTop - 10;
+      scrollBox.scrollTo({ top: topPos > 0 ? topPos : 0, behavior: 'smooth' });
+    }
+
+    function copyAllSql() {
+      const code = document.getElementById('sqlSolutionCode');
+      if (!code) return;
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        alert('✅ Đã sao chép toàn bộ 100% mã nguồn SQL giải đề thi Kobani vào Clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+:root {
+  --rk-bg: #030b14;
+  --rk-panel: rgba(11, 18, 27, 0.96);
+  --rk-soft: rgba(15, 23, 39, 0.96);
+  --rk-line: rgba(148, 163, 184, 0.2);
+  --rk-text: #edf6ff;
+  --rk-muted: #a9bed1;
+  --rk-cyan: #7dd3fc;
+  --rk-blue: #38bdf8;
+}
+
+html, body {
+  min-height: 100%;
+  background: radial-gradient(circle at top, #0c1e2d 0%, var(--rk-bg) 42%, #020b14 100%) !important;
+  color: var(--rk-text) !important;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 100vh;
+}
+
+.rk-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+  padding: 14px 10px;
+  background: rgba(8, 15, 24, 0.97);
+  border-right: 1px solid var(--rk-line);
+}
+
+.rk-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 14px;
+  border-bottom: 1px solid var(--rk-line);
+  font-weight: 800;
+  font-size: 1.55rem;
+  letter-spacing: -0.05em;
+}
+
+.rk-brand span {
+  color: var(--rk-cyan);
+  border: 1px solid rgba(125, 211, 252, 0.3);
+  background: rgba(125, 211, 252, 0.08);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rk-sidebar-label {
+  margin: 18px 8px 8px;
+  color: var(--rk-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rk-sidebar a {
+  display: block;
+  padding: 10px 12px;
+  margin: 6px 0;
+  color: var(--rk-muted);
+  text-decoration: none;
+  border: 1px solid var(--rk-line);
+  border-radius: 9px;
+  background: rgba(10, 17, 26, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rk-sidebar a:hover,
+.rk-sidebar a.active {
+  color: var(--rk-text);
+  border-color: rgba(125, 211, 252, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+body > .container {
+  grid-column: 2;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 24px clamp(18px, 4vw, 56px) 40px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body > .container h1 {
+  color: var(--rk-text) !important;
+}
+
+body > .container .topbar {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rk-line);
+}
+
+body > .container .card,
+body > .container .theory-box,
+body > .container .exercise-box,
+body > .container .review-box,
+body > .container .mermaid {
+  background: var(--rk-panel) !important;
+  border-color: var(--rk-line) !important;
+}
+
+@media (max-width: 850px) {
+  body {
+    display: block;
+  }
+
+  .rk-sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--rk-line);
+  }
+
+  body > .container {
+    padding: 18px !important;
+  }
+}

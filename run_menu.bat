@@ -1,4 +1,4 @@
 @echo off
-cd /d %~dp0
-python scripts\system_menu.py
-pause
+chcp 65001 >nul
+cd /d "%~dp0"
+call BANG_DIEU_KHIEN.bat

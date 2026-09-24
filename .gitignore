@@ -1,16 +1,25 @@
-# Bỏ qua tất cả các file và thư mục linh tinh
-/*
+# Bỏ qua các file và thư mục tạm thời, cache hệ thống
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.env
+.idea/
+.vscode/
 
-# CHỈ cho phép (whitelist) các thư mục Module_1 đến Module_5
+# Whitelist các thư mục chính của dự án
 !/Module_1_Frontend/
 !/Module_2_Database/
 !/Module_3_Java_Core/
 !/Module_4_FE_IT/
 !/Module_5_Java_Web/
+!/Dashboard_v1/
+!/scripts/
 
-# Cho phép file .gitignore này
+# Whitelist các file cấu hình và điều khiển
 !.gitignore
-
-# Bỏ qua những file không cần thiết bên trong các Module (nếu có)
-**/.DS_Store
-**/Thumbs.db
+!/vercel.json
+!/index.html
+!/BANG_DIEU_KHIEN.bat
+!/run_menu.bat
+!/README.md
