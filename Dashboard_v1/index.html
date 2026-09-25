@@ -337,6 +337,113 @@
       line-height: 1.6;
       white-space: pre-wrap;
     }
+    /* Hiệu ứng bản mờ (Frosted Glass) cho trạng thái & lỗi SQL */
+    .engine-status-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .engine-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      font-family: var(--font-code);
+      line-height: 1.3;
+    }
+    .engine-status-badge.ready {
+      color: #6b7280;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .engine-status-badge.success {
+      color: #15803d;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+    }
+    .engine-status-badge.error {
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.1);
+    }
+    .engine-status-popover {
+      position: absolute;
+      top: calc(100% + 7px);
+      right: 0;
+      z-index: 2500;
+      width: 360px;
+      max-width: calc(100vw - 40px);
+      padding: 12px 14px;
+      border-radius: 8px;
+      /* Hiệu ứng bản mờ Frosted Glass theo /rk-ui */
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      border: 1px solid rgba(210, 210, 210, 0.7);
+      box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.06);
+      font-size: 11px;
+      line-height: 1.5;
+      color: #1f2937;
+      text-align: left;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+      pointer-events: none;
+    }
+    .engine-status-wrapper:hover .engine-status-popover {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    /* AI minimalist badges: G cho Gemini, O cho Ollama */
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 5px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      font-family: var(--font-code);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      line-height: 1;
+    }
+    .ai-badge.gemini {
+      color: #0070f3;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+    .ai-badge.gemini:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+    .ai-badge.ollama {
+      color: #10b981;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+    .ai-badge.ollama:hover {
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+    .ai-badge.offline {
+      color: #888;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+    }
     @media (max-width: 768px) {
       .sql-studio-body { grid-template-columns: 1fr; }
       .studio-editor-pane { border-right: 0; border-bottom: 1px solid var(--line); }
@@ -482,7 +589,12 @@
         <div class="studio-pane studio-editor-pane" id="studioEditorPane">
           <div class="studio-pane-bar">
             <span style="display:inline-flex; align-items:center; gap:6px;">📝 SOẠN THẢO SQL (MySQL 8.0 &amp; SQLite) <span style="display:inline-flex; align-items:center; gap:3px; color:#10b981; font-size:9.5px; font-weight:700; background:#f0fdf4; border:1px solid #bbf7d0; padding:1px 6px; border-radius:4px;" title="Chế độ Tự động Review / Live Preview đang bật">● LIVE AUTO-RUN</span></span>
-            <span id="studioEngineStatus" style="color: #888; font-size: 10px;">SQLite WebAssembly sẵn sàng</span>
+            <div class="engine-status-wrapper" id="studioEngineStatusWrapper">
+              <span id="studioEngineStatus" class="engine-status-badge ready">SQLite: Sẵn sàng</span>
+              <div id="studioEnginePopover" class="engine-status-popover">
+                <div id="studioPopoverContent">Di chuột vào đây để xem chi tiết trạng thái, vị trí và lý do lỗi cú pháp SQL.</div>
+              </div>
+            </div>
           </div>
           <textarea id="studio-sql-editor" class="studio-sql-textarea" spellcheck="false" placeholder="Nhập câu lệnh SQL CREATE TABLE, INSERT INTO, SELECT..." oninput="scheduleStudioAutoRun()"></textarea>
         </div>
@@ -502,7 +614,7 @@
         <div class="studio-ai-bar">
           <div style="display:flex; align-items:center; gap:8px;">
             <strong>🤖 AI Trợ Giảng Thông Minh (Google Gemini Cloud &amp; Ollama)</strong>
-            <span class="ai-model" id="studio-ai-status">AI: đang kiểm tra...</span>
+            <span class="ai-badge" id="studio-ai-status" onclick="toggleAiProvider()" title="Đang kiểm tra AI...">...</span>
           </div>
           <div style="display:flex; align-items:center; gap:6px;">
             <button type="button" class="studio-ai-btn" onclick="checkStudioAiStatus()" title="⚡ Kiểm tra kết nối AI (Google Gemini Cloud)">⚡</button>
@@ -638,14 +750,18 @@
               </div>
               <div class="sql-result" id="btvn-sql-result">SQLite Preview sẽ hiển thị ở đây.</div>
             </div>
-            <div class="save-folder-status" id="sql-save-folder-status">Folder lưu: chưa chọn · file đích: ${escapeMarkup(data.sqlFileName)}</div>
-            <div class="engine-status" id="btvn-engine-status">SQL Engine: đang khởi động...</div>
+            <div class="engine-status-wrapper" id="btvnEngineStatusWrapper" style="margin-top:6px;">
+              <span class="engine-status-badge ready" id="btvn-engine-status">SQL Engine: đang khởi động...</span>
+              <div id="btvnEnginePopover" class="engine-status-popover">
+                <div id="btvnPopoverContent">Di chuột vào đây để xem chi tiết vị trí và lý do lỗi cú pháp SQL.</div>
+              </div>
+            </div>
           </section>
           <section class="board-section ai-section">
             <div class="ai-toolbar">
               <h3><span class="board-number">6</span> 🤖 AI Trợ Giảng Thông Minh (Google Gemini Cloud &amp; Ollama)</h3>
               <div style="display:flex;align-items:center;gap:8px;">
-                <span class="ai-model" id="ai-status">AI: đang kiểm tra...</span>
+                <span class="ai-badge" id="ai-status" onclick="toggleAiProvider()" title="Đang kiểm tra AI...">...</span>
                 <button type="button" style="padding:2px 7px;font-size:10px;border-radius:4px;border:1px solid #ccc;background:#fff;cursor:pointer;" onclick="configureApiKey()" title="Tùy chỉnh API Key Gemini">⚙️ Key</button>
               </div>
             </div>
@@ -2522,15 +2638,101 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       return html;
     }
 
+    function splitSqlStatements(sql) {
+      const statements = [];
+      let current = '';
+      let inSingleQuote = false;
+      let inDoubleQuote = false;
+      let inBacktick = false;
+      let inLineComment = false;
+      let inBlockComment = false;
+      let startLine = 1;
+      let currentLine = 1;
+
+      for (let i = 0; i < sql.length; i++) {
+        const char = sql[i];
+        const next = sql[i + 1] || '';
+
+        if (char === '\n') {
+          currentLine++;
+          if (inLineComment) inLineComment = false;
+        }
+
+        if (inLineComment) {
+          current += char;
+          continue;
+        }
+        if (inBlockComment) {
+          current += char;
+          if (char === '*' && next === '/') {
+            inBlockComment = false;
+            current += next;
+            i++;
+          }
+          continue;
+        }
+
+        if (char === '-' && next === '-' && !inSingleQuote && !inDoubleQuote && !inBacktick) {
+          inLineComment = true;
+          current += char + next;
+          i++;
+          continue;
+        }
+        if (char === '/' && next === '*' && !inSingleQuote && !inDoubleQuote && !inBacktick) {
+          inBlockComment = true;
+          current += char + next;
+          i++;
+          continue;
+        }
+
+        if (char === "'" && !inDoubleQuote && !inBacktick) {
+          inSingleQuote = !inSingleQuote;
+          current += char;
+          continue;
+        }
+        if (char === '"' && !inSingleQuote && !inBacktick) {
+          inDoubleQuote = !inDoubleQuote;
+          current += char;
+          continue;
+        }
+        if (char === '`' && !inSingleQuote && !inDoubleQuote) {
+          inBacktick = !inBacktick;
+          current += char;
+          continue;
+        }
+
+        if (char === ';' && !inSingleQuote && !inDoubleQuote && !inBacktick) {
+          current += char;
+          const trimmed = current.trim();
+          if (trimmed) {
+            statements.push({ sql: trimmed, startLine: startLine, endLine: currentLine });
+          }
+          current = '';
+          startLine = currentLine;
+          continue;
+        }
+
+        if (!current.trim() && char !== ' ' && char !== '\t' && char !== '\r' && char !== '\n') {
+          startLine = currentLine;
+        }
+        current += char;
+      }
+
+      if (current.trim()) {
+        statements.push({ sql: current.trim(), startLine: startLine, endLine: currentLine });
+      }
+      return statements;
+    }
+
     async function executeSqlWithEngine(sql) {
       if (!sql || !sql.trim()) {
-        return { ok: false, error: 'Chưa có câu lệnh SQL để thực thi.' };
+        return { ok: false, error: 'Chưa có câu lệnh SQL để thực thi.', line: 1, reason: 'Chưa có mã SQL' };
       }
       try {
         const engine = await getSqliteEngine();
         const database = new engine.Database();
 
-        // Lọc bỏ an toàn các lệnh đặc thù MySQL để SQLite preview mượt mà không crash
+        // Thay thế an toàn các lệnh MySQL đặc thù, giữ nguyên chính xác số dòng (1-to-1 line mapping)
         let cleanSql = sql
           .replace(/^[ \t]*CREATE\s+DATABASE\b.*$/gim, '-- $&')
           .replace(/^[ \t]*USE\b.*$/gim, '-- $&')
@@ -2544,11 +2746,91 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           .replace(/^[ \t]*DROP\s+TRIGGER\b.*$/gim, '-- $&')
           .replace(/^[ \t]*DROP\s+PROCEDURE\b.*$/gim, '-- $&')
           .replace(/^[ \t]*SELECT\s+@.*$/gim, '-- $&')
-          .replace(/CREATE\s+PROCEDURE[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Stored Procedure: MySQL Only */')
-          .replace(/CREATE\s+TRIGGER[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, '/* Trigger: MySQL Only */');
+          .replace(/CREATE\s+PROCEDURE[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, (match) => {
+            return '/* Stored Procedure: MySQL Only */' + '\n'.repeat((match.match(/\n/g) || []).length);
+          })
+          .replace(/CREATE\s+TRIGGER[\s\S]*?END(?:\s*\$\$|\s*;)?/gi, (match) => {
+            return '/* Trigger: MySQL Only */' + '\n'.repeat((match.match(/\n/g) || []).length);
+          });
 
-        database.run(cleanSql);
+        const statements = splitSqlStatements(cleanSql);
+        let failingStmt = null;
+        let rawError = '';
 
+        for (let i = 0; i < statements.length; i++) {
+          const stmt = statements[i];
+          const codeWithoutComments = stmt.sql.replace(/--.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '').trim();
+          if (!codeWithoutComments) continue;
+          try {
+            database.run(stmt.sql);
+          } catch (err) {
+            failingStmt = stmt;
+            rawError = err.message || String(err);
+            break;
+          }
+        }
+
+        if (failingStmt) {
+          database.close();
+          let errorLine = failingStmt.startLine;
+          let errorCol = 1;
+          let token = '';
+
+          const nearMatch = rawError.match(/near "([^"]+)": syntax error/i);
+          if (nearMatch) {
+            token = nearMatch[1];
+            const stmtLines = failingStmt.sql.split('\n');
+            for (let li = 0; li < stmtLines.length; li++) {
+              const cIdx = stmtLines[li].indexOf(token);
+              if (cIdx !== -1) {
+                errorLine = failingStmt.startLine + li;
+                errorCol = cIdx + 1;
+                break;
+              }
+            }
+          }
+
+          const originalLines = sql.split('\n');
+          const lineText = (originalLines[errorLine - 1] || '').trim();
+          const snippet = `Dòng ${errorLine}: ${lineText}`;
+
+          let reason = '';
+          if (token) {
+            reason = `Lỗi cú pháp gần từ khóa "${token}". Hãy kiểm tra chính tả từ khóa, dấu phẩy ngăn cách các cột hoặc dấu đóng ngoặc ().`;
+          } else if (/table .* already exists/i.test(rawError)) {
+            const tbl = rawError.match(/table (.*) already exists/i)?.[1] || '';
+            reason = `Bảng ${tbl ? `"${tbl}" ` : ''}đã tồn tại trong CSDL. Thêm mệnh đề "IF NOT EXISTS" vào sau CREATE TABLE hoặc xóa bảng cũ trước khi tạo lại.`;
+          } else if (/no such table: (.*)/i.test(rawError)) {
+            const tbl = rawError.match(/no such table: (.*)/i)?.[1] || '';
+            reason = `Bảng "${tbl}" chưa được tạo hoặc sai tên bảng. Hãy kiểm tra thứ tự tạo bảng (bảng cha tạo trước, bảng con tham chiếu sau).`;
+          } else if (/no such column: (.*)/i.test(rawError)) {
+            const col = rawError.match(/no such column: (.*)/i)?.[1] || '';
+            reason = `Cột "${col}" không tồn tại trong cấu trúc bảng. Hãy kiểm tra lại danh sách các thuộc tính đã khai báo trong CREATE TABLE.`;
+          } else if (/FOREIGN KEY constraint failed/i.test(rawError)) {
+            reason = `Vi phạm ràng buộc Khóa ngoại (FOREIGN KEY). Giá trị liên kết không tồn tại trong bảng cha hoặc thứ tự INSERT không hợp lệ.`;
+          } else if (/UNIQUE constraint failed: (.*)/i.test(rawError)) {
+            const fld = rawError.match(/UNIQUE constraint failed: (.*)/i)?.[1] || '';
+            reason = `Vi phạm ràng buộc duy nhất (PRIMARY KEY hoặc UNIQUE) tại trường: ${fld}. Dữ liệu bị trùng lặp.`;
+          } else if (/NOT NULL constraint failed: (.*)/i.test(rawError)) {
+            const fld = rawError.match(/NOT NULL constraint failed: (.*)/i)?.[1] || '';
+            reason = `Cột "${fld}" có ràng buộc NOT NULL nhưng đang bị bỏ trống hoặc chèn NULL.`;
+          } else {
+            reason = `Lỗi thực thi SQLite: ${rawError}`;
+          }
+
+          return {
+            ok: false,
+            line: errorLine,
+            column: errorCol,
+            token: token,
+            rawError: rawError,
+            reason: reason,
+            snippet: snippet,
+            error: `Dòng ${errorLine}: ${reason} (${rawError})`
+          };
+        }
+
+        // Render preview tables & views
         const tableMatches = [...cleanSql.matchAll(/CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
         let tablesRendered = '';
         let tableCount = 0;
@@ -2575,7 +2857,7 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           }
         }
 
-        // Quét thêm các câu lệnh CREATE VIEW
+        // Views
         const viewMatches = [...cleanSql.matchAll(/CREATE\s+VIEW\s+(?:IF\s+NOT\s+EXISTS\s+)?["`]?([\w]+)["`]?/gi)];
         if (viewMatches.length > 0) {
           for (const vm of viewMatches) {
@@ -2592,7 +2874,7 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           }
         }
 
-        // Quét thêm các câu lệnh SELECT độc lập
+        // SELECTs
         const selectMatches = [...cleanSql.matchAll(/(SELECT[\s\S]+?;)/gi)];
         if (selectMatches.length > 0) {
           for (let i = 0; i < selectMatches.length; i++) {
@@ -2622,7 +2904,7 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
         database.close();
         return { ok: true, html: tablesRendered, count: tableCount };
       } catch (error) {
-        return { ok: false, error: error.message || 'Lỗi cú pháp khi thực thi SQLite.' };
+        return { ok: false, error: error.message || 'Lỗi cú pháp khi thực thi SQLite.', line: 1, reason: error.message };
       }
     }
 
@@ -2637,20 +2919,60 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       const sql = editor.value;
       if (!sql.trim()) {
         result.textContent = 'Chưa có SQL để thực thi.';
+        if (status) {
+          status.className = 'engine-status-badge ready';
+          status.textContent = 'SQL Engine: Sẵn sàng';
+        }
         return;
       }
-      status.textContent = 'SQL Engine: đang thực thi SQLite WebAssembly...';
+      status.className = 'engine-status-badge ready';
+      status.textContent = 'SQL Engine: đang thực thi...';
       const res = await executeSqlWithEngine(sql);
       if (runId !== previewRunId) return;
 
       if (!res.ok) {
-        status.textContent = 'SQL Engine: lỗi cú pháp';
-        result.innerHTML = '<div style="color:#d63031;padding:6px;font-weight:bold;">❌ ' + escapeSqlHtml(res.error) + '</div>';
+        status.className = 'engine-status-badge error';
+        status.textContent = '✕ Lỗi: Dòng ' + res.line + (res.token ? ' · near "' + res.token + '"' : '');
+        const popover = document.getElementById('btvnPopoverContent');
+        if (popover) {
+          popover.innerHTML = `
+            <div style="font-weight:700; color:#dc2626; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size:12px;">
+              <span>✕</span> LỖI CÚ PHÁP SQLITE
+            </div>
+            <div style="margin-bottom:6px;">
+              <strong style="color:#111;">Vị trí lỗi:</strong> <span style="color:#dc2626; font-weight:700; font-family:var(--font-code);">Dòng ${res.line}${res.column ? ', Cột ' + res.column : ''}</span>
+            </div>
+            ${res.snippet ? `<div style="background:#111; color:#ef4444; padding:6px 10px; border-radius:5px; font-family:var(--font-code); font-size:10.5px; margin-bottom:8px; overflow-x:auto; white-space:pre;">${escapeMarkup(res.snippet)}</div>` : ''}
+            <div style="margin-bottom:6px;">
+              <strong style="color:#111;">Lý do lỗi:</strong> <span style="color:#374151;">${escapeMarkup(res.reason)}</span>
+            </div>
+            <div style="font-size:9.5px; color:#6b7280; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px; font-family:var(--font-code);">
+              SQLite: ${escapeMarkup(res.rawError || res.error)}
+            </div>
+          `;
+        }
+        result.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:10px 12px; border-radius:6px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px; line-height:1.5;"><strong>✕ Lỗi thực thi SQL (Dòng ' + res.line + '):</strong><br>' + escapeMarkup(res.reason) + '<br><small style="color:#777; margin-top:4px; display:block;">' + escapeMarkup(res.rawError || res.error) + '</small></div>';
         return;
       }
 
+      status.className = 'engine-status-badge success';
+      status.textContent = '✓ SQLite: Thực thi thành công! (' + (res.count || 0) + ' bảng)';
+      const popover = document.getElementById('btvnPopoverContent');
+      if (popover) {
+        popover.innerHTML = `
+          <div style="font-weight:700; color:#15803d; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size:12px;">
+            <span>✓</span> THỰC THI SQL THÀNH CÔNG
+          </div>
+          <div style="color:#374151; margin-bottom:6px;">
+            Toàn bộ các câu lệnh DDL / DML đã thực thi hợp lệ trong bộ nhớ SQLite WebAssembly.
+          </div>
+          <div style="display:flex; gap:12px; font-size:10.5px; color:#4b5563; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px;">
+            <div><strong>Kết quả:</strong> ${res.count || 0} bảng/kết quả</div>
+            <div><strong>Bộ nhớ:</strong> SQLite In-Memory</div>
+          </div>
+        `;
+      }
       result.innerHTML = res.html || '<div style="color:#666;padding:8px;">Lệnh SQL đã chạy thành công nhưng không có bảng nào để hiển thị.</div>';
-      status.textContent = 'SQL Engine: SQLite WebAssembly · thực thi thành công (' + (res.count || 0) + ' bảng/kết quả)';
     }
 
     const sqlFolderDbPromise = new Promise((resolve, reject) => {
@@ -2801,36 +3123,77 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
       }
     }
 
+    let availableAiProviders = { gemini: false, ollama: false };
+
+    function updateAiBadgeUI() {
+      const studioBadge = document.getElementById('studio-ai-status');
+      const btvnBadge = document.getElementById('ai-status');
+      const targets = [studioBadge, btvnBadge];
+
+      targets.forEach(badge => {
+        if (!badge) return;
+        if (activeAiProvider === 'gemini' || activeAiProvider === 'gemini-direct') {
+          badge.className = 'ai-badge gemini';
+          badge.textContent = 'G';
+          badge.title = 'Google Gemini Cloud AI (Online) · [Nhấn để đổi sang Ollama nếu có]';
+        } else if (activeAiProvider === 'ollama') {
+          badge.className = 'ai-badge ollama';
+          badge.textContent = 'O';
+          badge.title = 'Ollama Local AI (' + ollamaModel + ') · [Nhấn để đổi sang Gemini nếu có]';
+        } else {
+          badge.className = 'ai-badge offline';
+          badge.textContent = '?';
+          badge.title = 'AI offline · Nhấn ⚙️ để cấu hình Gemini Key hoặc bật Ollama';
+        }
+      });
+    }
+
+    function toggleAiProvider() {
+      if (availableAiProviders.gemini && availableAiProviders.ollama) {
+        if (activeAiProvider === 'gemini' || activeAiProvider === 'gemini-direct') {
+          activeAiProvider = 'ollama';
+          toast('Đã chuyển sang AI: Ollama Local [O]');
+        } else {
+          const customKey = getEffectiveGeminiApiKey();
+          activeAiProvider = customKey ? 'gemini-direct' : 'gemini';
+          toast('Đã chuyển sang AI: Google Gemini Cloud [G]');
+        }
+        updateAiBadgeUI();
+      } else if (availableAiProviders.gemini) {
+        toast('Google Gemini Cloud AI [G] đang kết nối trực tuyến (Ưu tiên mặc định)');
+      } else if (availableAiProviders.ollama) {
+        toast('Ollama Local AI [O] đang kết nối cục bộ!');
+      } else {
+        configureApiKey();
+      }
+    }
+
     async function checkAiStatus() {
-      const status = document.getElementById('ai-status');
-      const studioStatus = document.getElementById('studio-ai-status');
-      const setStatusText = (text, color) => {
-        if (status) { status.textContent = text; status.style.color = color; }
-        if (studioStatus) { studioStatus.textContent = text; studioStatus.style.color = color; }
-      };
+      const studioBadge = document.getElementById('studio-ai-status');
+      const btvnBadge = document.getElementById('ai-status');
+      [studioBadge, btvnBadge].forEach(b => {
+        if (b) { b.className = 'ai-badge offline'; b.textContent = '...'; b.title = 'Đang kiểm tra kết nối AI...'; }
+      });
 
-      setStatusText('AI: đang kiểm tra...', '#777');
+      availableAiProviders = { gemini: false, ollama: false };
 
-      // 1. Kiểm tra Vercel Serverless API (/api/ai)
+      // 1. Kiểm tra API Gemini (/api/ai) — hoạt động trên cả Vercel và Localhost (scripts/server.py)
       try {
         const res = await fetch('/api/ai', { method: 'GET' });
         if (res.ok) {
           const data = await res.json();
-          activeAiProvider = 'gemini';
-          const modelName = data.model || 'gemini-1.5-flash';
-          setStatusText('Gemini Cloud: online (' + modelName + ')', '#0070f3');
-          return 'gemini';
+          if (data.status === 'online' && data.hasSystemKey !== false) {
+            availableAiProviders.gemini = true;
+          }
         }
       } catch (e) {
-        // Không có route /api/ai (ví dụ chạy file:// hoặc static server)
+        // Fallback
       }
 
       // 2. Kiểm tra nếu có Custom Key lưu trong trình duyệt
       const customKey = getEffectiveGeminiApiKey();
       if (customKey) {
-        activeAiProvider = 'gemini-direct';
-        setStatusText('Gemini Cloud: online (Custom Key)', '#0070f3');
-        return 'gemini-direct';
+        availableAiProviders.gemini = true;
       }
 
       // 3. Kiểm tra Local Ollama fallback
@@ -2840,17 +3203,23 @@ SELECT c.customer_name, SUM(oi.quantity * oi.price) AS total_spent FROM customer
           const data = await resOllama.json();
           const models = (data.models || []).map((m) => m.name);
           ollamaModel = models.find((m) => m === 'qwen2.5-coder:7b') || models.find((m) => m === 'qwen2.5-coder:1.5b-base') || models[0] || 'qwen2.5-coder';
-          activeAiProvider = 'ollama';
-          setStatusText('Ollama Local: online (' + ollamaModel + ')', '#10b981');
-          return 'ollama';
+          availableAiProviders.ollama = true;
         }
       } catch (e) {
         // Ollama offline
       }
 
-      activeAiProvider = 'offline';
-      setStatusText('AI: offline (Sẵn sàng kết nối Gemini / Ollama)', '#777');
-      return 'offline';
+      // Ưu tiên Gemini Cloud [G], nếu không có thì dùng Ollama Local [O]
+      if (availableAiProviders.gemini) {
+        activeAiProvider = customKey ? 'gemini-direct' : 'gemini';
+      } else if (availableAiProviders.ollama) {
+        activeAiProvider = 'ollama';
+      } else {
+        activeAiProvider = 'offline';
+      }
+
+      updateAiBadgeUI();
+      return activeAiProvider;
     }
 
     const checkOllamaStatus = checkAiStatus;
@@ -3603,7 +3972,10 @@ DELIMITER ;
     function scheduleStudioAutoRun() {
       clearTimeout(studioAutoRunTimer);
       const studioStatus = document.getElementById('studioEngineStatus');
-      if (studioStatus) studioStatus.textContent = 'SQLite: đang đợi gõ...';
+      if (studioStatus) {
+        studioStatus.className = 'engine-status-badge ready';
+        studioStatus.textContent = 'SQLite: đang đợi gõ...';
+      }
       studioAutoRunTimer = setTimeout(() => {
         runStudioSql();
       }, 350);
@@ -3620,22 +3992,67 @@ DELIMITER ;
 
       if (!sql) {
         studioResult.innerHTML = '<p style="color:#777; font-size:12px; font-style:italic;">Chưa có mã SQL. Hãy nhập câu lệnh CREATE TABLE, INSERT INTO, SELECT...</p>';
-        if (studioStatus) studioStatus.textContent = 'Sẵn sàng';
+        if (studioStatus) {
+          studioStatus.className = 'engine-status-badge ready';
+          studioStatus.textContent = 'SQLite: Sẵn sàng';
+        }
         if (studioRowCount) studioRowCount.textContent = '0 dòng hiển thị';
         return;
       }
 
-      if (studioStatus) studioStatus.textContent = 'SQLite WebAssembly: đang thực thi...';
+      if (studioStatus) {
+        studioStatus.className = 'engine-status-badge ready';
+        studioStatus.textContent = 'SQLite: đang thực thi...';
+      }
       const res = await executeSqlWithEngine(sql);
 
       if (!res.ok) {
-        if (studioStatus) studioStatus.textContent = 'Lỗi cú pháp SQL';
-        studioResult.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:12px; border-radius:6px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px; line-height:1.5;"><strong>✕ Lỗi thực thi SQL:</strong><br>' + escapeMarkup(res.error) + '</div>';
+        if (studioStatus) {
+          studioStatus.className = 'engine-status-badge error';
+          studioStatus.textContent = '✕ Lỗi: Dòng ' + res.line + (res.token ? ' · near "' + res.token + '"' : '');
+        }
+        const popover = document.getElementById('studioPopoverContent');
+        if (popover) {
+          popover.innerHTML = `
+            <div style="font-weight:700; color:#dc2626; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size:12px;">
+              <span>✕</span> LỖI CÚ PHÁP SQLITE
+            </div>
+            <div style="margin-bottom:6px;">
+              <strong style="color:#111;">Vị trí lỗi:</strong> <span style="color:#dc2626; font-weight:700; font-family:var(--font-code);">Dòng ${res.line}${res.column ? ', Cột ' + res.column : ''}</span>
+            </div>
+            ${res.snippet ? `<div style="background:#111; color:#ef4444; padding:6px 10px; border-radius:5px; font-family:var(--font-code); font-size:10.5px; margin-bottom:8px; overflow-x:auto; white-space:pre;">${escapeMarkup(res.snippet)}</div>` : ''}
+            <div style="margin-bottom:6px;">
+              <strong style="color:#111;">Lý do lỗi:</strong> <span style="color:#374151;">${escapeMarkup(res.reason)}</span>
+            </div>
+            <div style="font-size:9.5px; color:#6b7280; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px; font-family:var(--font-code);">
+              SQLite: ${escapeMarkup(res.rawError || res.error)}
+            </div>
+          `;
+        }
+        studioResult.innerHTML = '<div style="color:#dc2626; background:#fef2f2; padding:12px; border-radius:6px; border:1px solid #fecaca; font-family:var(--font-code); font-size:12px; line-height:1.5;"><strong>✕ Lỗi thực thi SQL (Dòng ' + res.line + '):</strong><br>' + escapeMarkup(res.reason) + '<br><small style="color:#777; margin-top:4px; display:block;">' + escapeMarkup(res.rawError || res.error) + '</small></div>';
         if (studioRowCount) studioRowCount.textContent = 'Lỗi';
         return;
       }
 
-      if (studioStatus) studioStatus.textContent = 'SQLite: Thực thi thành công!';
+      if (studioStatus) {
+        studioStatus.className = 'engine-status-badge success';
+        studioStatus.textContent = '✓ SQLite: Thực thi thành công!';
+      }
+      const popover = document.getElementById('studioPopoverContent');
+      if (popover) {
+        popover.innerHTML = `
+          <div style="font-weight:700; color:#15803d; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size:12px;">
+            <span>✓</span> THỰC THI SQL THÀNH CÔNG
+          </div>
+          <div style="color:#374151; margin-bottom:6px;">
+            Toàn bộ các câu lệnh DDL / DML đã thực thi hợp lệ trong bộ nhớ SQLite WebAssembly.
+          </div>
+          <div style="display:flex; gap:12px; font-size:10.5px; color:#4b5563; border-top:1px solid rgba(0,0,0,0.08); padding-top:6px;">
+            <div><strong>Kết quả:</strong> ${(res.count || 0)} bảng/kết quả</div>
+            <div><strong>Bộ nhớ:</strong> SQLite In-Memory</div>
+          </div>
+        `;
+      }
       if (res.html && res.html.trim().length > 0) {
         studioResult.innerHTML = res.html;
         if (studioRowCount) studioRowCount.textContent = (res.count || 1) + ' bảng/kết quả';
